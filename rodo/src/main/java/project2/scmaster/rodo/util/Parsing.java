@@ -51,7 +51,7 @@ public class Parsing {
 				NodeList eleNodeList = itemElement.getElementsByTagName("ele");
 				NodeList timeNodeList = itemElement.getElementsByTagName("time");
 
-				for (int i = 0; i < eleNodeList.getLength(); i+=3) {
+				for (int i = 0; i < eleNodeList.getLength(); i+=5) {
 				
 					Node trkptElement = trkptNodeList.item(i);
 					String lat = trkptElement.getAttributes().getNamedItem("lat").getNodeValue();
