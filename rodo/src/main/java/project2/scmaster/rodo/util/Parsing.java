@@ -2,7 +2,10 @@ package project2.scmaster.rodo.util;
 
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.xml.parsers.*;
 
@@ -64,8 +67,23 @@ public class Parsing {
 					Node timeElement = timeNodeList.item(i);
 					NodeList chilTimeNodeList = timeElement.getChildNodes();
 					String time = chilTimeNodeList.item(0).getNodeValue();
+					String d = time.substring(0, 10);
+					String t = time.substring(11, 19);
+					time = d+" "+t;
+
+					SimpleDateFormat transForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					
-					GPX gpx = new GPX(lat, lon, ele, time);
+					Date date = null;
+					
+					try {
+						date = transForm.parse(time);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
+					
+					System.out.println(date);
+					
+					GPX gpx = new GPX(lat, lon, ele, date);
 					gpxList.add(gpx);
 				}
 			}

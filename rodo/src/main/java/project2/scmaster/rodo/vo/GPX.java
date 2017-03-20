@@ -1,16 +1,18 @@
 package project2.scmaster.rodo.vo;
 
+import java.util.Date;
+
 public class GPX {
 	private String lat;
 	private String lng;
 	private String ele;
-	private String time;
+	private Date time;
 	
 	public GPX() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GPX(String lat, String lng, String ele, String time) {
+	public GPX(String lat, String lng, String ele, Date time) {
 		super();
 		this.lat = lat;
 		this.lng = lng;
@@ -42,11 +44,11 @@ public class GPX {
 		this.ele = ele;
 	}
 
-	public String getTime() {
+	public Date getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(Date time) {
 		this.time = time;
 	}
 
