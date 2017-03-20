@@ -7,17 +7,19 @@ public class GPX {
 	private String lng;
 	private String ele;
 	private Date time;
+	private String dist;
 	
 	public GPX() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public GPX(String lat, String lng, String ele, Date time) {
+	public GPX(String lat, String lng, String ele, Date time, String dist) {
 		super();
 		this.lat = lat;
 		this.lng = lng;
 		this.ele = ele;
 		this.time = time;
+		this.dist = dist;
 	}
 
 	public String getLat() {
@@ -50,6 +52,14 @@ public class GPX {
 
 	public void setTime(Date time) {
 		this.time = time;
+	}
+	
+	public String getDist() {
+		return dist;
+	}
+
+	public void setDist(String dist) {
+		this.dist = dist;
 	}
 
 	@Override

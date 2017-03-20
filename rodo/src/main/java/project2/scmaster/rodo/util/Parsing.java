@@ -53,8 +53,9 @@ public class Parsing {
 				NodeList trkptNodeList = itemElement.getElementsByTagName("trkpt");
 				NodeList eleNodeList = itemElement.getElementsByTagName("ele");
 				NodeList timeNodeList = itemElement.getElementsByTagName("time");
-
-				for (int i = 0; i < eleNodeList.getLength(); i+=5) {
+				NodeList speedNodeList = itemElement.getElementsByTagName("gpx10:speed");
+				
+				for (int i = 0; i < eleNodeList.getLength(); i+=10) {
 				
 					Node trkptElement = trkptNodeList.item(i);
 					String lat = trkptElement.getAttributes().getNamedItem("lat").getNodeValue();
@@ -72,18 +73,23 @@ public class Parsing {
 					time = d+" "+t;
 
 					SimpleDateFormat transForm = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					
 					Date date = null;
-					
 					try {
 						date = transForm.parse(time);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
 					
-					System.out.println(date);
+					Node speedElement = speedNodeList.item(i);
+					String speed=null;
+					if(speedElement != null){
+						NodeList chilSpeedNodeList = speedElement.getChildNodes();
+						speed = chilSpeedNodeList.item(0).getNodeValue();
+					}else{
+						speed="0";
+					}
 					
-					GPX gpx = new GPX(lat, lon, ele, date);
+					GPX gpx = new GPX(lat, lon, ele, date, speed);
 					gpxList.add(gpx);
 				}
 			}
