@@ -17,7 +17,7 @@ public class MemberController {
 	@RequestMapping(value="MapTest", method=RequestMethod.GET)
 	public String MapTest(){
 		
-		return "MapTest";
+		return "ReadGps";
 	}
 	
 	@ResponseBody
