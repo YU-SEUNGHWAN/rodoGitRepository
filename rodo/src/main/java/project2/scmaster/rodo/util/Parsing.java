@@ -40,7 +40,6 @@ public class Parsing {
 		
 		doc.getDocumentElement().normalize();
 
-		System.out.printf("Root element : %s\n", doc.getDocumentElement().getNodeName());
 		NodeList itemNodeList = doc.getElementsByTagName("trkseg");
 
 		for (int s = 0; s < itemNodeList.getLength(); s++) {

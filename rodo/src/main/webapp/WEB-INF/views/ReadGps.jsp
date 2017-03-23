@@ -5,58 +5,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-#map{
-	width: 60%;
-	height: 400px;
-}
-#chart_div{
-	width: 40%;
-	height: 200px;
-}
-.map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
-.map_wrap {position:relative;width:100%;height:400px;}
-#category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
-#category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
-#category li.on {background: #eee;}
-#category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
-#category li:last-child{margin-right:0;border-right:0;}
-#category li span {display: block;margin:0 auto 3px;width:27px;height: 28px;}
-#category li .category_bg {background:url(resources/image/places_category.png) no-repeat;}
-#category li .bank {background-position: -10px 0;}
-#category li .mart {background-position: -10px -36px;}
-#category li .pharmacy {background-position: -10px -72px;}
-#category li .oil {background-position: -10px -108px;}
-#category li .cafe {background-position: -10px -144px;}
-#category li .store {background-position: -10px -180px;}
-#category li.on .category_bg {background-position-x:-46px;}
-.placeinfo_wrap {position:absolute;bottom:28px;left:-150px;width:300px;}
-.placeinfo {position:relative;width:100%;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;padding-bottom: 10px;background: #fff;}
-.placeinfo:nth-of-type(n) {border:0; box-shadow:0px 1px 2px #888;}
-.placeinfo_wrap .after {content:'';position:relative;margin-left:-12px;left:50%;width:22px;height:12px;background:url('http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-.placeinfo a, .placeinfo a:hover, .placeinfo a:active{color:#fff;text-decoration: none;}
-.placeinfo a, .placeinfo span {display: block;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-.placeinfo span {margin:5px 5px 0 5px;cursor: default;font-size:13px;}
-.placeinfo .title {font-weight: bold; font-size:14px;border-radius: 6px 6px 0 0;margin: -1px -1px 0 -1px;padding:10px; color: #fff;background: #d95050;background: #d95050 url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/arrow_white.png) no-repeat right 14px center;}
-.placeinfo .tel {color:#0f7833;}
-.placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
-</style>
 <script src="resources/js/jquery-3.1.1.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=ab43af777848bf1eb1bd3148b28cf31d&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6b513317a557b95d9627ec6ce1303e51&libraries=services"></script>
+<!-- ab43af777848bf1eb1bd3148b28cf31d -->
 <script src="resources/js/chart.js"></script>
 <script>
 	var latlngList = new Array;
 	var eleChart = new Array;
-	var map, placeOverlay, contentNode, markers, currCategory, ps;
-	
-	google.charts.load('current', {packages: ['corechart', 'line']});
+	var map, placeOverlay, contentNode, markers, currCategory, ps, overlayOn, container, mapWrapper, mapContainer, rvContainer,
+	mapCenter, rv, rvClient, markImage, marker;
+	var startLat, startLng, arriveLat, arriveLng;
 	
 	$(function() {
-		var x;
-		var y;
-		var x2;
-		var y2;
 		$.ajax({
 			type : "GET",
 			url : "getGpsList",
@@ -66,16 +27,16 @@
 
 					var ele = [new Date(item.time), parseFloat(item.ele), parseFloat(item.dist)];			
 					if(index==0){
-						x = parseFloat(item.lat);
-						y = parseFloat(item.lng);
+						startLat = parseFloat(item.lat);
+						startLng = parseFloat(item.lng);
 					}if(index==data.length-1){
-						x2 = parseFloat(item.lat);
-						y2 = parseFloat(item.lng);
+						arriveLat = parseFloat(item.lat);
+						arriveLng = parseFloat(item.lng);
 					}
 					latlngList.push(latlng);
 					eleChart.push(ele);
 				})
-				initMap(x, y, x2, y2);
+				initMap(startLat, startLng, arriveLat, arriveLng);
 			},
 			error : function(e) {
 				console.log(e);
@@ -85,10 +46,10 @@
 	});
 
    
-   	function initMap(x, y, x2, y2){
+   	function initMap(){
   	    var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
   	    mapOption = { 
-  	        center: new daum.maps.LatLng(x, y), // 지도의 중심좌표
+  	        center: new daum.maps.LatLng(startLat, startLng), // 지도의 중심좌표
   	        level: 7 // 지도의 확대 레벨
   	    };  
 
@@ -139,8 +100,8 @@
    		var arriveImage = new daum.maps.MarkerImage(arriveSrc, arriveSize, arriveOption);
    	
 	// 출발, 도착 마커가 표시될 위치입니다 
-   		var startPosition = new daum.maps.LatLng(x, y);
-   		var arrivePosition = new daum.maps.LatLng(x2, y2);
+   		var startPosition = new daum.maps.LatLng(startLat, startLng);
+   		var arrivePosition = new daum.maps.LatLng(arriveLat, arriveLng);
    		
    	// 출발, 도착 마커를 생성합니다
    		var startMarker = new daum.maps.Marker({
@@ -178,6 +139,82 @@
 
     	// 각 카테고리에 클릭 이벤트를 등록합니다
     	addCategoryClickEvent();
+    	
+    	
+    //////////로드뷰///////////////	
+    	
+		overlayOn = false; // 지도 위에 로드뷰 오버레이가 추가된 상태를 가지고 있을 변수
+		container = document.getElementById('container'); // 지도와 로드뷰를 감싸고 있는 div 입니다
+		mapWrapper = document.getElementById('mapWrapper'); // 지도를 감싸고 있는 div 입니다
+		mapContainer = document.getElementById('map'); // 지도를 표시할 div 입니다 
+		rvContainer = document.getElementById('roadview'); //로드뷰를 표시할 div 입니다
+		mapCenter = new daum.maps.LatLng(startLat, startLng); // 지도의 중심좌표
+
+	    // 로드뷰 객체를 생성합니다 
+	    rv = new daum.maps.Roadview(rvContainer); 
+	    
+	    // 좌표로부터 로드뷰 파노라마 ID를 가져올 로드뷰 클라이언트 객체를 생성합니다 
+	    rvClient = new daum.maps.RoadviewClient(); 
+	
+	    // 로드뷰에 좌표가 바뀌었을 때 발생하는 이벤트를 등록합니다 
+	    daum.maps.event.addListener(rv, 'position_changed', function() {
+	        // 현재 로드뷰의 위치 좌표를 얻어옵니다 
+	        var rvPosition = rv.getPosition();
+	        
+	        // 지도의 중심을 현재 로드뷰의 위치로 설정합니다
+	        map.setCenter(rvPosition);
+	
+	        // 지도 위에 로드뷰 도로 오버레이가 추가된 상태이면
+	        if(overlayOn) {
+	            // 마커의 위치를 현재 로드뷰의 위치로 설정합니다
+	            marker.setPosition(rvPosition);
+	        }
+    	});
+
+	    // 마커 이미지를 생성합니다
+	    markImage = new daum.maps.MarkerImage(
+	        'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/roadview_wk.png',
+	        new daum.maps.Size(35,39), {
+	        //마커의 좌표에 해당하는 이미지의 위치를 설정합니다.
+	        //이미지의 모양에 따라 값은 다를 수 있으나, 보통 width/2, height를 주면 좌표에 이미지의 하단 중앙이 올라가게 됩니다.
+	        offset: new daum.maps.Point(14, 39)
+    	});
+    
+	    // 드래그가 가능한 마커를 생성합니다
+	    marker = new daum.maps.Marker({
+	        image : markImage,
+	        position: mapCenter,
+	        draggable: true
+	    });
+	
+	    // 마커에 dragend 이벤트를 등록합니다
+	    daum.maps.event.addListener(marker, 'dragend', function(mouseEvent) {
+	
+	        // 현재 마커가 놓인 자리의 좌표입니다. 
+	        var position = marker.getPosition();
+	
+	        // 마커가 놓인 위치를 기준으로 로드뷰를 설정합니다
+	        toggleRoadview(position);
+	    });
+	
+	    //지도에 클릭 이벤트를 등록합니다
+	    daum.maps.event.addListener(map, 'click', function(mouseEvent){
+	        
+	        // 지도 위에 로드뷰 도로 오버레이가 추가된 상태가 아니면 클릭이벤트를 무시합니다 
+	        if(!overlayOn) {
+	            return;
+	        }
+	
+	        // 클릭한 위치의 좌표입니다 
+	        var position = mouseEvent.latLng;
+	
+	        // 마커를 클릭한 위치로 옮깁니다
+	        marker.setPosition(position);
+	
+	        // 클락한 위치를 기준으로 로드뷰를 설정합니다
+	        toggleRoadview(position);
+	    });
+
    	    
   	} 
    	
@@ -336,39 +373,150 @@
    	    if (el) {
    	        el.className = 'on';
    	    } 
-   	} 
+   	}
+   	
+   	
+// 전달받은 좌표(position)에 가까운 로드뷰의 파노라마 ID를 추출하여
+// 로드뷰를 설정하는 함수입니다
+function toggleRoadview(position){
+    rvClient.getNearestPanoId(position, 50, function(panoId) {
+        // 파노라마 ID가 null 이면 로드뷰를 숨깁니다
+        if (panoId === null) {
+            toggleMapWrapper(true, position);
+        } else {
+         toggleMapWrapper(false, position);
+
+            // panoId로 로드뷰를 설정합니다
+            rv.setPanoId(panoId, position);
+        }
+    });
+}
+
+// 지도를 감싸고 있는 div의 크기를 조정하는 함수입니다
+function toggleMapWrapper(active, position) {
+    if (active) {
+
+        // 지도를 감싸고 있는 div의 너비가 100%가 되도록 class를 변경합니다 
+        container.className = '';
+
+        // 지도의 크기가 변경되었기 때문에 relayout 함수를 호출합니다
+        map.relayout();
+
+        // 지도의 너비가 변경될 때 지도중심을 입력받은 위치(position)로 설정합니다
+        map.setCenter(position);
+    } else {
+
+        // 지도만 보여지고 있는 상태이면 지도의 너비가 30%가 되도록 class를 변경하여
+        // 로드뷰가 함께 표시되게 합니다
+        if (container.className.indexOf('view_roadview') === -1) {
+            container.className = 'view_roadview';
+
+            // 지도의 크기가 변경되었기 때문에 relayout 함수를 호출합니다
+            map.relayout();
+
+            // 지도의 너비가 변경될 때 지도중심을 입력받은 위치(position)로 설정합니다
+            map.setCenter(position);
+        }
+    }
+}
+
+// 지도 위의 로드뷰 도로 오버레이를 추가,제거하는 함수입니다
+function toggleOverlay(active) {
+    if (active) {
+        overlayOn = true;
+
+        // 지도 위에 로드뷰 도로 오버레이를 추가합니다
+        map.addOverlayMapTypeId(daum.maps.MapTypeId.ROADVIEW);
+
+        // 지도 위에 마커를 표시합니다
+        marker.setMap(map);
+
+        // 마커의 위치를 지도 중심으로 설정합니다 
+        marker.setPosition(mapCenter);
+
+        // 로드뷰의 위치를 지도 중심으로 설정합니다
+        toggleRoadview(mapCenter);
+    } else {
+        overlayOn = false;
+
+        // 지도 위의 로드뷰 도로 오버레이를 제거합니다
+        map.removeOverlayMapTypeId(daum.maps.MapTypeId.ROADVIEW);
+
+        // 지도 위의 마커를 제거합니다
+        marker.setMap(null);
+        
+    }
+}
+
+// 지도 위의 로드뷰 버튼을 눌렀을 때 호출되는 함수입니다
+function setRoadviewRoad() {
+    var control = document.getElementById('roadviewControl');
+
+    // 버튼이 눌린 상태가 아니면
+    if (control.className.indexOf('active') === -1) {
+        control.className = 'active';
+
+        // 로드뷰 도로 오버레이가 보이게 합니다
+        toggleOverlay(true);
+    } else {
+        control.className = '';
+
+        // 로드뷰 도로 오버레이를 제거합니다
+        toggleOverlay(false);
+        
+     	// 로드뷰를 지도 뒤로 숨기는 함수입니다
+        var position = marker.getPosition();
+        toggleMapWrapper(true, position);
+    }
+}
 </script>
+<link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
+<style>
+	#category li .category_bg {background:url(resources/image/places_category.png) no-repeat;}
+	#category li .bank {background-position: -10px 0;}
+	#category li .mart {background-position: -10px -36px;}
+	#category li .hospital {background-position: -10px -72px;}
+	#category li .sights {background-position: -10px -108px;}
+	#category li .cafe {background-position: -10px -144px;}
+	#category li .store {background-position: -10px -180px;}
+</style>
 </head>
 <body>
-	<div class="map_wrap">
-	    <div id="map"></div>
-	    <ul id="category">
-	        <li id="BK9" data-order="0"> 
-	            <span class="category_bg bank"></span>
-	            은행
-	        </li>       
-	        <li id="MT1" data-order="1"> 
-	            <span class="category_bg mart"></span>
-	            마트
-	        </li>  
-	        <li id="HP8" data-order="2"> 
-	            <span class="category_bg pharmacy"></span>
-	            병원
-	        </li>  
-	       <li id="AT4" data-order="3"> 
-	            <span class="category_bg oil"></span>
-	            관광명소
-	        </li>  
-	        <li id="CE7" data-order="4"> 
-	            <span class="category_bg cafe"></span>
-	            카페
-	        </li>  
-	        <li id="CS2" data-order="5"> 
-	            <span class="category_bg store"></span>
-	            편의점
-	        </li>
-	    </ul>
-	</div>
-	<div id="chart_div"></div>
+		<div id="container" class="map_wrap">
+		    <div id="rvWrapper">
+	        <div id="roadview" style="width:100%;height:100%;"></div> <!-- 로드뷰를 표시할 div 입니다 -->
+	    </div>
+	    <div id="mapWrapper">
+	      	<div id="map"></div>
+	        <div id="roadviewControl" onclick="setRoadviewRoad()"><span>로드뷰</span></div>
+	    </div>
+		    <ul id="category" style="padding-left:0px;margin-top 0px;margin-bottom: 0px;">
+		        <li id="BK9" data-order="0"> 
+		            <span class="category_bg bank"></span>
+		            은행
+		        </li>       
+		        <li id="MT1" data-order="1"> 
+		            <span class="category_bg mart"></span>
+		            마트
+		        </li>  
+		        <li id="HP8" data-order="2"> 
+		            <span class="category_bg hospital"></span>
+		            병원
+		        </li>  
+		       <li id="AT4" data-order="3"> 
+		            <span class="category_bg sights"></span>
+		            관광명소
+		        </li>  
+		        <li id="CE7" data-order="4"> 
+		            <span class="category_bg cafe"></span>
+		            카페
+		        </li>  
+		        <li id="CS2" data-order="5"> 
+		            <span class="category_bg store"></span>
+		            편의점
+		        </li>
+		    </ul>
+		</div>
+		<div id="chart_div"></div>
 </body>
 </html>
