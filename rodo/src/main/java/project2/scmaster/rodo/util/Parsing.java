@@ -54,7 +54,7 @@ public class Parsing {
 				NodeList timeNodeList = itemElement.getElementsByTagName("time");
 				NodeList speedNodeList = itemElement.getElementsByTagName("gpx10:speed");
 				
-				for (int i = 0; i < eleNodeList.getLength(); i+=10) {
+				for (int i = 0; i < eleNodeList.getLength(); i+=3) {
 				
 					Node trkptElement = trkptNodeList.item(i);
 					String lat = trkptElement.getAttributes().getNamedItem("lat").getNodeValue();

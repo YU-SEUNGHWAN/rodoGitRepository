@@ -24,7 +24,6 @@
 			success : function(data) {
 				$.each(data, function(index, item) {
 					var latlng = new daum.maps.LatLng(parseFloat(item.lat), parseFloat(item.lng));
-
 					var ele = [new Date(item.time), parseFloat(item.ele), parseFloat(item.dist)];			
 					if(index==0){
 						startLat = parseFloat(item.lat);
@@ -438,13 +437,14 @@ function toggleOverlay(active) {
         toggleRoadview(mapCenter);
     } else {
         overlayOn = false;
+        
+        viewStop();
 
         // 지도 위의 로드뷰 도로 오버레이를 제거합니다
         map.removeOverlayMapTypeId(daum.maps.MapTypeId.ROADVIEW);
 
         // 지도 위의 마커를 제거합니다
         marker.setMap(null);
-        
     }
 }
 
@@ -468,6 +468,36 @@ function setRoadviewRoad() {
         var position = marker.getPosition();
         toggleMapWrapper(true, position);
     }
+}
+
+var interval;
+var viweIndex=0;
+function viewStart(){
+	var length = latlngList.length;
+	var control = document.getElementById('roadviewControl');
+	
+	if (control.className.indexOf('active') === -1) {
+		control.className = 'active';
+        toggleOverlay(true);
+	}
+	interval = setInterval(function(){
+		if(viweIndex<length){
+			moveRoadview(latlngList[viweIndex++]);
+		}
+	}, 1000);
+}
+function moveRoadview(laylng){
+	marker.setPosition(laylng);				
+	toggleRoadview(laylng);
+}
+function viewPause(){
+	clearInterval(interval);
+}
+function viewStop(){
+	clearInterval(interval);
+	viweIndex=0;
+    marker.setPosition(mapCenter);
+    toggleRoadview(mapCenter);
 }
 </script>
 <link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
@@ -518,5 +548,8 @@ function setRoadviewRoad() {
 		    </ul>
 		</div>
 		<div id="chart_div"></div>
+		<input type="button" id="ajaxTest" onclick="viewStart()" value="start">
+		<input type="button" id="ajaxTest" onclick="viewPause()" value="pause">
+		<input type="button" id="ajaxTest" onclick="viewStop()" value="stop">
 </body>
 </html>
