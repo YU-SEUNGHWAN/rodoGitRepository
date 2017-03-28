@@ -103,9 +103,11 @@ jQuery(document).ready(function( $ ) {
   });
   
   
-  if($(location).attr('href').indexOf('about', 0)!=-1){
-	  $('#about2').trigger('click');
+  if($(location).attr('search').indexOf('services', 0)!=-1){
+	  $(".btn-services").trigger("click");
   };
-
+  if($(location).attr('search').indexOf('about', 0)!=-1){
+	  $(".btn-get-started").trigger("click");
+  };
   
 });

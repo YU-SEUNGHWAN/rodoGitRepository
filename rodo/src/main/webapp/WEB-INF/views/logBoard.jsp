@@ -64,7 +64,7 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li><a href="#none" onclick="javascript:location.href='bootstrap'">Home</a></li>
-          <li><a href="#none" onclick="javascript:location.href='bootstrap#services'">Rodo?</a></li>
+          <li><a href="#none" onclick="javascript:location.href='bootstrap?menu=services'">Rodo?</a></li>
           <li class="menu-active"><a href="#none" onclick="javascript:location.href='logBoard'">log</a></li>
           <li><a href="#none" onclick="javascript:location.href='photoBoard'">photo</a></li>
           <li><a href="#none" onclick="javascript:location.href='videoBoard'">video</a></li>
@@ -83,7 +83,7 @@
               <li><a href="#">Q&A</a></li>
             </ul>
           </li>
-		  <li style="padding-left:100px;"><a href="#about" onclick="javascript:location.href='bootstrap#about'">Login</a></li>
+		  <li style="padding-left:100px;"><a href="#about" onclick="javascript:location.href='bootstrap?menu=about'">Login</a></li>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
