@@ -12,7 +12,8 @@
 </h1>
 <ul>
 <li><a href="MapTest">지도 테스트</a></li>
-aaaaa123
+<li><a href="bootstrap">부트스트랩 테스트</a></li>
+<li><a href="test">로그인폼 테스트</a></li>
 </ul>
 </body>
 </html>
