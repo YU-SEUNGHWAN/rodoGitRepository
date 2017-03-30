@@ -13,8 +13,9 @@ body {
 body #about .container {
   position: relative;
   overflow: hidden;
-  width: 805px;
-  height: 598px;
+  width: 45%;
+  height: 0;
+  padding-bottom: 36%;
   margin: 80px auto 0;
   background-color: #ffffff;
   -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
@@ -24,12 +25,13 @@ body #about .container {
 body #about .container .half {
   float: left;
   width: 50%;
-  height: 100%;
+  height: 100vh;
   padding: 58px 40px 0;
 }
 body #about .container .half.bg {
   background-image: url("../img/loginImage.jpg");
   background-repeat: no-repeat;
+  background-size: 100%;
 }
 body #about .container h1 {
   font-size: 18px;
@@ -180,7 +182,7 @@ body #about .container .content .checkbox {
 body #about .container .content .checkbox + label {
   vertical-align: middle;
   display: inline-block;
-  width: 50%;
+  width: 100%;
 }
 body #about .container .content .checkbox + label:before {
   content: "\A";

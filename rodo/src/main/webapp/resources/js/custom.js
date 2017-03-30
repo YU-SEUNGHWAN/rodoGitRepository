@@ -68,7 +68,7 @@ jQuery(document).ready(function( $ ) {
               
               $('html, body').animate({
                   scrollTop: target.offset().top - top_space
-              }, 800, 'easeInOutExpo');
+              }, 500, 'easeInOutExpo');
 
               if ( $(this).parents('.nav-menu').length ) {
                 $('.nav-menu .menu-active').removeClass('menu-active');
@@ -103,11 +103,8 @@ jQuery(document).ready(function( $ ) {
   });
   
   
-  if($(location).attr('search').indexOf('services', 0)!=-1){
-	  $(".btn-services").trigger("click");
-  };
   if($(location).attr('search').indexOf('about', 0)!=-1){
-	  $(".btn-get-started").trigger("click");
+	  $("#btn-services").trigger("click");
   };
   
 });

@@ -53,41 +53,7 @@
 <!--==========================
   Header Section
 ============================-->
-  <header id="header">
-    <div class="container">
-    
-      <div id="logo" class="pull-left">
-        <a href="#none" onclick="javascript:location.href='bootstrap'"><img src="resources/img/logo.png" alt="" title="" /></img></a>
-        <!-- Uncomment below if you prefer to use a text image -->
-        <!--<h1><a href="#hero">Header 1</a></h1>-->
-      </div>
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li><a href="#none" onclick="javascript:location.href='bootstrap'">Home</a></li>
-          <li><a href="#none" onclick="javascript:location.href='bootstrap?menu=services'">Rodo?</a></li>
-          <li><a href="#none" onclick="javascript:location.href='logBoard'">log</a></li>
-          <li class="menu-active"><a href="#none" onclick="javascript:location.href='photoBoard'">photo</a></li>
-          <li><a href="#none" onclick="javascript:location.href='videoBoard'">video</a></li>
-          <li class="menu-has-children"><a href="#none">community</a>
-            <ul>
-              <li><a href="">free board</a></li>
-              <li class="menu-has-children"><a href="#none">local board</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Q&A</a></li>
-            </ul>
-          </li>
-		  <li style="padding-left:100px;"><a href="#about" onclick="javascript:location.href='bootstrap?menu=about'">Login</a></li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
-    </div>
-  </header><!-- #header -->
+<%@ include file="header.jsp" %>
     
 <!--==========================
   Porfolio Section
@@ -173,8 +139,19 @@
             </div>
           </a>
         </div>
-        
+        <table style="width:100%" class="board-navi">
+		  	<tr><td style="width:20%"></td>
+			<td style="width:60%; text-align:center;"><span class="page-navi">
+				<span class="btn-page">&lt;&lt;</span>
+				<span class="btn-page">&lt;</span>
+				<span class="btn-page">1</span>
+				<span class="btn-page">&gt;</span>
+				<span class="btn-page">&gt;&gt;</span>
+			</span></td>
+	      	<td style="width:20%"><a href="#services" class="btn-write">Write</a></td></tr>
+      	</table>
       </div>
+
     </div>        
   </section>
 

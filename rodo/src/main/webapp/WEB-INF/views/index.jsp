@@ -40,36 +40,11 @@
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
   
-<!-- =======================================================
-  Theme Name: Imperial
-  Theme URL: https://bootstrapmade.com/imperial-free-onepage-bootstrap-theme/
-  Author: BootstrapMade.com
-  Author URL: https://bootstrapmade.com
-======================================================= -->
+
 </head>
 
 <body>
-  
-<!--==========================
-  Hero Section
-============================-->
-  <section id="hero">
-    <div class="hero-container">
-      <div class="wow fadeIn">
-        <div class="hero-logo">
-          <img class="" src="resources/img/logo.png" alt="Imperial">
-        </div>
-        
-        <h1>Welcome to Imperial stu    dios</h1>
-        <h2>We create <span class="rotating">beautiful graphics, functional websites, working mobile apps</span></h2>
-        <div class="actions">
-          <a href="#about" class="btn-get-started">로그인</a>
-          <a href="#services" class="btn-services">홈페이지 입장</a>
-        </div>
-      </div>
-    </div>
-  </section>
-  
+ 
 <!--==========================
   Header Section
 ============================-->
@@ -85,7 +60,6 @@
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="#hero">Home</a></li>
-          <li><a href="#services">Rodo?</a></li>
           <li><a href="#none" onclick="javascript:location.href='logBoard'">log</a></li>
           <li><a href="#none" onclick="javascript:location.href='photoBoard'">photo</a></li>
           <li><a href="#none" onclick="javascript:location.href='videoBoard'">video</a></li>
@@ -109,6 +83,26 @@
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
+
+  
+<!--==========================
+  Hero Section
+============================-->
+  <section id="hero">
+    <div class="hero-container">
+      <div class="wow fadeIn">
+        <div class="hero-logo">
+          <img class="" src="resources/img/logo.png" alt="Imperial">
+        </div>
+        
+        <h1>Welcome to project Rodo</h1>
+        <h2>Share your <span class="rotating">road, trip, memory</span></h2>
+        <div class="actions">
+          <a href="#about" id="btn-services" class="btn-services">로그인</a>
+        </div>
+      </div>
+    </div>
+  </section>
     
 <!--==========================
   About Section
@@ -145,23 +139,19 @@
                				<form action="#" method="post" enctype="multipart/form-data">
             					
 			                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your ID">
-			                    <label for="text">Your ID</label>
+			                    <input type="button" value="id check" class="submit">
 			                    
 			                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
-             					<label for=" password">Your Password</label>
              						    
 								<input type="password" name="passwordc" id="passwordc" class="inpt" required="required" placeholder="One more Password">
-								<label for=" password">One more Password</label>
              						    
              					<input type="text" name="name" id="name" class="inpt" required="required" placeholder="Your Name">
-			                    <label for="text">Your Name</label>
              						    
              					<input type="text" name="email" id="email" class="inpt" required="required" placeholder="Your Email">
-			                    <label for="text">Your Email</label>
+             					<input type="button" value="mail check" class="submit">
              						    
 			                    <div class="submit-wrap">
-				                	<input type="submit" value="Sign up" class="submit">
-				                    <a href="#" class="more">Terms and conditions</a>
+				                	<input type="submit" value="Sign up" class="submit" style="margin-top: 25px;">
 			                    </div>
 						                    
         					  </form>
@@ -190,71 +180,7 @@
 	});
 	</script>
   
-<!--==========================
-  Services Section
-============================-->
-  <section id="services">
-    <div class="container wow fadeInUp">
-      <div class="row">
-        <div class="col-md-12">
-          <h3 class="section-title">What is Rodo?</h3>
-          <div class="section-title-divider"></div>
-          <p class="section-description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium</p>
-        </div>
-      </div>
-        
-      <div class="row">
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-desktop"></i></div>
-          <h4 class="service-title"><a href="">Lorem Ipsum</a></h4>
-          <p class="service-description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-bar-chart"></i></div>
-          <h4 class="service-title"><a href="">Dolor Sitema</a></h4>
-          <p class="service-description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-paper-plane"></i></div>
-          <h4 class="service-title"><a href="">Sed ut perspiciatis</a></h4>
-          <p class="service-description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-photo"></i></div>
-          <h4 class="service-title"><a href="">Magni Dolores</a></h4>
-          <p class="service-description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-road"></i></div>
-          <h4 class="service-title"><a href="">Nemo Enim</a></h4>
-          <p class="service-description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-shopping-bag"></i></div>
-          <h4 class="service-title"><a href="">Eiusmod Tempor</a></h4>
-          <p class="service-description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
-        </div>
-      </div>
-    </div>  
-  </section>
-  
-<!--==========================
-  Subscrbe Section
-============================-->  
-  <section id="subscribe">
-    <div class="container wow fadeInUp">
-      <div class="row">
-        <div class="col-md-8">
-          <h3 class="subscribe-title">Subscribe For Updates</h3>
-          <p class="subscribe-text">Join our 1000+ subscribers and get access to the latest tools, freebies, product announcements and much more!</p>
-        </div>
-        <div class="col-md-4 subscribe-btn-container">
-          <a class="subscribe-btn" href="#">Subscribe Now</a>
-        </div>
-      </div>
-    </div>
-  </section>
-    
+
 <!--==========================
   Testimonials Section
 ============================--> 

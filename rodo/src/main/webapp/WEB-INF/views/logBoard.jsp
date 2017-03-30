@@ -53,42 +53,8 @@
 <!--==========================
   Header Section
 ============================-->
-  <header id="header">
-    <div class="container">
-    
-      <div id="logo" class="pull-left">
-        <a href="#none" onclick="javascript:location.href='bootstrap'"><img src="resources/img/logo.png" alt="" title="" /></img></a>
-        <!-- Uncomment below if you prefer to use a text image -->
-        <!--<h1><a href="#hero">Header 1</a></h1>-->
-      </div>
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li><a href="#none" onclick="javascript:location.href='bootstrap'">Home</a></li>
-          <li><a href="#none" onclick="javascript:location.href='bootstrap?menu=services'">Rodo?</a></li>
-          <li class="menu-active"><a href="#none" onclick="javascript:location.href='logBoard'">log</a></li>
-          <li><a href="#none" onclick="javascript:location.href='photoBoard'">photo</a></li>
-          <li><a href="#none" onclick="javascript:location.href='videoBoard'">video</a></li>
-          <li class="menu-has-children"><a href="#none">community</a>
-            <ul>
-              <li><a href="">free board</a></li>
-              <li class="menu-has-children"><a href="#none">local board</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Q&A</a></li>
-            </ul>
-          </li>
-		  <li style="padding-left:100px;"><a href="#about" onclick="javascript:location.href='bootstrap?menu=about'">Login</a></li>
-        </ul>
-      </nav><!-- #nav-menu-container -->
-    </div>
-  </header><!-- #header -->
-    
+<%@ include file="header.jsp" %>
+
 <!--==========================
   Services Section
 ============================-->
@@ -100,43 +66,48 @@
           <div class="section-title-divider"></div>
         </div>
       </div>
-        
       <div class="row" style="height:450px;">
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-desktop"></i></div>
-          <h4 class="service-title"><a href="">Lorem Ipsum</a></h4>
-          <p class="service-description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+        <div class="col-md-6 service-item">
+          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
+          <h4 class="service-title"><a href="">북한산 등반</a></h4>
+          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
+      	</div>
+        <div class="col-md-6 service-item">
+          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
+          <h4 class="service-title"><a href="">북한산 등반하고 왔습니다</a></h4>
+          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-bar-chart"></i></div>
-          <h4 class="service-title"><a href="">Dolor Sitema</a></h4>
-          <p class="service-description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+        <div class="col-md-6 service-item">
+          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
+          <h4 class="service-title"><a href="">북한산 등반</a></h4>
+          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-paper-plane"></i></div>
-          <h4 class="service-title"><a href="">Sed ut perspiciatis</a></h4>
-          <p class="service-description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
+        <div class="col-md-6 service-item">
+          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
+          <h4 class="service-title"><a href="">북한산 등반하고 왔습니다</a></h4>
+          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-photo"></i></div>
-          <h4 class="service-title"><a href="">Magni Dolores</a></h4>
-          <p class="service-description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
+        <div class="col-md-6 service-item">
+          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
+          <h4 class="service-title"><a href="">북한산 등반</a></h4>
+          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-road"></i></div>
-          <h4 class="service-title"><a href="">Nemo Enim</a></h4>
-          <p class="service-description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+        <div class="col-md-6 service-item">
+          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
+          <h4 class="service-title"><a href="">북한산 등반하고 왔습니다</a></h4>
+          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-shopping-bag"></i></div>
-          <h4 class="service-title"><a href="">Eiusmod Tempor</a></h4>
-          <p class="service-description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
-        </div>
-        <div class="col-md-4 service-item">
-          <div class="service-icon"><i class="fa fa-photo"></i></div>
-          <h4 class="service-title"><a href="">Magni Dolores</a></h4>
-          <p class="service-description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-        </div>
+		<table style="width:100%" class="board-navi">
+	  	<tr><td style="width:20%"></td>
+		<td style="width:60%; text-align:center;"><span class="page-navi">
+			<span class="btn-page">&lt;&lt;</span>
+			<span class="btn-page">&lt;</span>
+			<span class="btn-page">1</span>
+			<span class="btn-page">&gt;</span>
+			<span class="btn-page">&gt;&gt;</span>
+		</span></td>
+      	<td style="width:20%"><a href="#services" class="btn-write">Write</a></td></tr>
+      </table>
       </div>
     </div>  
   </section>
