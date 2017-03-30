@@ -14,8 +14,7 @@ body #about .container {
   position: relative;
   overflow: hidden;
   width: 45%;
-  height: 0;
-  padding-bottom: 36%;
+  height: 70vh;
   margin: 80px auto 0;
   background-color: #ffffff;
   -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 30px;
@@ -31,7 +30,8 @@ body #about .container .half {
 body #about .container .half.bg {
   background-image: url("../img/loginImage.jpg");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-width:100%;
+  background-position: top;
 }
 body #about .container h1 {
   font-size: 18px;
