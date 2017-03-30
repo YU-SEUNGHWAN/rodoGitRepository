@@ -5,4 +5,97 @@
 
 <!-- 회원정보 처리 SQL -->
 <mapper namespace="project2.scmaster.rodo.dao.MemberMapper">
+
+<insert id = "insert" parameterType = "Member">
+
+	insert
+		into
+			rodo_member
+			(
+				id
+				, password
+				, name
+				, email
+			)
+			
+			values
+			(
+				#{id}
+				, #{password}
+				, #{name}
+				, #{email}
+			)
+
+</insert>
+
+<select id = "selectOne" resultType = "Member" parameterType = "String">
+
+	select
+		id
+		, password
+		, name
+		, email
+		
+	from
+		rodo_member
+	
+	where 
+		id = #{id}
+
+</select>
+
+<select id = "findid" resultType = "String" parameterType = "String">
+
+	select
+		id
+	
+	from
+		rodo_member
+		
+	where
+		email = #{email}
+	
+</select>
+
+<select id = "emailcheck" resultType = "String" parameterType = "String">
+
+	select
+		email
+		
+	from
+		rodo_member
+		
+	where
+		email = #{email}
+
+</select>
+
+<update id = "update" parameterType = "Member">
+
+	update
+		rodo_member
+		
+	set
+		password = #{password}
+		, name = #{name}
+		, email = #{email}
+		
+	where
+		id = #{id}
+
+</update>
+
+<update id = "updatepw" parameterType = "Member">
+
+	update
+		rodo_member
+		
+	set
+		password = #{password}
+			
+	where
+		id = #{id}
+	
+</update>
+
 </mapper>

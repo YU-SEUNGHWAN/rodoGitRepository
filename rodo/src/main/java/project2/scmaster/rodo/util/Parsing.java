@@ -16,10 +16,9 @@ import org.w3c.dom.NodeList;
 
 import project2.scmaster.rodo.vo.GPX;
 
-public class Parsing {
-
+public class Parsing 
+{
 	private final String GPX_FILE_PATH = "D:\\test.gpx";
-
 	
 	public ArrayList<GPX> GpxParse(){
 		

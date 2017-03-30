@@ -8,5 +8,12 @@
 </head>
 <body>
 
+	<h1> 회원가입 완료 </h1>
+
+<p>${id}님 가입을 환영합니다</p>
+
+<p><a href = "login">로그인</a></p>
+<p><a href = "./">메인으로</a></p>
+
 </body>
 </html>
