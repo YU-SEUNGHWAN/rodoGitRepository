@@ -13,6 +13,7 @@
 
 <ul>
 <li><a href="MapTest">지도 테스트</a></li>
+<<<<<<< HEAD
 
 <li><a href = "freeboardlist">자유게시판</a></li>
 </ul>
@@ -38,6 +39,10 @@
 	</c:otherwise>
 </c:choose>
 
+=======
+<li><a href="bootstrap">부트스트랩 테스트</a></li>
+<li><a href="test">로그인폼 테스트</a></li>
+>>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 </ul>
 </body>
 </html>

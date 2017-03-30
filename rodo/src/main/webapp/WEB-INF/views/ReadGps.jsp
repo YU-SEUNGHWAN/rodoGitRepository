@@ -140,6 +140,7 @@
     	addCategoryClickEvent();
     	
     	
+    	
     //////////로드뷰///////////////	
     	
 		overlayOn = false; // 지도 위에 로드뷰 오버레이가 추가된 상태를 가지고 있을 변수
@@ -282,7 +283,7 @@
 
    	// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
    	function addMarker(position, order) {
-   	    var imageSrc = 'resources/image/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+   	    var imageSrc = 'resources/img/places_category.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
    	        imageSize = new daum.maps.Size(27, 28),  // 마커 이미지의 크기
    	        imgOptions =  {
    	            spriteSize : new daum.maps.Size(72, 208), // 스프라이트 이미지의 크기
@@ -438,7 +439,8 @@ function toggleOverlay(active) {
     } else {
         overlayOn = false;
         
-        viewStop();
+        clearInterval(interval);
+    	viewIndex=0;
 
         // 지도 위의 로드뷰 도로 오버레이를 제거합니다
         map.removeOverlayMapTypeId(daum.maps.MapTypeId.ROADVIEW);
@@ -471,7 +473,7 @@ function setRoadviewRoad() {
 }
 
 var interval;
-var viweIndex=0;
+var viewIndex=0;
 function viewStart(){
 	var length = latlngList.length;
 	var control = document.getElementById('roadviewControl');
@@ -481,10 +483,10 @@ function viewStart(){
         toggleOverlay(true);
 	}
 	interval = setInterval(function(){
-		if(viweIndex<length){
-			moveRoadview(latlngList[viweIndex++]);
+		if(viewIndex<length){
+			moveRoadview(latlngList[viewIndex++]);
 		}
-	}, 1000);
+	}, 500);
 }
 function moveRoadview(laylng){
 	marker.setPosition(laylng);				
@@ -495,14 +497,14 @@ function viewPause(){
 }
 function viewStop(){
 	clearInterval(interval);
-	viweIndex=0;
+	viewIndex=0;
     marker.setPosition(mapCenter);
     toggleRoadview(mapCenter);
 }
 </script>
 <link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
 <style>
-	#category li .category_bg {background:url(resources/image/places_category.png) no-repeat;}
+	#category li .category_bg {background:url(resources/img/places_category.png) no-repeat;}
 	#category li .bank {background-position: -10px 0;}
 	#category li .mart {background-position: -10px -36px;}
 	#category li .hospital {background-position: -10px -72px;}
@@ -533,7 +535,7 @@ function viewStop(){
 		            <span class="category_bg hospital"></span>
 		            병원
 		        </li>  
-		       <li id="AT4" data-order="3"> 
+		       <li id="AT4" data-order="3">
 		            <span class="category_bg sights"></span>
 		            관광명소
 		        </li>  
