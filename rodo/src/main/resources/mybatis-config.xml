@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<typeAliases>
+		<typeAlias type="project2.scmaster.rodo.vo.Member" alias="Member" />
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeBoard" alias="Rodo_FreeBoard" />
+	</typeAliases>
+	
+	
+	<mappers>
+		<mapper resource="Mapper/MemberMapper.xml" />
+		<mapper resource="Mapper/Rodo_FreeBoardMapper.xml" />
+	</mappers>
+	
+</configuration>
