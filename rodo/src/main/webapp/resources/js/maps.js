@@ -1,16 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="resources/js/jquery-3.1.1.js"></script>
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6b513317a557b95d9627ec6ce1303e51&libraries=services"></script>
-<!-- ab43af777848bf1eb1bd3148b28cf31d -->
-<script src="resources/js/chart.js"></script>
-<script>
 	var latlngList = new Array;
 	var eleChart = new Array;
 	var map, placeOverlay, contentNode, markers, currCategory, ps, overlayOn, container, mapWrapper, mapContainer, rvContainer,
@@ -24,7 +11,6 @@
 			success : function(data) {
 				$.each(data, function(index, item) {
 					var latlng = new daum.maps.LatLng(parseFloat(item.lat), parseFloat(item.lng));
-					var ele = [new Date(item.time), parseFloat(item.ele), parseFloat(item.dist)];			
 					if(index==0){
 						startLat = parseFloat(item.lat);
 						startLng = parseFloat(item.lng);
@@ -33,7 +19,10 @@
 						arriveLng = parseFloat(item.lng);
 					}
 					latlngList.push(latlng);
-					eleChart.push(ele);
+					if(index%5==0){
+						var ele = [new Date(item.time), parseFloat(item.ele), parseFloat(item.dist)];			
+						eleChart.push(ele);
+					}
 				})
 				initMap(startLat, startLng, arriveLat, arriveLng);
 			},
@@ -501,57 +490,3 @@ function viewStop(){
     marker.setPosition(mapCenter);
     toggleRoadview(mapCenter);
 }
-</script>
-<link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
-<style>
-	#category li .category_bg {background:url(resources/img/places_category.png) no-repeat;}
-	#category li .bank {background-position: -10px 0;}
-	#category li .mart {background-position: -10px -36px;}
-	#category li .hospital {background-position: -10px -72px;}
-	#category li .sights {background-position: -10px -108px;}
-	#category li .cafe {background-position: -10px -144px;}
-	#category li .store {background-position: -10px -180px;}
-</style>
-</head>
-<body>
-		<div id="container" class="map_wrap">
-		    <div id="rvWrapper">
-	        <div id="roadview" style="width:100%;height:100%;"></div> <!-- 로드뷰를 표시할 div 입니다 -->
-	    </div>
-	    <div id="mapWrapper">
-	      	<div id="map"></div>
-	        <div id="roadviewControl" onclick="setRoadviewRoad()"><span>로드뷰</span></div>
-	    </div>
-		    <ul id="category" style="padding-left:0px;margin-top 0px;margin-bottom: 0px;">
-		        <li id="BK9" data-order="0"> 
-		            <span class="category_bg bank"></span>
-		            은행
-		        </li>       
-		        <li id="MT1" data-order="1"> 
-		            <span class="category_bg mart"></span>
-		            마트
-		        </li>  
-		        <li id="HP8" data-order="2"> 
-		            <span class="category_bg hospital"></span>
-		            병원
-		        </li>  
-		       <li id="AT4" data-order="3">
-		            <span class="category_bg sights"></span>
-		            관광명소
-		        </li>  
-		        <li id="CE7" data-order="4"> 
-		            <span class="category_bg cafe"></span>
-		            카페
-		        </li>  
-		        <li id="CS2" data-order="5"> 
-		            <span class="category_bg store"></span>
-		            편의점
-		        </li>
-		    </ul>
-		</div>
-		<div id="chart_div"></div>
-		<input type="button" id="ajaxTest" onclick="viewStart()" value="start">
-		<input type="button" id="ajaxTest" onclick="viewPause()" value="pause">
-		<input type="button" id="ajaxTest" onclick="viewStop()" value="stop">
-</body>
-</html>

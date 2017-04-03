@@ -58,7 +58,7 @@
 <!--==========================
   Porfolio Section
 ============================-->
-  <section id="portfolio">
+  <section id="portfolio" >
     <div class="container wow fadeInUp">
       <div class="row">
         <div class="col-md-12" style="padding-bottom:35px">
@@ -69,7 +69,7 @@
       
       <div class="row">
         <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-1.jpg);" href="">
+          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-1.jpg);" href="readPhoto">
             <div class="details">
               <h4>Portfolio 1</h4>
               <span>Alored dono par</span>

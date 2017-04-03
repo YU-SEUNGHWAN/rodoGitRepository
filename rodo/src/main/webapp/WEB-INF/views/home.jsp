@@ -12,7 +12,7 @@
 </h1>
 
 <ul>
-<li><a href="MapTest">지도 테스트</a></li>
+<li><a href="readGps">지도 테스트</a></li>
 <<<<<<< HEAD
 
 <li><a href = "freeboardlist">자유게시판</a></li>

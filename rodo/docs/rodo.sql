@@ -1,56 +1,3 @@
-<<<<<<< HEAD
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-drop table;
-
-
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-create table (
-);
-
-
 create sequence gps_seq start with 1 increment by 1;
 create sequence photo_seq start with 1 increment by 1;
 create sequence video_seq start with 1 increment by 1;
@@ -65,7 +12,6 @@ create table rodo_member
 )
 
 select * from rodo_member;
-
 
 create table rodo_freeboard
 (
@@ -90,4 +36,3 @@ create table rodo_freefile
 )
 
 alter table rodo_freefile add foreign key(free_boardnum) references rodo_freeboard (free_boardnum);
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git

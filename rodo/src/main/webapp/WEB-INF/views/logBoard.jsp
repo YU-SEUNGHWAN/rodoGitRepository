@@ -69,32 +69,32 @@
       <div class="row" style="height:450px;">
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="">북한산 등반</a></h4>
+          <h4 class="service-title"><a href="readGps">북한산 등반</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
       	</div>
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="">북한산 등반하고 왔습니다</a></h4>
+          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="">북한산 등반</a></h4>
+          <h4 class="service-title"><a href="readGps">북한산 등반</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="">북한산 등반하고 왔습니다</a></h4>
+          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="">북한산 등반</a></h4>
+          <h4 class="service-title"><a href="readGps">북한산 등반</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="">북한산 등반하고 왔습니다</a></h4>
+          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
         </div>
 		<table style="width:100%" class="board-navi">

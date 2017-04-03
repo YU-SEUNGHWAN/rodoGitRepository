@@ -27,22 +27,6 @@ public class MemberController
 	@Autowired
 	MemberDao dao;
 	
-	@RequestMapping(value="MapTest", method=RequestMethod.GET)
-	public String MapTest(){
-		
-		return "ReadGps";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="getGpsList", method=RequestMethod.GET)
-	public ArrayList<GPX> getGpsList(){
-		
-		Parsing parsing = new Parsing();
-		ArrayList<GPX> gpxList = parsing.GpxParse();
-		
-		return gpxList;
-	}
-	
 	@RequestMapping(value = "insert", method = RequestMethod.GET)
 	public String insert()
 	{
