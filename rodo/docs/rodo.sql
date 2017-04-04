@@ -1,8 +1,9 @@
-create sequence gps_seq start with 1 increment by 1;
-create sequence photo_seq start with 1 increment by 1;
-create sequence video_seq start with 1 increment by 1;
-create sequence free_seq start with 1 increment by 1;
-=======
+drop table rodo_member;
+drop table rodo_freeboard;
+drop sequence rodo_freeboard_seq;
+drop table rodo_freefile;
+
+
 create table rodo_member
 (
 	id varchar2(20) primary key
@@ -11,7 +12,7 @@ create table rodo_member
 	, email varchar2(50) unique
 )
 
-select * from rodo_member;
+insert into rodo_member values('aaa', 'aaa', 'aaa', 'aaa');
 
 create table rodo_freeboard
 (
@@ -26,8 +27,6 @@ create table rodo_freeboard
 
 alter table rodo_freeboard add foreign key(free_id) references rodo_member (id);
 create sequence rodo_freeboard_seq start with 1 increment by 1;
-
-
 create table rodo_freefile
 (
 	free_boardnum number not null

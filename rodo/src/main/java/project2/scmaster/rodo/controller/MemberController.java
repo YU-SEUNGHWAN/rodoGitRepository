@@ -95,10 +95,10 @@ public class MemberController
 		{
 			if (member.getPassword().equals(password))
 			{
-				session.setAttribute("id", member.getId());
-				session.setAttribute("name", member.getName());
+				session.setAttribute("loginId", member.getId());
+				session.setAttribute("loginName", member.getName());
 				
-				return "redirect:/";
+				return "redirect:index";
 			}
 			
 			else
@@ -114,7 +114,7 @@ public class MemberController
 	{
 		session.invalidate();
 		
-		return "member/logout";
+		return "redirect:index";
 	}
 	
 	@RequestMapping(value = "find", method = RequestMethod.GET)
