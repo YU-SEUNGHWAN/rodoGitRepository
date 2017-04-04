@@ -8,6 +8,7 @@
 
 <script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
 
+
 <script>
 
 	$(function()
