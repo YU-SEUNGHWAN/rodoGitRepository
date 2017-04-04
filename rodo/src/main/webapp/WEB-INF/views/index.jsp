@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,7 +66,21 @@
               <li><a href="#">Q&A</a></li>
             </ul>
           </li>
-		  <li style="padding-left:100px;"><a href="#about">Login</a></li>
+          <c:choose>
+          	<c:when test="${loginId==null}">
+	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
+	       	</c:when>
+	        <c:otherwise>
+			 <li class="menu-has-children" style="padding-left:100px;"><a href="#none">${loginId} 님</a>
+		        <ul>
+		             <li><a href="#">my info</a></li>
+		             <li><a href="#">my List</a></li>
+		             <li><a href="logout">log out</a></li>
+			    </ul>  
+			 </li>
+       		</c:otherwise>
+	      </c:choose>
+		 
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
@@ -85,7 +100,14 @@
         <h1>Welcome to project Rodo</h1>
         <h2>Share your <span class="rotating">road, trip, memory</span></h2>
         <div class="actions">
-          <a href="#about" id="btn-services" class="btn-services">로그인</a>
+          	<c:choose>
+	          	<c:when test="${loginId==null}">
+		          	<a href="#about" id="btn-services" class="btn-services">로그인</a>
+		       	</c:when>
+		        <c:otherwise>
+		          	<a href="logout" id="btn-get-started" class="btn-get-started">로그아웃</a>
+	       		</c:otherwise>
+	       	</c:choose>
         </div>
       </div>
     </div>
@@ -104,23 +126,22 @@
 	        </div>
 	        <div class="content">
 		            <div class="signin-cont cont">
-			                <form action="#" method="post" enctype="multipart/form-data">
+			                <form action="login" method="post" enctype="multipart/form-data">
 			                
-				                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your ID">
-				                    <label for="text">Your email</label>
-				                    
-				                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
-              						<label for="password">Your password</label>
-              						    
-				                    <input type="checkbox" id="remember" class="checkbox" checked>
-				                    <label for="remember">Remember me</label>
-				                    
-				                    <div class="submit-wrap">
-					                        <input type="submit" value="Sign in" class="submit">
-					                        <a href="#" class="more">Forgot your password?</a>
-				                    </div>
-				                    
-      					        </form>
+			                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your ID">
+			                    <label for="text">Your email</label>
+			                    
+			                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
+             						<label for="password">Your password</label>
+             						    
+			                    <input type="checkbox" id="remember" class="checkbox" checked>
+			                    
+			                    <div class="submit-wrap">
+				                        <input type="submit" value="Sign in" class="submit">
+				                        <a href="#" class="more">Forgot your password?</a>
+			                    </div>
+			                    
+   					        </form>
  				      </div>
     				  <div class="signup-cont cont">
                				<form action="#" method="post" enctype="multipart/form-data">

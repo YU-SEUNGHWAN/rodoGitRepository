@@ -6,7 +6,6 @@
 	
 	<typeAliases>
 		<typeAlias type="project2.scmaster.rodo.vo.Member" alias="Member" />
-		<typeAlias type="project2.scmaster.rodo.vo.Board" alias="Board" />
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeBoard" alias="Rodo_FreeBoard" />
 	</typeAliases>
 	
@@ -14,7 +13,6 @@
 	<mappers>
 		<mapper resource="Mapper/MemberMapper.xml" />
 		<mapper resource="Mapper/Rodo_FreeBoardMapper.xml" />
-		<mapper resource="Mapper/PhotoBoardMapper.xml" />
 	</mappers>
 	
 </configuration>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,13 +28,13 @@
     <div class="container">
     
       <div id="logo" class="pull-left">
-        <a href="#none" onclick="javascript:location.href='bootstrap'"><img src="resources/img/logo.png" alt="" title="" /></img></a>
+        <a href="#none" onclick="javascript:location.href='index'"><img src="resources/img/logo.png" alt="" title="" /></img></a>
         <!-- Uncomment below if you prefer to use a text image -->
         <!--<h1><a href="#hero">Header 1</a></h1>-->
       </div>
       <nav id="nav-menu-container">
         <ul class="nav-menu">
-          <li><a href="#none" onclick="javascript:location.href='bootstrap'">Home</a></li>
+          <li><a href="#none" onclick="javascript:location.href='index'">Home</a></li>
           <li><a href="#none" id="log" onclick="javascript:location.href='logBoard'">log</a></li>
           <li><a href="#none" id="photo" onclick="javascript:location.href='photoBoard'">photo</a></li>
           <li><a href="#none" id="video" onclick="javascript:location.href='videoBoard'">video</a></li>
@@ -52,7 +53,20 @@
               <li><a href="#">Q&A</a></li>
             </ul>
           </li>
-		  <li style="padding-left:100px;"><a href="#about" onclick="javascript:location.href='bootstrap?menu=about'">Login</a></li>
+		  <c:choose>
+          	<c:when test="${loginId==null}">
+	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
+	       	</c:when>
+	        <c:otherwise>
+			 <li class="menu-has-children" style="padding-left:100px;"><a href="#none">${loginId} 님</a>
+		        <ul>
+		             <li><a href="#">my info</a></li>
+		             <li><a href="#">my List</a></li>
+		             <li><a href="logout">log out</a></li>
+			    </ul>  
+			 </li>
+       		</c:otherwise>
+	      </c:choose>
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>

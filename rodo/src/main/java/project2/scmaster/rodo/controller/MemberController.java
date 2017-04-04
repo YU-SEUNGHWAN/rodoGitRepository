@@ -95,8 +95,8 @@ public class MemberController
 		{
 			if (member.getPassword().equals(password))
 			{
-				session.setAttribute("LoginID", member.getId());
-				session.setAttribute("LoginName", member.getName());
+				session.setAttribute("id", member.getId());
+				session.setAttribute("name", member.getName());
 				
 				return "redirect:/";
 			}
@@ -142,7 +142,7 @@ public class MemberController
 	@RequestMapping(value = "beforeupdate", method = RequestMethod.POST)
 	public String beforeupdate(String password, HttpSession session)
 	{
-		String id = (String)session.getAttribute("LoginID");
+		String id = (String)session.getAttribute("id");
 		
 		Member member = dao.selectOne(id);
 		
@@ -152,7 +152,7 @@ public class MemberController
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public String update2(HttpSession session, Model model)
 	{	
-		String id = (String)session.getAttribute("LoginID");
+		String id = (String)session.getAttribute("id");
 		
 		Member member = dao.selectOne(id);
 		model.addAttribute("member", member);

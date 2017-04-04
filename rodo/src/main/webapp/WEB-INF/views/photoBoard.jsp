@@ -71,40 +71,47 @@
         <div class="col-md-3">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-1.jpg);" href="readPhoto">
             <div class="details">
-              <h4>북한산 다녀왔어요</h4>
-              <span>작성자 : 둘리</span><br>
-              <span>작성일 : 2017.04.04</span>
+              <h4>Portfolio 1</h4>
+              <span>Alored dono par</span>
             </div>
           </a>
-       </div>
+        </div>
         
-       <div class="col-md-3">
+        <div class="col-md-3">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-2.jpg);" href="">
             <div class="details">
               <h4>Portfolio 2</h4>
               <span>Alored dono par</span>
             </div>
           </a>
-       </div>
-
+        </div>
         
-       <div class="col-md-3">
+        <div class="col-md-3">
+          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-3.jpg);" href="">
+            <div class="details">
+              <h4>Portfolio 3</h4>
+              <span>Alored dono par</span>
+            </div>
+          </a>
+        </div>
+        
+        <div class="col-md-3">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-4.jpg);" href="">
             <div class="details">
               <h4>Portfolio 4</h4>
               <span>Alored dono par</span>
             </div>
           </a>
-       </div>
+        </div>
         
-       <div class="col-md-3">
+        <div class="col-md-3">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-5.jpg);" href="">
             <div class="details">
               <h4>Portfolio 5</h4>
               <span>Alored dono par</span>
             </div>
           </a>
-       </div>
+        </div>
         
         <div class="col-md-3">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-6.jpg);" href="">
@@ -141,7 +148,7 @@
 				<span class="btn-page">&gt;</span>
 				<span class="btn-page">&gt;&gt;</span>
 			</span></td>
-	      	<td style="width:20%"><a href="#services" class="btn-write">Write</a></td></tr>
+	      		      	<td style="width:20%"><a href="writePhoto" class="btn-write">Write</a></td></tr>
       	</table>
       </div>
 

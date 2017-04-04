@@ -32,8 +32,7 @@ $(document).ready(function(){
       </div> 
       <div style="margin-bottom:150px;">
 	      <ul class="bxslider">
-			  <li><img src="resources/img/portfolio-1.jpg" /></li>
-			  <li><img src="resources/img/portfolio-2.jpg" /></li>
+			  <li><img src="resources/img/services-bg.jpg" /></li>
 			  <li><img src="resources/img/hero-bg.jpg" /></li>
 		  </ul>
       </div>
