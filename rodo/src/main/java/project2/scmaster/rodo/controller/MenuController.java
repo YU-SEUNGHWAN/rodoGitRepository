@@ -13,12 +13,6 @@ public class MenuController {
 		return "index";
 	}
 
-	@RequestMapping(value="test", method=RequestMethod.GET)
-	public String test(){
-		
-		return "test1";
-	}
-
 	@RequestMapping(value="photoBoard", method=RequestMethod.GET)
 	public String photoBoard(){
 		
