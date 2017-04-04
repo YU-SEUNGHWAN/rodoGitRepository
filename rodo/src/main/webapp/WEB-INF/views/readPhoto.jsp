@@ -1,38 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <link href="resources/css/jquery.bxslider.css" rel="stylesheet" />
-<script src="resources/js/jquery.bxslider.min.js"></script>
 
-<!-- Required JavaScript Libraries -->
-<script src="resources/lib/jquery/jquery.min.js"></script>
-<script src="resources/lib/jquery/jquery-migrate.min.js"></script>
-<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="resources/lib/superfish/hoverIntent.js"></script>
-<script src="resources/lib/superfish/superfish.min.js"></script>
-<script src="resources/lib/morphext/morphext.min.js"></script>
-<script src="resources/lib/wow/wow.min.js"></script>
-<script src="resources/lib/stickyjs/sticky.js"></script>
-<script src="resources/lib/easing/easing.js"></script>
-
-<!-- Template Specisifc Custom Javascript File -->
-<script src="resources/js/custom.js"></script>
-
-<script type="text/javascript">
- 
+<script>
 $(document).ready(function(){
-   $('.imagebox').bxSlider({
-   auto: false,
-   autoControls: false
-   });
+	$('.bxslider').bxSlider();
 });
- 
 </script>
 </head>
 <body>
@@ -50,15 +30,30 @@ $(document).ready(function(){
           <div class="board-title-divider"></div>
         </div>
       </div> 
-      
-      <ul class="imagebox">
-		  <li><img src="resources/img/portfolio-1.jpg" /></li>
-		  <li><img src="resources/img/portfolio-2.jpg" /></li>
-		  <li><img src="resources/img/portfolio-3.jpg" /></li>
-	  </ul>
-      
+      <div style="margin-bottom:150px;">
+	      <ul class="bxslider">
+			  <li><img src="resources/img/portfolio-1.jpg" /></li>
+			  <li><img src="resources/img/portfolio-2.jpg" /></li>
+			  <li><img src="resources/img/hero-bg.jpg" /></li>
+		  </ul>
+      </div>
 		<div id="content" class="board-content"><pre>넘나 재밌었삼
-담에는 가족들하고 같이 오고싶은것</pre></div>
+담에는 가족들하고 같이 오고싶은것
+언제쯤 다시 올 수 있을까요
+요즘 너무 바빠요 ㅠㅠㅠ
+하 힘들다....
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+ㅇ
+</pre></div>
 	
 	<div class="board-reply">
 	
@@ -116,6 +111,21 @@ $(document).ready(function(){
       </div>
 </footer>
 
+
+<!-- Required JavaScript Libraries -->
+<script src="resources/lib/jquery/jquery.min.js"></script>
+<script src="resources/lib/jquery/jquery-migrate.min.js"></script>
+<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="resources/lib/superfish/hoverIntent.js"></script>
+<script src="resources/lib/superfish/superfish.min.js"></script>
+<script src="resources/lib/morphext/morphext.min.js"></script>
+<script src="resources/lib/wow/wow.min.js"></script>
+<script src="resources/lib/stickyjs/sticky.js"></script>
+<script src="resources/lib/easing/easing.js"></script>
+
+<!-- Template Specisifc Custom Javascript File -->
+<script src="resources/js/custom.js"></script>
+<script src="resources/js/jquery.bxslider.min.js"></script>
 <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
     
 </body>
