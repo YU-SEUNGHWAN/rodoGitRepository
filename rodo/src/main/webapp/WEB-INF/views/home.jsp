@@ -40,9 +40,7 @@
 </c:choose>
 
 =======
-<li><a href="bootstrap">부트스트랩 테스트</a></li>
-<li><a href="test">로그인폼 테스트</a></li>
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
+<li><a href="index">부트스트랩 테스트</a></li>
 </ul>
 </body>
 </html>
