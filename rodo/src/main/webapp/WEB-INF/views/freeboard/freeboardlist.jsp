@@ -24,13 +24,20 @@
 
 <p><a href = "freeboardwrite">글쓰기</a></p>
 
-<table>
-
+<table border = "1">
 <c:forEach var = "board" items = "${list}">
 	<tr>
 		<td class = "list">
-			<p>작성자 : ${board.id}</p>
-			<p>제목 : <a href = "read?boardnum=${board.boardnum}">${board.title}</a></p>
+			<p>작성자 : ${board.free_id}</p>
+			<p>제목 : <a href = "read?free_boardnum=${board.free_boardnum}">${board.free_title}</a></p>
+		<c:if test = "${sessionScope.id!=null}">
+			
+			<c:if test = "${sessionScope.id == board.free_id}">
+				<a href = "delete?free_boardnum=${board.free_boardnum}">삭제</a>
+			</c:if>
+			
+		</c:if>
+		
 		</td>
 	</tr>
 </c:forEach> 

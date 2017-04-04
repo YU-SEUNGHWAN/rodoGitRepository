@@ -9,10 +9,12 @@ public class Rodo_FreeBoard
 	private String free_input_dt;
 	private String free_update_dt;
 	private int free_hit;
+	private String freefile_original;
+	private String freefile_saved;
 	
 	public Rodo_FreeBoard(int free_boardnum, String free_id, String free_title, String free_content,
-			String free_input_dt, String free_update_dt, int free_hit) 
-	{
+			String free_input_dt, String free_update_dt, int free_hit, String freefile_original,
+			String freefile_saved) {
 		super();
 		this.free_boardnum = free_boardnum;
 		this.free_id = free_id;
@@ -21,10 +23,12 @@ public class Rodo_FreeBoard
 		this.free_input_dt = free_input_dt;
 		this.free_update_dt = free_update_dt;
 		this.free_hit = free_hit;
+		this.freefile_original = freefile_original;
+		this.freefile_saved = freefile_saved;
 	}
-	
+
 	public Rodo_FreeBoard() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public int getFree_boardnum() {
@@ -83,11 +87,27 @@ public class Rodo_FreeBoard
 		this.free_hit = free_hit;
 	}
 
+	public String getFreefile_original() {
+		return freefile_original;
+	}
+
+	public void setFreefile_original(String freefile_original) {
+		this.freefile_original = freefile_original;
+	}
+
+	public String getFreefile_saved() {
+		return freefile_saved;
+	}
+
+	public void setFreefile_saved(String freefile_saved) {
+		this.freefile_saved = freefile_saved;
+	}
+
 	@Override
-	public String toString() 
-	{
+	public String toString() {
 		return "Rodo_FreeBoard [free_boardnum=" + free_boardnum + ", free_id=" + free_id + ", free_title=" + free_title
 				+ ", free_content=" + free_content + ", free_input_dt=" + free_input_dt + ", free_update_dt="
-				+ free_update_dt + ", free_hit=" + free_hit + "]";
+				+ free_update_dt + ", free_hit=" + free_hit + ", freefile_original=" + freefile_original
+				+ ", freefile_saved=" + freefile_saved + "]";
 	}
 }

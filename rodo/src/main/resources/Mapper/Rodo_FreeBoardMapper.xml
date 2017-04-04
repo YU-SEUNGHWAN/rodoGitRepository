@@ -16,11 +16,6 @@
 				, free_id
 				, free_title
 				, free_content
-				
-			<!-- <if test = "originalfile != null and savedfile != null">
-				
-			</if> -->
-			
 			)
 			
 			values
@@ -29,16 +24,62 @@
 				, #{free_id}
 				, #{free_title}
 				, #{free_content}
-				
-			<!-- <if test = "originalfile != null and savedfile != null">
-				, #{originalfile}
-				, #{savedfile}
-			</if> -->
-			
 			)
 
 </insert>
 
+
+<insert id = "writefile" parameterType = "Rodo_FreeBoard">
+
+	insert
+		into
+			rodo_freefile
+			(
+				free_boardnum
+				, freefile_original
+				, freefile_saved
+			)
+			
+			values
+			(
+				#{free_boardnum}
+				, #{freefile_original}
+				, #{freefile_saved}
+			)
+
+</insert>
+
+
+<select id="getsequence" resultType="int">
+	
+	select
+		MAX(free_boardnum)
+			
+	from
+		rodo_freeboard
+	
+</select>
+
+
+<!-- <insert id = "writefile" parameterType = "Rodo_FreeFile">
+
+	insert
+		into
+			rodo_freefile
+			(
+				free_boardnum
+				, freefile_original
+				, freefile_saved
+			)
+			
+			values
+			(
+				, #{free_boardnum}
+				, #{freefile_original}
+				, #{freefile_saved}
+			)
+
+</insert> -->
 
 
 <select id = "list" resultType = "Rodo_FreeBoard">
@@ -59,5 +100,71 @@
 		free_boardnum desc
 	
 </select>
+
+
+<select id = "selectOne" parameterType = "int" resultType = "Rodo_FreeBoard">
+
+	select
+		b.free_boardnum
+		, b.free_id
+		, b.free_title
+		, b.free_content
+		, b.free_input_dt
+		, b.free_update_dt
+		, b.free_hit
+		, f.freefile_original
+		, f.freefile_saved
+		
+	from
+		rodo_freeboard b, rodo_freefile f
+		
+	where
+		b.free_boardnum = f.free_boardnum
+		
+	and
+		b.free_boardnum = #{free_boardnum}
+
+</select>
+
+
+
+
+
+<delete id = "delete" parameterType = "Rodo_FreeBoard">
+
+	delete 
+		from
+			rodo_freeboard
+			
+		where 
+			free_boardnum = #{free_boardnum}
+			
+		and
+			free_id = #{free_id}
+
+</delete>
+
+
+<update id = "update" parameterType = "Rodo_FreeBoard">
+
+	update
+		rodo_freeboard
+		
+	set 
+		free_title = #{free_title}
+		, free_content = #{free_content}
+		
+		<if test = "freefile_original != null and freefile_saved != null">
+		
+			, freefile_original = #{freefile_original}
+			, freefile_saved = #{freefile_saved}
+			
+		</if>
+	
+	where 
+		free_boardnum = #{free_boardnum}
+	
+</update>
+
 
 </mapper>

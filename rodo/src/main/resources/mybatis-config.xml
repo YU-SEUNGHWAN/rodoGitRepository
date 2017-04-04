@@ -7,6 +7,7 @@
 	<typeAliases>
 		<typeAlias type="project2.scmaster.rodo.vo.Member" alias="Member" />
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeBoard" alias="Rodo_FreeBoard" />
+		<!-- <typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeFile" alias="Rodo_FreeFile" /> -->
 	</typeAliases>
 	
 	

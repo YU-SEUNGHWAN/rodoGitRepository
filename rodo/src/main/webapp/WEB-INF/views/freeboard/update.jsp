@@ -4,16 +4,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>자유게시판 게시글작성</title>
-
-
-
+<title>게시글 수정</title>
 </head>
 <body>
 
-<h1> 자유게시판 게시글작성 </h1>
+<h1> 게시글 수정 </h1>
 
-<form action = "freeboardwrite" method = "post" enctype = "multipart/form-data">
+<form action = "updateboard" method = "post" enctype = "multipart/form-data">
 
 <table border = "1">
 	<tr>
@@ -22,7 +19,7 @@
 		</td>
 		
 		<td>
-			<input type = "text" name = "free_title" id = "free_title">
+			<input type = "text" name = "free_title" id = "free_title" value = "${board.free_title}">
 		</td>
 	</tr>
 	
@@ -32,7 +29,7 @@
 		</td>
 	
 		<td>
-			<textarea rows = "20" cols = "50" id = "free_content" name = "free_content"></textarea>
+			<textarea rows = "20" cols = "50" id = "free_content" name = "free_content">${board.free_content}</textarea>
 		</td>
 	</tr>
 	
@@ -43,6 +40,12 @@
 		
 		<td>
 			<input type = "file" name = "upload" id = "upload" size = "30" multiple = "multiple">
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
+			<input type = "hidden" name = "free_boardnum" id = "free_boardnum" value = "${board.free_boardnum}">
 		</td>
 	</tr>
 	
