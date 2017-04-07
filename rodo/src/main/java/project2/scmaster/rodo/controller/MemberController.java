@@ -74,12 +74,6 @@ public class MemberController
 		return "member/joincomplete";
 	}
 	
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login()
-	{
-		return "member/login";
-	}
-	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login2(String id, String password, Model model, HttpSession session)
 	{

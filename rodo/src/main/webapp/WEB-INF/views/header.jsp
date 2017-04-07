@@ -18,6 +18,60 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
+  
+  <script type="text/javascript">
+        
+         var wsUri = "ws://203.233.196.103:8888/rodo/echo.do";
+         var websocket;
+         
+         function init() {
+            
+             websocket = new WebSocket(wsUri);
+             websocket.onopen = function(evt) {
+                 onOpen(evt)
+             };
+	         setTimeout(function(){
+	        	 doSend();
+	         }, 500)
+			 receiveMessage();
+             
+         }
+        
+         function receiveMessage(){
+             websocket.onmessage = function(evt) {
+                 onMessage(evt)
+             };
+             websocket.onerror = function(evt) {
+                 onError(evt)
+             };
+         }
+         
+        
+         function onOpen(evt) {
+             //writeToScreen("Connected to Endpoint!");
+         }
+         
+         function onMessage(evt) {
+        	console.log(evt.data);
+			var inner = $("#loginstatus").html();
+			$("#loginstatus").html("<img style='width:20px;' src='resources/img/message.png'> "+inner);
+         }
+         
+         function onError(evt) {
+        	 console.log('ERROR: ' + evt.data);
+         }
+         
+         function doSend() {
+         	var message = document.getElementById("loginId").value;
+            websocket.send("login*Session:"+message);
+            //websocket.close();
+         }
+         
+         
+         window.addEventListener("load", init, false);
+         
+   </script>
+        
 </head>
 <body>
 
@@ -55,13 +109,14 @@
           </li>
 		  <c:choose>
           	<c:when test="${loginId==null}">
-	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
+	          	<li style="padding-left:100px;"><a href="index#login">login</a></li>
 	       	</c:when>
 	        <c:otherwise>
-			 <li class="menu-has-children" style="padding-left:100px;"><a href="#none">${loginId} 님</a>
+			 <li class="menu-has-children" style="padding-left:100px;"><a id="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
 		             <li><a href="#">my info</a></li>
 		             <li><a href="#">my List</a></li>
+		             <li><a href="messageList">message</a></li>
 		             <li><a href="logout">log out</a></li>
 			    </ul>  
 			 </li>
@@ -71,6 +126,8 @@
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
+  
+  <input type="hidden" id="loginId" value="${loginId}">
   
 </body>
 </html>

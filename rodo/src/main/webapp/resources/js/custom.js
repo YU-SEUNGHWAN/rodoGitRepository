@@ -103,8 +103,9 @@ jQuery(document).ready(function( $ ) {
   });
   
   
-  if($(location).attr('search').indexOf('about', 0)!=-1){
+  if($(location).attr('href').indexOf('login', 0)!=-1){
 	  $("#btn-services").trigger("click");
   };
+  
   
 });

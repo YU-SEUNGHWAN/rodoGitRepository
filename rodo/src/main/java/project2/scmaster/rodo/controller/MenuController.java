@@ -30,5 +30,11 @@ public class MenuController {
 		
 		return "logBoard";
 	}
+
+	@RequestMapping(value="socketTest", method=RequestMethod.GET)
+	public String socketTest(){
+		
+		return "socketTest";
+	}
 	
 }

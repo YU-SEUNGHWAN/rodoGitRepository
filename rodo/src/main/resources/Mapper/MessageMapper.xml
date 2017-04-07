@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보 처리 SQL -->
+<mapper namespace="project2.scmaster.rodo.dao.MessageMapper">
+
+<insert id = "writeMessage" parameterType = "Message">
+
+	insert
+		into
+			rodo_message
+			(
+				message_num
+				, message_sender
+				, message_receiver
+				, message_title
+				, message_text
+				
+			)
+			
+	values
+			(
+				rodo_message_seq.nextval
+				, #{sender}
+				, #{receiver}
+				, #{title}
+				, #{text}
+
+			)
+
+</insert>
+
+
+
+<select id = "receivedMessage" parameterType="String" resultType ="Message">
+
+	select
+		message_num messagenum
+		, message_sender sender
+		, message_receiver receiver
+		, message_title title
+		, message_text text
+		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, message_read_fl flag
+
+	from 
+		rodo_message
+		
+	where
+		message_receiver = #{id}
+		
+	order by
+		message_num desc
+	
+</select>
+
+<select id = "readMessage" parameterType="int" resultType ="Message">
+
+	select
+		message_num messagenum
+		, message_sender sender
+		, message_receiver receiver
+		, message_title title
+		, message_text text
+		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, message_read_fl flag
+
+	from 
+		rodo_message
+		
+	where
+		message_num = #{messagenum}
+		
+</select>
+
+
+<select id = "newMessage" parameterType="String" resultType = "Message">
+
+	select
+		message_num messagenum
+		, message_sender sender
+		, message_receiver receiver
+		, message_title title
+		, message_text text
+		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, message_read_fl flag
+
+	from 
+		rodo_message
+	
+	where
+		message_receiver = #{id} 
+		and message_read_fl = 0
+		
+	order by
+		message_num desc
+	
+</select>
+
+
+<select id = "sentMessage" parameterType="String" resultType = "Message">
+
+	select
+		message_num messagenum
+		, message_sender sender
+		, message_receiver receiver
+		, message_title title
+		, message_text text
+		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, message_read_fl flag
+
+	from 
+		rodo_message
+		
+	where
+		message_sender = #{id}
+		
+	order by
+		message_num desc
+	
+</select>
+
+
+</mapper>
