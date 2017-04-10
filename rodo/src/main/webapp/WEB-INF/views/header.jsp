@@ -18,6 +18,9 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
+  
+  <script src="resources/js/message.js"></script>
+        
 </head>
 <body>
 
@@ -40,6 +43,7 @@
           <li><a href="#none" id="video" onclick="javascript:location.href='videoBoard'">video</a></li>
           <li class="menu-has-children"><a href="#none">community</a>
             <ul>
+<<<<<<< HEAD
               <li><a href="freeboardlist">free board</a></li>
               <li class="menu-has-children"><a href="#none">local board</a>
                 <ul>
@@ -50,18 +54,22 @@
                   <li><a href="#">Deep Drop Down 5</a></li>
                 </ul>
               </li>
+=======
+              <li><a href="">free board</a></li>
+>>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
               <li><a href="#">Q&A</a></li>
             </ul>
           </li>
 		  <c:choose>
           	<c:when test="${loginId==null}">
-	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
+	          	<li style="padding-left:100px;"><a href="index#login">login</a></li>
 	       	</c:when>
 	        <c:otherwise>
-			 <li class="menu-has-children" style="padding-left:100px;"><a href="#none">${loginId} 님</a>
+			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
 		             <li><a href="#">my info</a></li>
 		             <li><a href="#">my List</a></li>
+		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>
 			    </ul>  
 			 </li>
@@ -71,6 +79,8 @@
       </nav><!-- #nav-menu-container -->
     </div>
   </header><!-- #header -->
+  
+  <input type="hidden" id="loginId" value="${loginId}">
   
 </body>
 </html>
