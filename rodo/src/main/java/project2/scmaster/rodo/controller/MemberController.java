@@ -92,8 +92,8 @@ public class MemberController
 		{
 			if (member.getPassword().equals(loginpassword))
 			{
-				session.setAttribute("id", member.getId());
-				session.setAttribute("name", member.getName());
+				session.setAttribute("loginId", member.getId());
+				session.setAttribute("loginName", member.getName());
 				
 				return "redirect:index";
 			}

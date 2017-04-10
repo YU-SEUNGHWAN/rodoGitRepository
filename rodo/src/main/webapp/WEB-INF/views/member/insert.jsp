@@ -15,10 +15,6 @@
 var emailflag = false;
 var checknumflag = false;
 
-function IDCheckFunction()
-{
-	window.open("idcheckbutton", "width=400, height=300");
-}
 
 $(function()
 {

@@ -111,8 +111,8 @@
 	
 	<tr>
 		<td>
-			<c:if test = "${sessionScope.id!=null}">
-				<c:if test = "${sessionScope.id == board.free_id}">
+			<c:if test = "${sessionScope.loginId!=null}">
+				<c:if test = "${sessionScope.loginId == board.free_id}">
 					<a href = "updateboard?free_boardnum=${board.free_boardnum}">수정</a>
 					<a href = "delete?free_boardnum=${board.free_boardnum}">삭제</a>
 				</c:if>
@@ -155,13 +155,13 @@
 		</td>
 		
 		<td>
-			<c:if test = "${sessionScope.id == reply.freereply_id}">
+			<c:if test = "${sessionScope.loginId == reply.freereply_id}">
 				<a href = "">수정</a>
 			</c:if>
 		</td>
 		
 		<td>
-			<c:if test = "${sessionScope.id == reply.freereply_id}">
+			<c:if test = "${sessionScope.loginId == reply.freereply_id}">
 				<a href = "deletereply?freereply_replynum=${reply.freereply_replynum}&free_boardnum=${reply.free_boardnum}">삭제</a>
 			</c:if>
 		</td>
