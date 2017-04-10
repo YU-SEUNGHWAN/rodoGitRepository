@@ -11,9 +11,6 @@
   <meta content="" name="description">
     
   
-  <!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
-  <link href="favicon.ico" rel="shortcut icon">
-  
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet"> 
   
@@ -27,7 +24,8 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
-  
+   
+    <script src="resources/js/message.js"></script>
 
 </head>
 
@@ -54,15 +52,6 @@
           <li class="menu-has-children"><a href="#none">community</a>
             <ul>
               <li><a href="">free board</a></li>
-              <li class="menu-has-children"><a href="#none">local board</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
               <li><a href="#">Q&A</a></li>
             </ul>
           </li>
@@ -71,10 +60,11 @@
 	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
 	       	</c:when>
 	        <c:otherwise>
-			 <li class="menu-has-children" style="padding-left:100px;"><a href="#none">${loginId} 님</a>
+			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
 		             <li><a href="#">my info</a></li>
 		             <li><a href="#">my List</a></li>
+		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>
 			    </ul>  
 			 </li>
@@ -84,8 +74,10 @@
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
+    
+    <input type="hidden" id="loginId" value="${loginId}">
+    
   </header><!-- #header -->
-
   
 <!--==========================
   Hero Section
@@ -225,7 +217,6 @@
   <script src="resources/lib/stickyjs/sticky.js"></script>
   <script src="resources/lib/easing/easing.js"></script>
   
-  <!-- Template Specisifc Custom Javascript File -->
   <script src="resources/js/custom.js"></script>
   
 </body>

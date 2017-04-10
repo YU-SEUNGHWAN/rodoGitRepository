@@ -6,6 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <script src="resources/js/jquery-3.1.1.js"></script>
+<link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script>
 function readMessage(messagenum){
 	location.href='readMessage?messagenum='+messagenum;
@@ -19,7 +21,8 @@ function receivedMsg(){
 		url : "ajaxReceived",
 		success : function(data){
 		
-			var html = 	"<tr>"
+			var html = "<table class='table-striped' style='width:300px;'>"	
+				+ "<tr>"
 				+"<td>보낸사람</td>"
 				+"<td>제목</td>"
 				+"<td>보낸날짜</td>"
@@ -34,6 +37,8 @@ function receivedMsg(){
 					+"</tr>";
 			});
 
+			html +=  "</table>";
+			
 			$("#messageTable").html(html);
 		
 			
@@ -54,7 +59,8 @@ function sentMsg(){
 		url : "ajaxSent",
 		success : function(data){
 		
-			var html = 	"<tr>"
+				var html = "<table class='table-striped' style='width:300px;'>"	
+				+ "<tr>"
 				+"<td>받는사람</td>"
 				+"<td>제목</td>"
 				+"<td>보낸날짜</td>"
@@ -69,6 +75,8 @@ function sentMsg(){
 					+"</tr>";
 			});
 
+			html +=  "</table>";
+			
 			$("#messageTable").html(html);
 		
 			
@@ -86,23 +94,25 @@ function sentMsg(){
 <body>
 <header>
 	<h3>쪽지함</h3>
-	<a href="#none" onclick="receivedMsg()">받은 쪽지함</a>
-	<a href="#none" onclick="sentMsg()">보낸 쪽지함</a>
+	<a href="#none" onclick="receivedMsg()">받은 쪽지함</a> | 
+	<a href="#none" onclick="sentMsg()">보낸 쪽지함</a> | 
 	<a href='writeMessage'>쪽지 보내기</a>
 </header>
-<table id="messageTable">
-	<tr>
-		<td>보낸이</td>
-		<td>제목</td>
-		<td>보낸 날짜</td>
-	</tr>
-	<c:forEach var="message" items="${received}">
+<div id="messageTable">
+	<table class="table-striped" style="width:300px;">
 		<tr>
-			<td>${message.sender}</td>
-			<td><a href="#none" onclick="readMessage('${message.messagenum}')">${message.title}</a></td>
-			<td>${message.senddate}</td>
+			<td>보낸사람</td>
+			<td>제목</td>
+			<td>보낸날짜</td>
 		</tr>
-	</c:forEach>
-</table>
+		<c:forEach var="message" items="${received}">
+			<tr>
+				<td>${message.sender}</td>
+				<td><a href="#none" onclick="readMessage('${message.messagenum}')">${message.title}</a></td>
+				<td>${message.senddate}</td>
+			</tr>
+		</c:forEach>
+	</table>
+</div>
 </body>
 </html>
