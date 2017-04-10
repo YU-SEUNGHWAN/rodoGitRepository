@@ -43,9 +43,9 @@
           <li><a href="#none" id="video" onclick="javascript:location.href='videoBoard'">video</a></li>
           <li class="menu-has-children"><a href="#none">community</a>
             <ul>
-<<<<<<< HEAD
               <li><a href="freeboardlist">free board</a></li>
-              <li class="menu-has-children"><a href="#none">local board</a>
+              
+              <!-- <li class="menu-has-children"><a href="#none">local board</a>
                 <ul>
                   <li><a href="#">Deep Drop Down 1</a></li>
                   <li><a href="#">Deep Drop Down 2</a></li>
@@ -54,10 +54,11 @@
                   <li><a href="#">Deep Drop Down 5</a></li>
                 </ul>
               </li>
-=======
-              <li><a href="">free board</a></li>
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
+              
+              <li><a href="">free board</a></li> -->
+              
               <li><a href="#">Q&A</a></li>
+              
             </ul>
           </li>
 		  <c:choose>
@@ -67,7 +68,7 @@
 	        <c:otherwise>
 			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
-		             <li><a href="#">my info</a></li>
+		             <li><a href="checkupdate">my info</a></li>
 		             <li><a href="#">my List</a></li>
 		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>

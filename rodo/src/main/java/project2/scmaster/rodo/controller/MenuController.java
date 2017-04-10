@@ -10,7 +10,7 @@ public class MenuController {
 	@RequestMapping(value="index", method=RequestMethod.GET)
 	public String bootstrap(){
 		
-		return "member/index";
+		return "index";
 	}
 
 	@RequestMapping(value="index2", method=RequestMethod.GET)
@@ -42,5 +42,4 @@ public class MenuController {
 		
 		return "socketTest";
 	}
-	
 }
