@@ -1,5 +1,7 @@
 package project2.scmaster.rodo.vo;
 
+import java.util.List;
+
 public class Rodo_FreeBoard 
 {
 	private int free_boardnum;
@@ -9,12 +11,12 @@ public class Rodo_FreeBoard
 	private String free_input_dt;
 	private String free_update_dt;
 	private int free_hit;
-	private String freefile_original;
-	private String freefile_saved;
+	private List<String> freefile_original;
+	private List<String> freefile_saved;
 	
 	public Rodo_FreeBoard(int free_boardnum, String free_id, String free_title, String free_content,
-			String free_input_dt, String free_update_dt, int free_hit, String freefile_original,
-			String freefile_saved) {
+			String free_input_dt, String free_update_dt, int free_hit, List<String> freefile_original,
+			List<String> freefile_saved) {
 		super();
 		this.free_boardnum = free_boardnum;
 		this.free_id = free_id;
@@ -26,9 +28,9 @@ public class Rodo_FreeBoard
 		this.freefile_original = freefile_original;
 		this.freefile_saved = freefile_saved;
 	}
-
+	
 	public Rodo_FreeBoard() {
-		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public int getFree_boardnum() {
@@ -87,19 +89,19 @@ public class Rodo_FreeBoard
 		this.free_hit = free_hit;
 	}
 
-	public String getFreefile_original() {
+	public List<String> getFreefile_original() {
 		return freefile_original;
 	}
 
-	public void setFreefile_original(String freefile_original) {
+	public void setFreefile_original(List<String> freefile_original) {
 		this.freefile_original = freefile_original;
 	}
 
-	public String getFreefile_saved() {
+	public List<String> getFreefile_saved() {
 		return freefile_saved;
 	}
 
-	public void setFreefile_saved(String freefile_saved) {
+	public void setFreefile_saved(List<String> freefile_saved) {
 		this.freefile_saved = freefile_saved;
 	}
 

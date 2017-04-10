@@ -36,6 +36,8 @@ public class MailController
 	      
 	  //  session.setAttribute("code", code);
 	      setNum(code);
+	      
+	      System.out.println("메일 전송완료.");
 	   }
 	   
 	   @ResponseBody

@@ -2,8 +2,6 @@ package project2.scmaster.rodo.controller;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -16,28 +14,43 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import project2.scmaster.rodo.dao.Rodo_FreeBoardDao;
-import project2.scmaster.rodo.util.FileService;
+import project2.scmaster.rodo.util.PageNavigator;
 import project2.scmaster.rodo.vo.Rodo_FreeBoard;
+import project2.scmaster.rodo.vo.Rodo_FreeReply;
 
 
 @Controller
 public class FreeBoardController 
 {
+	final int countPerPage = 10;		// 페이지 당 글 수
+	final int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
+	
 	@Autowired
 	Rodo_FreeBoardDao dao;
 	
 	final String uploadPath = "/boardfile";
 	
 	@RequestMapping(value = "freeboardlist", method = RequestMethod.GET)
-	public String freeboardlist(Model model)
+	public String freeboardlist(Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
+			)
 	{
-		List<Rodo_FreeBoard> list = dao.list();
+		int total = dao.listsize(searchText);
 		
+		System.out.println(total);
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_FreeBoard> list = dao.list(navi.getStartRecord(), navi.getCountPerPage(), searchText);
+		
+		model.addAttribute("searchText", searchText);
 		model.addAttribute("list", list);
+		model.addAttribute("navi", navi);
 		
 		return "freeboard/freeboardlist";
 	}
@@ -52,15 +65,14 @@ public class FreeBoardController
 	public String freeboardwrite2(Rodo_FreeBoard board, 
 			MultipartFile upload, HttpSession session)
 	{
-		String free_id = (String)session.getAttribute("id");
-		board.setFree_id(free_id);
+		String id = (String)session.getAttribute("id");
+		board.setFree_id(id);
 		
 		int result = dao.write(board);
 		
-		System.out.println(board.toString());
 		int result2 = 0;
 		
-		if (!upload.isEmpty()) // upload != null 로 하면 안된다. 얘는 반드시 이렇게 써야 함
+		/*if (!upload.isEmpty()) // upload != null 로 하면 안된다. 얘는 반드시 이렇게 써야 함
 		{
 			String savedfile = FileService.saveFile(upload, uploadPath);
 			board.setFreefile_original(upload.getOriginalFilename());
@@ -73,17 +85,17 @@ public class FreeBoardController
 			System.out.println(board.toString());
 			
 			result2 = dao.writefile(board);
-		}
+		}*/
 		
 		if (result == 1)
 		{
 			return "redirect:/freeboardlist";
 		}
 		
-		else if (result == 1 && result2 == 1)
+		/*else if (result == 1 && result2 == 1)
 		{
 			return "redirect:/freeboardlist";
-		}
+		}*/
 
 		return "freeboard/freeboardwrite";
 	}
@@ -92,16 +104,34 @@ public class FreeBoardController
 	public String read(int free_boardnum, Model model, HttpSession session)
 	{
 		Rodo_FreeBoard board = dao.selectOne(free_boardnum);
+		Rodo_FreeBoard board2 = dao.selectnofile(free_boardnum);
 		
-		if (board == null)
-		{
+		if (board == null && board2 == null)
+		{	
 			return "redirect:freeboardlist";
 		}
 		
-		model.addAttribute("board", board);
-		model.addAttribute("id", (String)session.getAttribute("id"));
+		else if (board != null)
+		{
+			List<Rodo_FreeReply> replylist = dao.findreply(free_boardnum);
+			
+			model.addAttribute("board", board);
+			model.addAttribute("id", (String)session.getAttribute("id"));
+			model.addAttribute("replylist", replylist);
+			
+			return "freeboard/freeboardread";
+		}
 		
-		System.out.println(board.toString());
+		else if (board == null && board2 != null)
+		{
+			List<Rodo_FreeReply> replylist = dao.findreply(free_boardnum);
+			
+			model.addAttribute("board", board2);
+			model.addAttribute("id", (String)session.getAttribute("id"));
+			model.addAttribute("replylist", replylist);
+			
+			return "freeboard/freeboardread";
+		}
 		
 		return "freeboard/freeboardread";
 	}
@@ -114,6 +144,16 @@ public class FreeBoardController
 		board.setFree_boardnum(free_boardnum);
 		board.setFree_id((String)session.getAttribute("id"));
 		
+		List<Rodo_FreeReply> list = dao.findreply(free_boardnum);
+		
+		for (int i=0; i<list.size(); i++)
+		{
+			if (list.get(i) != null)
+			{
+				dao.deletereply(list.get(i));
+			}
+		}
+		
 		dao.delete(board);
 		
 		return "redirect:/freeboardlist";
@@ -123,8 +163,22 @@ public class FreeBoardController
 	public String update(int free_boardnum, Model model)
 	{	
 		Rodo_FreeBoard board = dao.selectOne(free_boardnum);
-		model.addAttribute("board", board);
-	
+		Rodo_FreeBoard board2 = dao.selectnofile(free_boardnum);
+		
+		if (board != null)
+		{
+			model.addAttribute("board", board);
+			
+			return "freeboard/update";
+		}
+		
+		else if (board == null && board2 != null)
+		{
+			model.addAttribute("board", board2);
+			
+			return "freeboard/update";
+		}
+		
 		return "freeboard/update";
 	}
 	
@@ -141,13 +195,12 @@ public class FreeBoardController
 		return "redirect:/freeboardlist";
 	}
 	
-	
 	@RequestMapping(value = "download", method = RequestMethod.GET)
 	public String download(int free_boardnum, HttpServletResponse response)
 	{
 		Rodo_FreeBoard board = dao.selectOne(free_boardnum);
 		
-		try 
+		/*try 
 		{
 			response.setHeader("Content-Disposition", "attachment;filename="+URLEncoder.encode(board.getFreefile_original(), "UTF-8"));
 		}
@@ -156,7 +209,7 @@ public class FreeBoardController
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		// 저장된 파일 경로
 		String fullPath = uploadPath + "/" + board.getFreefile_saved();
@@ -182,5 +235,33 @@ public class FreeBoardController
 		}
 		
 		return null;
+	}
+	
+	@RequestMapping(value = "replywrite", method = RequestMethod.POST)
+	public String replywrite(Rodo_FreeReply reply, HttpSession session, Model model)
+	{	
+		String id = (String)session.getAttribute("id");
+		reply.setFreereply_id(id);
+		
+		int result = dao.writereply(reply);
+		
+		if (result == 1)
+		{
+			return "redirect:read?free_boardnum="+reply.getFree_boardnum();
+		}
+		
+		return "freeboard/freeboardread";
+	}
+	
+	@RequestMapping(value = "deletereply", method = RequestMethod.GET)
+	public String deletereply(Rodo_FreeReply reply, HttpSession session, Model model)
+	{	
+	//	Rodo_FreeReply reply = dao.selectreply(freereply_replynum);
+		
+		System.out.println(reply.toString());
+		
+		dao.deletereply(reply);
+		
+		return "redirect:/read?free_boardnum="+reply.getFree_boardnum();
 	}
 }

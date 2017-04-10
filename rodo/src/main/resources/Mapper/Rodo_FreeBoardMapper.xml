@@ -36,15 +36,27 @@
 			rodo_freefile
 			(
 				free_boardnum
-				, freefile_original
-				, freefile_saved
+				
+				<if test = "freefile_original != null and freefile_saved != null">
+		
+					, freefile_original
+					, freefile_saved
+			
+				</if>
+				
+				
 			)
 			
 			values
 			(
-				#{free_boardnum}
-				, #{freefile_original}
-				, #{freefile_saved}
+				#{free_board}
+			
+				<if test = "freefile_original != null and freefile_saved != null">
+				
+					, #{freefile_original}
+					, #{freefile_saved}
+				
+				</if>	
 			)
 
 </insert>
@@ -96,6 +108,11 @@
 	from 
 		rodo_freeboard
 		
+		<if test = "_parameter != null">
+			where
+				free_title like '%' || #{searchText} || '%'
+		</if>
+		
 	order by
 		free_boardnum desc
 	
@@ -104,30 +121,47 @@
 
 <select id = "selectOne" parameterType = "int" resultType = "Rodo_FreeBoard">
 
-	select
-		b.free_boardnum
-		, b.free_id
-		, b.free_title
-		, b.free_content
-		, b.free_input_dt
-		, b.free_update_dt
-		, b.free_hit
-		, f.freefile_original
-		, f.freefile_saved
-		
-	from
-		rodo_freeboard b, rodo_freefile f
-		
-	where
-		b.free_boardnum = f.free_boardnum
-		
-	and
-		b.free_boardnum = #{free_boardnum}
+		select
+			b.free_boardnum
+			, b.free_id
+			, b.free_title
+			, b.free_content
+			, b.free_input_dt
+			, b.free_update_dt
+			, b.free_hit
+			, f.freefile_original
+			, f.freefile_saved
+			
+		from
+			rodo_freeboard b, rodo_freefile f
+	
+		where
+			b.free_boardnum = #{free_boardnum}
+	
+		and
+			b.free_boardnum = f.free_boardnum
 
 </select>
 
 
+<select id = "selectnofile" parameterType = "int" resultType ="Rodo_FreeBoard">
 
+		select
+			free_boardnum
+			, free_id
+			, free_title
+			, free_content
+			, free_input_dt
+			, free_update_dt
+			, free_hit
+			
+		from
+			rodo_freeboard
+			
+		where 
+			free_boardnum = #{free_boardnum}
+
+</select>
 
 
 <delete id = "delete" parameterType = "Rodo_FreeBoard">
@@ -165,6 +199,107 @@
 		free_boardnum = #{free_boardnum}
 	
 </update>
+
+
+
+<!-- ********************************** 리플 ********************************** -->
+
+
+<insert id = "writereply" parameterType = "Rodo_FreeReply">
+
+	insert
+		into
+			rodo_freereply
+			(
+				freereply_replynum
+				, free_boardnum
+				, freereply_id
+				, freereply_text
+			)
+			
+		values
+			(
+				rodo_freereply_seq.nextval
+				, #{free_boardnum}
+				, #{freereply_id}
+				, #{freereply_text}
+			)
+		
+</insert>
+
+
+<select id = "findreply" parameterType = "int" resultType = "Rodo_FreeReply">
+
+	select
+		freereply_replynum
+		, free_boardnum
+		, freereply_id
+		, freereply_text
+		, freereply_input_dt
+		
+	from
+		rodo_freereply
+		
+	where
+		free_boardnum = #{free_boardnum}
+	
+	order by
+		freereply_replynum
+	
+</select>
+
+
+<select id = "selectreply" parameterType = "int" resultType = "Rodo_FreeReply">
+
+	select 
+		freereply_replynum
+		, free_boardnum
+		, freereply_id
+		, freereply_text
+		, freereply_input_dt
+		, freereply_update_dt
+		
+	from
+		rodo_freereply
+		
+	where
+		freereply_replynum = #{freereply_replynum}
+
+</select>
+
+
+<delete id = "deletereply" parameterType = "Rodo_FreeReply">
+
+	delete
+		from
+			rodo_freereply
+			
+		where
+			freereply_replynum = #{freereply_replynum}
+			
+		and
+			free_boardnum = #{free_boardnum}
+
+</delete>
+
+
+<!-- ********************************** 페이징 ********************************** -->
+
+
+	<select id = "listsize" parameterType = "String" resultType = "int">
+	
+		select 
+			count(*)
+			
+		from
+			rodo_freeboard
+		
+		<if test = "_parameter != null">
+			where
+				free_title like '%' || #{searchText} || '%'
+		</if>
+		
+	</select>
 
 
 </mapper>

@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MenuController {
 
-	@RequestMapping(value="bootstrap", method=RequestMethod.GET)
+	@RequestMapping(value="index", method=RequestMethod.GET)
 	public String bootstrap(){
 		
-		return "index";
+		return "member/index";
 	}
 
-	@RequestMapping(value="test", method=RequestMethod.GET)
-	public String test(){
+	@RequestMapping(value="index2", method=RequestMethod.GET)
+	public String index2(){
 		
-		return "test1";
+		return "index2";
 	}
-
+	
 	@RequestMapping(value="photoBoard", method=RequestMethod.GET)
 	public String photoBoard(){
 		

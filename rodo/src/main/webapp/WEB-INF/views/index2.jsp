@@ -39,7 +39,7 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
-  
+
 
 </head>
 
@@ -139,7 +139,9 @@
                				<form action="#" method="post" enctype="multipart/form-data">
             					
 			                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your ID">
-			                    <input type="button" value="id check" class="submit">
+			                 	<label for = "id" id = "idlabel"></label>
+			                 	
+			                 	<!-- <input type="button" value="id check" class="submit"> -->
 			                    
 			                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
              						    
@@ -153,8 +155,8 @@
 			                    <div class="submit-wrap">
 				                	<input type="submit" value="Sign up" class="submit" style="margin-top: 25px;">
 			                    </div>
-						                    
-        					  </form>
+
+							</form>
 						</div>
 			        </div>
 		    </article>

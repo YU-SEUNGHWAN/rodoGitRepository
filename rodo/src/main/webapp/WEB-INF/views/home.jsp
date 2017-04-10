@@ -12,7 +12,7 @@
 </h1>
 
 <ul>
-<li><a href="MapTest">지도 테스트</a></li>
+<li><a href="readGps">지도 테스트</a></li>
 <<<<<<< HEAD
 
 <li><a href = "freeboardlist">자유게시판</a></li>
@@ -23,9 +23,9 @@
 <ul>
 <c:choose>
 	<c:when test = "${sessionScope.id == null}">
-			<li><a href = "insert">회원가입</a></li>
-
-			<li><a href = "login">로그인</a></li>
+			<!-- <li><a href = "insert">회원가입</a></li> -->
+			
+			<li><a href="index">로그인</a></li>
 			
 			<li><a href = "find">id pw 찾기</a></li>
 	</c:when>
@@ -38,11 +38,7 @@
 			<li><p><a href = "logout">로그아웃</a></p></li>
 	</c:otherwise>
 </c:choose>
-
-=======
-<li><a href="bootstrap">부트스트랩 테스트</a></li>
-<li><a href="test">로그인폼 테스트</a></li>
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 </ul>
+
 </body>
 </html>

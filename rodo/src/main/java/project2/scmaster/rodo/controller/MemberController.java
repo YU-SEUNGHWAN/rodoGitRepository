@@ -27,32 +27,16 @@ public class MemberController
 	@Autowired
 	MemberDao dao;
 	
-	@RequestMapping(value="MapTest", method=RequestMethod.GET)
-	public String MapTest(){
-		
-		return "ReadGps";
-	}
-	
-	@ResponseBody
-	@RequestMapping(value="getGpsList", method=RequestMethod.GET)
-	public ArrayList<GPX> getGpsList(){
-		
-		Parsing parsing = new Parsing();
-		ArrayList<GPX> gpxList = parsing.GpxParse();
-		
-		return gpxList;
-	}
-	
 	@RequestMapping(value = "insert", method = RequestMethod.GET)
 	public String insert()
 	{
 		return "member/insert";
 	}
 	
-	@RequestMapping(value = "idcheckbutton", method = RequestMethod.GET)
+	@RequestMapping(value = "mailcheckbutton", method = RequestMethod.GET)
 	public String insert2()
 	{
-		return "member/idcheckbutton";
+		return "member/mailcheckbutton";
 	}
 	
 	@ResponseBody
@@ -97,9 +81,12 @@ public class MemberController
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login2(String id, String password, Model model, HttpSession session)
+	public String login2(String loginid, String loginpassword, Model model, HttpSession session)
 	{
-		Member member = dao.selectOne(id);
+		/*String id = loginid;
+		String password = loginpassword;*/
+		
+		Member member = dao.selectOne(loginid);
 		
 		if (member == null)
 		{
@@ -109,12 +96,12 @@ public class MemberController
 		
 		else
 		{
-			if (member.getPassword().equals(password))
+			if (member.getPassword().equals(loginpassword))
 			{
 				session.setAttribute("id", member.getId());
 				session.setAttribute("name", member.getName());
 				
-				return "redirect:/";
+				return "redirect:index";
 			}
 			
 			else
@@ -130,7 +117,7 @@ public class MemberController
 	{
 		session.invalidate();
 		
-		return "member/logout";
+		return "redirect:index";
 	}
 	
 	@RequestMapping(value = "find", method = RequestMethod.GET)
