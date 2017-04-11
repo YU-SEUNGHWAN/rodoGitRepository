@@ -23,6 +23,8 @@
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="">
   
+  <script src="resources/js/jquery-3.1.1.js"></script>
+  
   <!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
   <link href="favicon.ico" rel="shortcut icon">
   
@@ -39,13 +41,19 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
-  
-<!-- =======================================================
-  Theme Name: Imperial
-  Theme URL: https://bootstrapmade.com/imperial-free-onepage-bootstrap-theme/
-  Author: BootstrapMade.com
-  Author URL: https://bootstrapmade.com
-======================================================= -->
+
+<script>
+$(function(){
+	$(".portfolio-item").mouseover(function(){
+		$(this).find("h4").css('opacity', 0.8);
+		$(this).find("span").css('opacity', 0.8);
+	});	
+	$(".portfolio-item").mouseout(function(){
+		$(this).find("h4").css('opacity', 0);
+		$(this).find("span").css('opacity', 0);
+	});	
+})
+</script>
 </head>
 
 <body>
@@ -68,77 +76,63 @@
       </div>
       
       <div class="row">
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-1.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 1</h4>
-              <span>Alored dono par</span>
+      
+        <div class="col-md-4">
+          <a class="portfolio-item" style="background-image: url(resources/img/hero-bg.jpg);" href="">
+            <div class="details play">
+	              <h4>Portfolio 1</h4>
+	              <span>Alored dono par</span>
             </div>
           </a>
         </div>
         
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-2.jpg);" href="">
-            <div class="details">
+        <div class="col-md-4">
+          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-7.jpg);" href="">
+            <div class="details play">
               <h4>Portfolio 2</h4>
               <span>Alored dono par</span>
             </div>
           </a>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-4">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-3.jpg);" href="">
-            <div class="details">
+            <div class="details play">
               <h4>Portfolio 3</h4>
               <span>Alored dono par</span>
             </div>
           </a>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-4">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-4.jpg);" href="">
-            <div class="details">
+            <div class="details play">
               <h4>Portfolio 4</h4>
               <span>Alored dono par</span>
             </div>
           </a>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-4">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-5.jpg);" href="">
-            <div class="details">
+            <div class="details play">
               <h4>Portfolio 5</h4>
               <span>Alored dono par</span>
             </div>
           </a>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-4">
           <a class="portfolio-item" style="background-image: url(resources/img/portfolio-6.jpg);" href="">
-            <div class="details">
+            <div class="details play">
               <h4>Portfolio 6</h4>
               <span>Alored dono par</span>
             </div>
           </a>
         </div>
         
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-7.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 7</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-8.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 8</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
+      </div>
+
         <table style="width:100%" class="board-navi">
 		  	<tr><td style="width:20%"></td>
 			<td style="width:60%; text-align:center;">
@@ -149,7 +143,7 @@
 				<span class="btn-page">&gt;</span>
 				<span class="btn-page">&gt;&gt;</span>
 			</span></td>
-	      	<td style="width:20%"><a href="#services" class="btn-write">Write</a></td></tr>
+	      	<td style="width:20%"><a href="writeVideoForm" class="btn-write">Write</a></td></tr>
       	</table>
       </div>
     </div>

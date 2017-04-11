@@ -1,20 +1,9 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-create sequence gps_seq start with 1 increment by 1;
-create sequence photo_seq start with 1 increment by 1;
-create sequence video_seq start with 1 increment by 1;
-create sequence free_seq start with 1 increment by 1;
-=======
-=======
 drop table rodo_member;
 drop table rodo_freeboard;
 drop sequence rodo_freeboard_seq;
 drop table rodo_freefile;
 
 
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
-=======
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 create table rodo_member
 (
 	id varchar2(20) primary key
@@ -23,13 +12,10 @@ create table rodo_member
 	, email varchar2(50) unique
 );
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 select * from rodo_member;
-=======
+
 insert into rodo_member values('aaa', 'aaa', 'aaa', 'aaa');
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
-=======
+
 create table rodo_photoboard
 (
 	photo_boardnum number primary key
@@ -55,7 +41,6 @@ create table rodo_photofile
 alter table rodo_photofile add foreign key(photo_boardnum) references rodo_photoboard (photo_boardnum);
 
 
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 
 create table rodo_freeboard
 (
@@ -69,27 +54,16 @@ create table rodo_freeboard
 );
 
 alter table rodo_freeboard add foreign key(free_id) references rodo_member (id);
-<<<<<<< HEAD
-create sequence rodo_freeboard_seq start with 1 increment by 1;
-=======
-create sequence rodo_freeboard_seq start with 1 increment by 1;
 
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
+create sequence rodo_freeboard_seq start with 1 increment by 1;
 
 create table rodo_freefile
 (
 	free_boardnum number not null
-<<<<<<< HEAD
 	, freefile_original varchar2(200)
 	, freefile_saved varchar2(200)
 )
-=======
-	, freefile_original varchar2(200) not null
-	, freefile_saved varchar2(200) not null
-);
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 
-<<<<<<< HEAD
 alter table rodo_freefile add foreign key(free_boardnum) references rodo_freeboard (free_boardnum);
 
 
@@ -109,10 +83,6 @@ create sequence rodo_freereply_seq start with 1 increment by 1;
 select * from rodo_freereply;
 
 
-=======
-alter table rodo_freefile add foreign key(free_boardnum) references rodo_freeboard (free_boardnum);
-
-
 
 create table rodo_message(
 	message_num number primary key
@@ -128,4 +98,3 @@ create sequence rodo_message_seq start with 1 increment by 1;
 
 
 select * from RODO_MESSAGE
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git

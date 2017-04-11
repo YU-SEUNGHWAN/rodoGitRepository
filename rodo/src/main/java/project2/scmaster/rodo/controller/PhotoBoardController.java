@@ -18,5 +18,6 @@ public class PhotoBoardController {
 		
 		return "readPhoto";
 	}
-
+	
+	
 }

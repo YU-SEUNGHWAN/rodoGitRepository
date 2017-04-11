@@ -26,7 +26,6 @@ public class MessageController {
 	
 		String id = (String)session.getAttribute("loginId");
 		ArrayList<Message> received = dao.receivedMessage(id);
-		System.out.println(received);
 		model.addAttribute("received", received);
 		
 		return "Message/messageList";

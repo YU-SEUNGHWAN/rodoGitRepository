@@ -11,7 +11,7 @@
 제목 <input type="text" value="${message.title}"><br>
 보낸 날짜 <input type="text" value="${message.senddate}"><br>
 <textarea>${message.text}</textarea><br>
-<input type="button" value="목록으로">
-<input type="button" value="답장하기">
+<input type="button" value="목록으로" onclick="javascript:location.href='messageList'">
+<input type="button" value="답장하기" onclick="javascript:location.href='writeMessage'">
 </body>
 </html>

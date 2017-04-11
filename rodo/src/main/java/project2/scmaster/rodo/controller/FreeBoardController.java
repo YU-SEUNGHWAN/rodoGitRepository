@@ -65,7 +65,7 @@ public class FreeBoardController
 	public String freeboardwrite2(Rodo_FreeBoard board, 
 			MultipartFile upload, HttpSession session)
 	{
-		String id = (String)session.getAttribute("id");
+		String id = (String)session.getAttribute("loginId");
 		board.setFree_id(id);
 		
 		int result = dao.write(board);
@@ -116,7 +116,7 @@ public class FreeBoardController
 			List<Rodo_FreeReply> replylist = dao.findreply(free_boardnum);
 			
 			model.addAttribute("board", board);
-			model.addAttribute("id", (String)session.getAttribute("id"));
+			model.addAttribute("id", (String)session.getAttribute("loginId"));
 			model.addAttribute("replylist", replylist);
 			
 			return "freeboard/freeboardread";
@@ -127,7 +127,7 @@ public class FreeBoardController
 			List<Rodo_FreeReply> replylist = dao.findreply(free_boardnum);
 			
 			model.addAttribute("board", board2);
-			model.addAttribute("id", (String)session.getAttribute("id"));
+			model.addAttribute("id", (String)session.getAttribute("loginId"));
 			model.addAttribute("replylist", replylist);
 			
 			return "freeboard/freeboardread";
@@ -142,7 +142,7 @@ public class FreeBoardController
 		Rodo_FreeBoard board = new Rodo_FreeBoard();
 		
 		board.setFree_boardnum(free_boardnum);
-		board.setFree_id((String)session.getAttribute("id"));
+		board.setFree_id((String)session.getAttribute("loginId"));
 		
 		List<Rodo_FreeReply> list = dao.findreply(free_boardnum);
 		
@@ -240,7 +240,7 @@ public class FreeBoardController
 	@RequestMapping(value = "replywrite", method = RequestMethod.POST)
 	public String replywrite(Rodo_FreeReply reply, HttpSession session, Model model)
 	{	
-		String id = (String)session.getAttribute("id");
+		String id = (String)session.getAttribute("loginId");
 		reply.setFreereply_id(id);
 		
 		int result = dao.writereply(reply);

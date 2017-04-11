@@ -21,8 +21,8 @@ function receivedMsg(){
 		url : "ajaxReceived",
 		success : function(data){
 		
-			var html = "<table class='table-striped' style='width:300px;'>"	
-				+ "<tr>"
+			var html = "<table class='table-striped' style='width:430px;'>"	
+				+ "<tr style='background: #666464; color:white;'>"
 				+"<td>보낸사람</td>"
 				+"<td>제목</td>"
 				+"<td>보낸날짜</td>"
@@ -41,6 +41,8 @@ function receivedMsg(){
 			
 			$("#messageTable").html(html);
 		
+			$(".message-menu a").css("color", "black");
+			$("#rvmsg").css("color","red");
 			
 		},
 		error : function(e){
@@ -59,8 +61,8 @@ function sentMsg(){
 		url : "ajaxSent",
 		success : function(data){
 		
-				var html = "<table class='table-striped' style='width:300px;'>"	
-				+ "<tr>"
+				var html = "<table class='table-striped' style='width:430px;'>"	
+				+ "<tr style='background: #666464; color:white;'>"
 				+"<td>받는사람</td>"
 				+"<td>제목</td>"
 				+"<td>보낸날짜</td>"
@@ -78,7 +80,9 @@ function sentMsg(){
 			html +=  "</table>";
 			
 			$("#messageTable").html(html);
-		
+			
+			$(".message-menu a").css("color", "black");
+			$("#sdmsg").css("color","red");
 			
 		},
 		error : function(e){
@@ -90,20 +94,57 @@ function sentMsg(){
 }
 
 </script>
+<style>
+h3{
+	font-weight: bolder;
+	margin-left: 10px;
+	font-family: "Open Sans",sans-serif;
+}
+.slice{
+background: black;
+width: 450px;
+height: 3px;
+margin-bottom: 15px;
+margin-left: 5px;
+}
+.message-menu{
+	margin-bottom: 15px;
+}
+.message-menu a{
+	color : black;
+	text-decoration: none;
+	font-weight: bolder;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.message-menu a:hover{
+	color : red;
+}
+#messageTable{
+	margin-left: 10px;
+}
+#messageTable table tr td{
+	border-bottom : 1px solid black;
+	padding:3px;
+}
+</style>
 </head>
 <body>
 <header>
-	<h3>쪽지함</h3>
-	<a href="#none" onclick="receivedMsg()">받은 쪽지함</a> | 
-	<a href="#none" onclick="sentMsg()">보낸 쪽지함</a> | 
+	<h3>MESSAGE</h3>
+	<div class="slice"></div>
+	<div class="message-menu">
+	<a href="#none" id="rvmsg" onclick="receivedMsg()">받은 쪽지함</a> | 
+	<a href="#none" id="sdmsg" onclick="sentMsg()">보낸 쪽지함</a> | 
 	<a href='writeMessage'>쪽지 보내기</a>
+	<div>
 </header>
 <div id="messageTable">
-	<table class="table-striped" style="width:300px;">
-		<tr>
-			<td>보낸사람</td>
-			<td>제목</td>
-			<td>보낸날짜</td>
+	<table class="table-striped" style="width:440px;">
+		<tr style="background: #666464; color:white;">
+			<td style='width:90px;'>보낸사람</td>
+			<td style='width:220px;'>제목</td>
+			<td style='width:130px;'>보낸날짜</td>
 		</tr>
 		<c:forEach var="message" items="${received}">
 			<tr>

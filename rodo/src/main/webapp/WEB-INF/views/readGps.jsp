@@ -9,8 +9,8 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=6b513317a557b95d9627ec6ce1303e51&libraries=services"></script>
 <!-- ab43af777848bf1eb1bd3148b28cf31d -->
-<script src="resources/js/chart.js"></script>
 <script src="resources/js/maps.js"></script>
+<script src="resources/js/chart.js"></script>
 <link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
 </head>
 <body>

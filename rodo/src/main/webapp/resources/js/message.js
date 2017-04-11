@@ -49,6 +49,6 @@
          
          function messageWindow(){
         	 
-        	 window.open("messageList", "", "width=400, height=300, left=400, top=100");
+        	 window.open("messageList", "", "width=500, height=400, left=400, top=100");
         	 
          }
