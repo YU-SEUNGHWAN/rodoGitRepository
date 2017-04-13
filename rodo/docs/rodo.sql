@@ -98,3 +98,22 @@ create sequence rodo_message_seq start with 1 increment by 1;
 
 
 select * from RODO_MESSAGE
+
+
+create table rodo_videoboard
+(
+	video_boardnum number primary key
+	, video_id varchar2(20) not null
+	, video_title varchar2(100) not null
+	, video_content varchar2(100) not null
+	, video_input_dt date default sysdate
+	, video_update_dt date default sysdate
+	, video_originalfile varchar2(150) not null
+	, video_savedfile varchar2(150) not null
+	, video_thumbnail varchar2(150) not null
+	, free_hit number default 0
+);
+
+create sequence rodo_video_seq start with 1 increment by 1;
+
+select * from rodo_videoboard;

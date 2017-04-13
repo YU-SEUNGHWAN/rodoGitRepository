@@ -9,12 +9,14 @@
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeBoard" alias="Rodo_FreeBoard" />
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeReply" alias="Rodo_FreeReply" />
 		<typeAlias type="project2.scmaster.rodo.vo.Message" alias="Message" />
+		<typeAlias type="project2.scmaster.rodo.vo.videoBoard" alias="Video" />
 	</typeAliases>
 	
 	
 	<mappers>
 		<mapper resource="Mapper/MemberMapper.xml" />
 		<mapper resource="Mapper/Rodo_FreeBoardMapper.xml" />
+		<mapper resource="Mapper/VideoBoardMapper.xml" />
 		<mapper resource="Mapper/MessageMapper.xml" />
 	</mappers>
 	
