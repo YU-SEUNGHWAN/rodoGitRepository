@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 게시판 처리 SQL -->
+<mapper namespace="project2.scmaster.rodo.dao.Rodo_PhotoBoardMapper">
+
+	<!-- 보드 저장 -->
+	<insert id="PhotoInsertBoard" parameterType="Rodo_PhotoBoard">
+		insert into 
+			rodo_photoboard (
+				photo_boardnum,
+				photo_id,
+				photo_title,
+				photo_content,
+				photo_share,
+				photofile_tn
+			)
+		values (
+			rodo_photoboard_seq.nextval,
+			#{photo_id},
+			#{photo_title},
+			#{photo_content},
+			#{photo_share},
+			#{photofile_tn}
+		)
+	</insert>
+	
+	<!-- 파일 저장 -->
+	<insert id="PhotofileInsertBoard" parameterType="Hashmap">
+		insert into 
+			rodo_photofile (
+				photo_boardnum,
+				photofile_original,
+				photofile_saved
+			)
+		values (
+			 #{photo_boardnum},
+			 #{photofile_original},
+			 #{photofile_saved}
+		)
+	</insert>
+	
+	<!-- 게시글 번호 찾기 -->	
+	<select id="PhotoSelelctBoardnum" resultType="int">
+		select
+			MAX(photo_boardnum)
+		from
+			rodo_photoboard
+	</select>
+	
+	<!-- 게시글 읽기 -->
+	<select id="readPhoto" parameterType="int" resultType="Rodo_PhotoBoard">
+		select 
+			photo_id, photo_boardnum, photo_title, photo_content, photo_share,
+			photo_input_dt, photo_update_dt, photo_hit, photofile_tn
+		from 
+			rodo_photoboard
+		where 
+			photo_boardnum = #{photo_boardnum}
+		order by 
+			photo_boardnum asc
+	</select>
+
+	<!-- 보드리스트 가져오기 -->
+	<select id = "Photolist" resultType = "Rodo_PhotoBoard">
+		select 
+			photo_id, photo_boardnum, photo_title, photo_content, photo_share,
+			photo_input_dt, photo_update_dt, photo_hit, photofile_tn
+		from 
+			rodo_photoboard
+		order by 
+			photo_boardnum asc
+	</select>
+
+	<!-- 보드파일리스트 가져오기 -->
+	<select id = "PhotoFileList" parameterType="int"  resultType = "HashMap">
+		select 
+			photofile_original photofile_original
+			, photofile_saved photofile_saved
+		from 
+			rodo_photofile
+		where 
+			photo_boardnum = #{photo_boardnum} 
+		order by 
+			photo_boardnum asc
+	</select>
+	
+	<!-- 보드리스트 삭제하기 -->
+	<delete id="deletePhoto" parameterType="int">
+		delete
+			rodo_photoboard
+		where 
+			photo_boardnum = #{photo_boardnum}
+	</delete>
+
+	<!-- 보드파일리스트 삭제하기 -->
+	<delete id="deletePhotoFile" parameterType="int">
+		delete
+			rodo_photofile
+		where 
+			photo_boardnum = #{photo_boardnum}
+	</delete>
+	
+	<!-- 보드리스트 업데이트 하기 -->
+	<update id="updatePhoto" parameterType="Rodo_PhotoBoard">
+		update  
+			rodo_photoboard
+		set
+			photo_title = #{photo_title},
+			photo_content = #{photo_content},
+			photo_share = #{photo_share},
+			photofile_tn = #{photofile_tn},
+			photo_update_dt = sysdate
+		where 
+			photo_boardnum = #{photo_boardnum}
+	</update>
+	
+	<!-- 보드파일리스트 업데이트 하기 
+	<update id="updatePhotoFile" parameterType="HashMap">
+		update  
+			rodo_photofile 
+		set
+			photofile_original = #{og},
+			photofile_saved = #{sv}
+		where 
+			photo_boardnum = #{photo_boardnum}
+	</update>  -->
+</mapper>

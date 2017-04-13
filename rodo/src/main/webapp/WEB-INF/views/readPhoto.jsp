@@ -13,9 +13,20 @@
 $(document).ready(function(){
 	$('.bxslider').bxSlider();
 });
+
+function Delete(){
+	location.href="delete?photo_boardnum="+${pt_board.photo_boardnum}; 
+}
+
+function updatePhoto(){
+	location.href="updatePhoto?photo_boardnum="+${pt_board.photo_boardnum}; 
+}
+
 </script>
 </head>
 <body>
+
+<h1>사진게시판</h1>
 <!--==========================
   Header Section
 ============================-->
@@ -26,33 +37,28 @@ $(document).ready(function(){
      
       <div class="row">
         <div class="col-md-12" style="padding-bottom:35px; padding-top: 40px;">
-          <span class="board-title">북한산 등반 다녀왔습니다 (17.03.21)</span>
+          <span class="board-title">${pt_board.photo_title }</span>
+          <span class="board-title" style="margin-left:50%;">${pt_board.photo_update_dt }</span>
           <div class="board-title-divider"></div>
         </div>
       </div> 
+      
       <div style="margin-bottom:150px;">
 	      <ul class="bxslider">
-			  <li><img src="resources/img/services-bg.jpg" /></li>
-			  <li><img src="resources/img/hero-bg.jpg" /></li>
+			  		<c:forEach items="${pt_board.photofile_saved}" var ="photo">
+			  			<li><img src='photoLoad?origin=${photo}' /></li>
+			  		</c:forEach>
 		  </ul>
       </div>
-		<div id="content" class="board-content"><pre>넘나 재밌었삼
-담에는 가족들하고 같이 오고싶은것
-언제쯤 다시 올 수 있을까요
-요즘 너무 바빠요 ㅠㅠㅠ
-하 힘들다....
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-ㅇ
-</pre></div>
+		
+		<div id="content" class="board-content"><pre>
+			${pt_board.photo_content }
+		</pre></div>
+	
+		<input type="button" class="delbtn" value="글 삭제" onclick="Delete()"/>
+		<input type="button" class="updatebtn" value="글 수정" onclick="updatePhoto()"/>
+	
+	
 	
 	<div class="board-reply">
 	

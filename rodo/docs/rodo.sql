@@ -19,13 +19,15 @@ create table rodo_photoboard
 	, photo_id varchar2(20) not null
 	, photo_title varchar2(100) not null
 	, photo_content varchar2(100) not null
-	, photo_share varchar2(10) not null
+	, photo_share varchar2(10) default 0
 	, photo_input_dt date default sysdate
 	, photo_update_dt date default sysdate
 	, photo_hit number default 0
+	, photofile_tn varchar2(200) not null
 )
 
 alter table rodo_photoboard add foreign key(photo_id) references rodo_member (id);
+
 create sequence rodo_photoboard_seq start with 1 increment by 1;
 
 create table rodo_photofile

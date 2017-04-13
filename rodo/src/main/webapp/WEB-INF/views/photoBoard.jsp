@@ -4,6 +4,9 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <script type="text/javascript">
+  
+  </script>
   <title>Share Your Road</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
@@ -68,77 +71,19 @@
       </div>
       
       <div class="row">
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-1.jpg);" href="readPhoto">
+      <c:forEach items="${photoList}" var="photo">
+      	<div class="col-md-3">
+      	  <a class="portfolio-item" style="background-image: url('download?origin=${photo.photofile_saved}&tn=${photo.photofile_tn }');" 
+      	  href="readPhoto?photo_boardnum=${photo.photo_boardnum }">
             <div class="details">
-              <h4>Portfolio 1</h4>
-              <span>Alored dono par</span>
+              <h4>${photo.photo_title}</h4>
+              <span>${photo.photo_id}</span>
+              <span>${photo.photo_input_dt}</span>
             </div>
           </a>
         </div>
+      </c:forEach>
         
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-2.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 2</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-3.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 3</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-4.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 4</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-5.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 5</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-6.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 6</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-7.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 7</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-3">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-8.jpg);" href="">
-            <div class="details">
-              <h4>Portfolio 8</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
         <table style="width:100%" class="board-navi">
 		  	<tr><td style="width:20%"></td>
 			<td style="width:60%; text-align:center;"><span class="page-navi">
