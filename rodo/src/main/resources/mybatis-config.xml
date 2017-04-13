@@ -7,14 +7,25 @@
 	<typeAliases>
 		<typeAlias type="project2.scmaster.rodo.vo.Member" alias="Member" />
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeBoard" alias="Rodo_FreeBoard" />
+<<<<<<< HEAD
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_PhotoBoard" alias="Rodo_PhotoBoard" />
+=======
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeReply" alias="Rodo_FreeReply" />
+		<typeAlias type="project2.scmaster.rodo.vo.Message" alias="Message" />
+		<typeAlias type="project2.scmaster.rodo.vo.videoBoard" alias="Video" />
+>>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 	</typeAliases>
 	
 	
 	<mappers>
 		<mapper resource="Mapper/MemberMapper.xml" />
 		<mapper resource="Mapper/Rodo_FreeBoardMapper.xml" />
+<<<<<<< HEAD
 		<mapper resource="Mapper/Rodo_PhotoBoardMapper.xml" />
+=======
+		<mapper resource="Mapper/VideoBoardMapper.xml" />
+		<mapper resource="Mapper/MessageMapper.xml" />
+>>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 	</mappers>
 	
 </configuration>

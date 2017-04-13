@@ -10,7 +10,6 @@
   <meta content="" name="keywords">
   <meta content="" name="description">
     
-  
   <!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
   <link href="favicon.ico" rel="shortcut icon">
   
@@ -27,11 +26,400 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
+   
+	<script src="resources/js/message.js"></script>
+
+	<script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+
+<style>
+
+  .modal-header, h4, .close {
+      background-color: rgb(50,50,50);
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
   
+  #btnsubmit
+  {
+  	background-color: rgb(50,50,50);;
+  	border-color: rgb(50,50,50);;
+  }
+  
+  .moto
+  {	
+  	color: blue;
+  }
+  
+</style>
 
+
+<script>
+
+var emailflag = false;
+var checknumflag = false;
+var idflag = false;
+
+
+
+$(function()
+{
+	$("#submmit").on("click", function()
+	{
+		var name = $("#name").val();
+		
+		//	입력된 ID 값이 없다면..
+		if(idflag == false) 
+		{
+			alert("아이디를 확인해 주세요.");
+			
+			return false;
+		}
+		
+		//	비밀번호 유효성 체크
+		var pwd = $("#password").val();
+		var pwd1 = $("#passwordc").val();
+
+		if( pwd != pwd1 ) {	//	비밀번호 와 비밀번호 확인이 다르다면 ... 
+			
+			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			
+			return false;
+		}
+		
+		if (pwd == "" || pwd.length < 4)
+		{
+			alert("비밀번호는 4자리 이상 입력하여야 합니다.");	
+			
+			//	이벤트 중지하기
+			return false;
+		}
+		
+		if (emailflag == false)
+		{
+			alert("email 체크를 하고 인증번호를 발급 받으세요.")
+			
+			return false;
+		}
+		
+		if (name == "")
+		{
+			alert("이름을 입력하세요.");
+			return false;
+		}
+		
+		if (checknumflag == false)
+		{
+			alert("인증번호체크가 완료되지 않았습니다.");
+			
+			return false;
+		}
+	})
+})
+
+
+$(function()
+{
+	var checkAjaxSetTimeout;
+	
+	$("#id").keyup(function()
+	{
+		clearTimeout(checkAjaxSetTimeout);
+        checkAjaxSetTimeout = setTimeout(function()
+        {
+		
+			if ( $("#id").val().length <= 6 && $("#id").val().length > 0 )
+			{
+				$("#idlabel").css("color", "red");
+				$("#idlabel").html("사용 불가능한 아이디 입니다.");
+			}
+			
+			else if ( $("#id").val() == "" )
+			{
+				$("#idlabel").css("color", "red");
+				$("#idlabel").html("");
+			}
+			
+			else if ( $("#id").val().length > 6 )
+			{
+				var id = $("#id").val();
+				
+				$.ajax
+				({
+					type : "post",
+					url : "checkidajax",
+					
+					data :
+					{
+						id : id
+					},
+					
+					success : function(data)
+					{
+						if (data == "")
+						{
+							$("#idlabel").css("color", "blue");
+							$("#idlabel").html("사용 가능한 아이디 입니다.");
+							idflag = true;
+						}
+						
+						else
+						{
+							$("#idlabel").css("color", "red");
+							$("#idlabel").html("사용 불가능한 아이디 입니다.");
+						}
+					},
+					
+					error : function(e)
+					{
+						console.log(e);
+					}
+				})
+			}
+        }, 500)
+	})
+})
+
+
+$(function()
+{
+	var checkAjaxSetTimeout;
+	
+	$("#email").keyup(function()
+	{
+		var email = $("#email").val();
+		var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;   
+		
+		clearTimeout(checkAjaxSetTimeout);
+        checkAjaxSetTimeout = setTimeout(function()
+        {
+			
+        	if (email == "")
+			{
+				$("#maillabel").css("color", "red");
+				$("#maillabel").html("");
+
+				emailflag = false;
+    		    return false;
+			}
+        	
+        	else if(regex.test(email) === false)
+    		{
+        		$("#maillabel").css("color", "red");
+				$("#maillabel").html("사용 불가능한 이메일 입니다.");
+    		    
+    		    emailflag = false;
+    		    return false;
+    		}
+			
+			
+			else
+			{	
+				$.ajax
+				({
+					type : "post",
+					url : "emailcheck2",
+					
+					data :
+					{
+						email : email
+					},
+					
+					success : function(data)
+					{
+						if (data == "")
+						{
+							$("#maillabel").css("color", "blue");
+							$("#maillabel").html("사용 가능한 이메일 입니다.");
+							
+							emailflag = true;
+							return true;
+						}
+						
+						else
+						{
+							$("#maillabel").css("color", "red");
+							$("#maillabel").html("사용 불가능한 이메일 입니다.");
+							
+							emailflag = false;
+							return false;
+						}
+					},
+					
+					error : function(e)
+					{
+						console.log(e);
+					}
+				})
+			}
+        }, 500)
+	})
+})
+
+
+$(function()
+{
+	$("#mailcheck").on("click", function()
+	{
+		var email = $("#email").val();
+		
+		if(emailflag == true)
+		{
+			$.ajax
+			({
+				type : "post",
+				url : "emailcheck",
+				
+				data : 
+				{
+					user : email
+				},
+				
+				success : function(data)
+				{
+					if (emailflag == true)
+					{
+						console.log("메일로 인증번호가 전송되었습니다.");
+					}
+				},
+				
+				error : function(e)
+				{
+					console.log(e);
+				}
+			})
+		}
+		
+		else
+		{
+			alert("이메일을 확인하세요.");
+			console.log("이메일을 확인하세요.");
+			
+			return false;
+		}
+		
+	})
+})
+
+$(function()
+{
+	$("#btnsubmit").on("click", function()
+	{
+		var checknum = $("#checknumber").val();
+		
+		$.ajax
+		({
+			type : "post",
+			url : "checknum",
+			
+			success : function(data)
+			{
+				if (checknum == data)
+				{	
+					checknumflag = true;
+					
+					$("#myModal").modal('hide');
+					document.getElementById("checknumber").value = "";
+					$("#kakunin").html("");
+				}
+				
+				else
+				{
+					$("#kakunin").css("color", "red");
+					$("#kakunin").html("인증번호가 일치하지 않습니다.");
+				}
+			},
+			
+			error : function(e)
+			{
+				console.log(e);
+			}
+		})
+	})
+})
+
+
+$(document).ready(function()
+{
+    $("#mailcheck").click(function()
+    {
+    	if (emailflag == true)
+    	{
+    		$("#myModal").modal();
+    	}
+    });
+});
+
+
+</script>
 </head>
-
 <body>
+ 
+
+ <div class="container">
+  <!-- <h2>Modal Login Example</h2> -->
+  <!-- Trigger the modal with a button -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4><span class="glyphicon glyphicon-lock"></span> Certification</h4>
+        </div>
+      
+        <div class="modal-body" style="padding:40px 50px;">
+       
+          <form role="form">
+           
+            <div class="form-group">
+              <label for="checknumber"><span class="glyphicon glyphicon-user"></span> Check Number</label>
+              <input type="text" class="form-control" id="checknumber" placeholder="Input Number">
+            </div>
+            
+            <!-- <div class="form-group">
+              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
+              <input type="text" class="form-control" id="psw" placeholder="Enter password">
+            </div> -->
+            
+            <!-- <div class="checkbox">
+              <label><input type="checkbox" value="" checked>Remember me</label>
+            </div> -->
+            
+              <!-- <button type="button" id = "btnsubmit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> OK</button> -->
+        
+        <button type="button" id = "btnsubmit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> OK</button>
+       
+          </form>
+          
+        </div>
+        
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+          <span class="glyphicon glyphicon-remove"></span> Cancel</button>
+          
+          
+          <p class = "moto" id = "kakunin"> 메일로 전송된 인증번호를 입력해 주세요. </p>
+
+        </div>
+        
+      </div>
+      
+    </div>
+  </div> 
+</div>
+ 
+ 
+ 
  
 <!--==========================
   Header Section
@@ -53,16 +441,7 @@
           <li><a href="#none" onclick="javascript:location.href='videoBoard'">video</a></li>
           <li class="menu-has-children"><a href="#none">community</a>
             <ul>
-              <li><a href="">free board</a></li>
-              <li class="menu-has-children"><a href="#none">local board</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
+              <li><a href="freeboardlist">free board</a></li>
               <li><a href="#">Q&A</a></li>
             </ul>
           </li>
@@ -71,10 +450,11 @@
 	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
 	       	</c:when>
 	        <c:otherwise>
-			 <li class="menu-has-children" style="padding-left:100px;"><a href="#none">${loginId} 님</a>
+			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
-		             <li><a href="#">my info</a></li>
+		             <li><a href="checkupdate">my info</a></li>
 		             <li><a href="#">my List</a></li>
+		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>
 			    </ul>  
 			 </li>
@@ -84,8 +464,10 @@
         </ul>
       </nav><!-- #nav-menu-container -->
     </div>
+    
+    <input type="hidden" id="loginId" value="${loginId}">
+    
   </header><!-- #header -->
-
   
 <!--==========================
   Hero Section
@@ -126,19 +508,19 @@
 	        </div>
 	        <div class="content">
 		            <div class="signin-cont cont">
-			                <form action="login" method="post" enctype="multipart/form-data">
+			                 <form action="login" method="post" enctype="multipart/form-data">
 			                
-			                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your ID">
+			                    <input type="text" name="loginid" id="loginid" class="inpt" required="required" placeholder="Your ID">
 			                    <label for="text">Your email</label>
 			                    
-			                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
+			                    <input type="password" name="loginpassword" id="loginpassword" class="inpt" required="required" placeholder="Your Password">
              						<label for="password">Your password</label>
              						    
 			                    <input type="checkbox" id="remember" class="checkbox" checked>
 			                    
 			                    <div class="submit-wrap">
 				                        <input type="submit" value="Sign in" class="submit">
-				                        <a href="#" class="more">Forgot your password?</a>
+				                        <a href="find" class="more">Forgot your password?</a>
 			                    </div>
 			                    
    					        </form>
@@ -225,7 +607,6 @@
   <script src="resources/lib/stickyjs/sticky.js"></script>
   <script src="resources/lib/easing/easing.js"></script>
   
-  <!-- Template Specisifc Custom Javascript File -->
   <script src="resources/js/custom.js"></script>
   
 </body>

@@ -67,6 +67,7 @@ public class PhotoBoardController {
 		model.addAttribute("pt_board", pt_board);
 		return "readPhoto";
 	}
+<<<<<<< HEAD
 
 	@RequestMapping(value = "writePhoto", method = RequestMethod.GET)
 	public String writePhoto(){
@@ -319,3 +320,8 @@ public class PhotoBoardController {
 	}
 	
 }
+=======
+	
+	
+}
+>>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git

@@ -15,10 +15,6 @@
 var emailflag = false;
 var checknumflag = false;
 
-function IDCheckFunction()
-{
-	window.open("idcheckbutton", "width=400, height=300");
-}
 
 $(function()
 {
@@ -136,85 +132,84 @@ $(function()
 	})
 })
 
-
-		$(function()
-		{
-			$("#checknumc").on("click", function()
-			{	
-				var email = $("#email").val();
-				var checkbutton = $("#checknumc").val();
-				var num = $("#checknum").val();
+$(function()
+{
+	$("#checknumc").on("click", function()
+	{	
+		var email = $("#email").val();
+		var checkbutton = $("#checknumc").val();
+		var num = $("#checknum").val();
+		
+		if (checkbutton == "인증번호 전송")
+		{	
+			$.ajax
+			({
+				type : "post",
+				url : "emailcheck",
 				
-				if (checkbutton == "인증번호 전송")
-				{	
-					$.ajax
-					({
-						type : "post",
-						url : "emailcheck",
-						
-						data :
-						{
-							user : email
-						},
-						
-						success : function(data)
-						{
-							if (emailflag == true)
-							{
-								console.log("메일로 인증번호가 전송되었습니다.");
-								alert("메일로 인증번호가 발송되었습니다.");
-								
-								document.getElementById("checknumc").value = "인증번호 체크";
-							}
-							
-							else
-							{
-								alert("이메일 인증이 완료되지 않았습니다. 이메일 인증을 완료하세요");
-								return false;
-							}
-						},
-						
-						error : function(e)
-						{
-							console.log(e);
-						}
-					})
-				}
-				
-				else
+				data :
 				{
-					$.ajax
-					({
-						type : "post",
-						url : "checknum",
+					user : email
+				},
+				
+				success : function(data)
+				{
+					if (emailflag == true)
+					{
+						console.log("메일로 인증번호가 전송되었습니다.");
+						alert("메일로 인증번호가 발송되었습니다.");
 						
-						success : function(data)
-						{
-							if (num == data)
-							{
-								alert("인증에 성공하였습니다.");
-								checknumflag = true;
-								
-								return true;
-							}
-							
-							else
-							{
-								alert("인증번호가 일치하지 않습니다.");
-								checknumflag = false;
-								
-								return false;
-							}
-						},
+						document.getElementById("checknumc").value = "인증번호 체크";
+					}
 					
-						error : function(e)
-						{
-							console.log(e);
-						}
-					})
+					else
+					{
+						alert("이메일 인증이 완료되지 않았습니다. 이메일 인증을 완료하세요");
+						return false;
+					}
+				},
+				
+				error : function(e)
+				{
+					console.log(e);
 				}
 			})
-		})
+		}
+		
+		else
+		{
+			$.ajax
+			({
+				type : "post",
+				url : "checknum",
+				
+				success : function(data)
+				{
+					if (num == data)
+					{
+						alert("인증에 성공하였습니다.");
+						checknumflag = true;
+						
+						return true;
+					}
+					
+					else
+					{
+						alert("인증번호가 일치하지 않습니다.");
+						checknumflag = false;
+						
+						return false;
+					}
+				},
+			
+				error : function(e)
+				{
+					console.log(e);
+				}
+			})
+		}
+	})
+})
 		
 </script>
 

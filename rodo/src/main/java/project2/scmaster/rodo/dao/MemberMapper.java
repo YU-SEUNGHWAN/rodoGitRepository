@@ -17,4 +17,5 @@ public interface MemberMapper
 	
 	public int updatepw(Member member);
 	
+	
 }

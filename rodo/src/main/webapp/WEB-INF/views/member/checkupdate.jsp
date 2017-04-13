@@ -61,7 +61,7 @@
 		<tr>
 			<td>
 				<label for = "id">아이디</label>
-				<input type = "text" id = "id" name = "id" readonly = "readonly" placeholder = "${sessionScope.id}">
+				<input type = "text" id = "id" name = "id" readonly = "readonly" placeholder = "${sessionScope.loginId}">
 			</td>
 		</tr>
 		

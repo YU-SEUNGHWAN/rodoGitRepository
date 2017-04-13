@@ -22,6 +22,12 @@ public class MenuController {
 		return "index";
 	}
 
+	@RequestMapping(value="index2", method=RequestMethod.GET)
+	public String index2(){
+		
+		return "index2";
+	}
+	
 	@RequestMapping(value="photoBoard", method=RequestMethod.GET)
 	public String photoBoard(Model model){
 		ArrayList<Rodo_PhotoBoard> pt_board = new ArrayList<>(); 
@@ -40,5 +46,10 @@ public class MenuController {
 		
 		return "logBoard";
 	}
-	
+
+	@RequestMapping(value="socketTest", method=RequestMethod.GET)
+	public String socketTest(){
+		
+		return "socketTest";
+	}
 }

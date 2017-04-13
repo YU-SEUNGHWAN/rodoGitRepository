@@ -33,10 +33,10 @@ public class MemberController
 		return "member/insert";
 	}
 	
-	@RequestMapping(value = "idcheckbutton", method = RequestMethod.GET)
+	@RequestMapping(value = "mailcheckbutton", method = RequestMethod.GET)
 	public String insert2()
 	{
-		return "member/idcheckbutton";
+		return "member/mailcheckbutton";
 	}
 	
 	@ResponseBody
@@ -74,16 +74,13 @@ public class MemberController
 		return "member/joincomplete";
 	}
 	
-	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login()
-	{
-		return "member/login";
-	}
-	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login2(String id, String password, Model model, HttpSession session)
+	public String login2(String loginid, String loginpassword, Model model, HttpSession session)
 	{
-		Member member = dao.selectOne(id);
+		/*String id = loginid;
+		String password = loginpassword;*/
+		
+		Member member = dao.selectOne(loginid);
 		
 		if (member == null)
 		{
@@ -93,7 +90,7 @@ public class MemberController
 		
 		else
 		{
-			if (member.getPassword().equals(password))
+			if (member.getPassword().equals(loginpassword))
 			{
 				session.setAttribute("loginId", member.getId());
 				session.setAttribute("loginName", member.getName());
@@ -142,7 +139,7 @@ public class MemberController
 	@RequestMapping(value = "beforeupdate", method = RequestMethod.POST)
 	public String beforeupdate(String password, HttpSession session)
 	{
-		String id = (String)session.getAttribute("id");
+		String id = (String)session.getAttribute("loginId");
 		
 		Member member = dao.selectOne(id);
 		
@@ -152,7 +149,7 @@ public class MemberController
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public String update2(HttpSession session, Model model)
 	{	
-		String id = (String)session.getAttribute("id");
+		String id = (String)session.getAttribute("loginId");
 		
 		Member member = dao.selectOne(id);
 		model.addAttribute("member", member);
