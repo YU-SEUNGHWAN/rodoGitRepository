@@ -117,7 +117,7 @@ function pagingFormSubmit(currentPage)
                                                   <div class="col-lg-10">
                                                       <input type="text" placeholder="" id="inputEmail1" class="form-control">
                                                   </div>
-                                              </div>
+                                              </div>ㅅ
                                               <div class="form-group">
                                                   <label class="col-lg-2 control-label">Cc / Bcc</label>
                                                   <div class="col-lg-10">

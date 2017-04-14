@@ -13,47 +13,119 @@
 
 <script>
 
-// $(function()
-// {
-// 	$("#replybtn").on("click", function()
-// 	{
-// 		var reply = $("#freereply_text").val();
-// 		var boardnum = $("#free_boardnum").val();
+
+$(function()
+{
+	$("#replybtn").on("click", function()
+	{
+		var reply = $("#freereply_text").val();
+		var boardnum = $("#free_boardnum").val();
 		
-// 		$.ajax
-// 		({
-// 			type : "post",
-// 			url : "replywrite",
+		$.ajax
+		({
+			type : "post",
+			url : "replywrite",
 			
-// 			data : 
-// 			{
-// 				free_boardnum : boardnum,
-// 				freereply_text : reply
-// 			},
+			data : 
+			{
+				free_boardnum : boardnum,
+				freereply_text : reply
+			},
 			
-// 			dataType : "JSON",
+			/* complete : function(data)
+			{
+				alert("오는거 맞냐");
+			},  */
 			
-// 			complete : function(data)
-// 			{
+			success : function(data)
+			{
+		         console.log(data);
+		         var html =    "<tr class='replymenu'>"
+		                  +"<td>아이디</td>"
+		                  +"<td>댓글</td>"
+		                  +"<td>날짜</td>"
+		                  +"<td></td>"
+		                  +"</tr>"; 
+		         
+		            $.each(data, function(index,item)
+		            {
+			            html += "<tr>"
+			                     +"<td class='rename'>"+item.freereply_id+"</td>"
+			                     +"<td id='"+item.freereply_replynum+"' class='retext'>"+item.freereply_text+"</td>"
+			                     +"<td class='redate'>"+item.freereply_input_dt+"</td>"
+			                     +"<td class='reetc'>"
+			                           +"<td><a href='javascript:replyUpdateForm("+item.freereply_replynum+","+item.free_boardnum+")'>[수정]</a></td>"
+			                           +"<td><a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a></td>"
+			                     +"</td>"
+			                  +"</tr>";
+		         });
 				
-// 			}
+		         $("#freereply_text").val("");
+		         $("#replytable").html(html);
+		      },
+		      
+		      error : function(e)
+		      {
+		         console.log(e);
+		      }
+		   })
+		})
+	})
+
+	
+
+function deletereplywarp(replynum, boardnum)
+{
+	console.log(replynum);
+	console.log(boardnum);
+	
+	$.ajax
+	({
+		type : "get",
+		url : "deletereply",
+		
+		data : 
+		{
+			freereply_replynum : replynum,
+			free_boardnum : boardnum
+		},
+		
+		success : function(data)
+		{	
+			console.log(data);
 			
-// // 			success : function(data)
-// // 			{
-// // 				console.log("댓글");
-				
-// // 				alert("안나오면 디짐");
-// // 			},
+	         var html =    "<tr class='replymenu'>"
+	                  +"<td>아이디</td>"
+	                  +"<td>댓글</td>"
+	                  +"<td>날짜</td>"
+	                  +"<td></td>"
+	                  +"</tr>"; 
+	         
+	            $.each(data, function(index,item)
+	            {
+		            html += "<tr>"
+		                     +"<td class='rename'>"+item.freereply_id+"</td>"
+		                     +"<td id='"+item.freereply_replynum+"' class='retext'>"+item.freereply_text+"</td>"
+		                     +"<td class='redate'>"+item.freereply_input_dt+"</td>"
+		                     +"<td class='reetc'>"
+		                           +"<td><a href='javascript:replyUpdateForm("+item.freereply_replynum+","+item.free_boardnum+")'>[수정]</a></td>"
+		                     	   +"<td><a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a></td>"
+		                     +"</td>"
+		                  +"</tr>";
+	         });
 			
-			
-			
-// // 			error : function(e)
-// // 			{
-// // 				console.log(e);
-// // 			}
-// 		})
-// 	})
-// })
+	         $("#freereply_text").val("");
+	         $("#replytable").html(html);
+		},
+		
+		error : function(e)
+		{
+			console.log(e);
+		}
+	})
+}
+
+
 
 </script>
 
@@ -98,8 +170,8 @@
 		
 			<c:if test = "${board.freefile_original != null}">
 			
-				<img alt = "" src = "downloadFree?free_boardnum=${board.free_boardnum}"><br>
-				<a href = "downloadFree?free_boardnum=${board.free_boardnum}">
+				<img alt = "" src = "freedownload?free_boardnum=${board.free_boardnum}"><br>
+				<a href = "download?free_boardnum=${board.free_boardnum}">
 					${board.freefile_original}
 				</a>
 				
@@ -113,8 +185,8 @@
 		<td>
 			<c:if test = "${sessionScope.loginId!=null}">
 				<c:if test = "${sessionScope.loginId == board.free_id}">
-					<a href = "updateboard?free_boardnum=${board.free_boardnum}">수정</a>
-					<a href = "deleteFreeboard?free_boardnum=${board.free_boardnum}">삭제</a>
+					<a href = "updateboard?free_boardnum=${board.free_boardnum}">[수정]</a>
+					<a href = "deletefreeboard?free_boardnum=${board.free_boardnum}">[삭제]</a>
 				</c:if>
 			</c:if>
 				<a href = "freeboardlist">목록보기</a>
@@ -126,20 +198,30 @@
 
 <p>
 
-<form action = "replywrite" method = "post">
+<!-- <form action = "replywrite" method = "post"> -->
 
 리플내용
 
 	<input type = "hidden" name = "free_boardnum" id = "free_boardnum" value = "${board.free_boardnum}">
 	<input type = "text" name = "freereply_text" id = "freereply_text">
+		
+	<input type = "hidden" id = "replynum" value = "${reply.freereply_replynum}">
+	<input type = "hidden" id = "boardnum" value = "${reply.free_boardnum}">
 	
 	<input type = "submit" id = "replybtn" value = "확인">
 	
-</form>
+<!-- </form> -->
 	
-<table>
-	<c:forEach var = "reply" items = "${replylist}">
-		
+<table id = "replytable">
+	
+	<tr class = "replymenu">
+		<td>아이디</td>
+		<td>댓글</td>
+		<td>날짜</td>
+		<td></td>
+	</tr>
+	
+	<c:forEach var = "reply" items = "${replylist}">	
 	<tr>
 
 		<td>
@@ -156,25 +238,20 @@
 		
 		<td>
 			<c:if test = "${sessionScope.loginId == reply.freereply_id}">
-				<a href = "">수정</a>
+				<a href = "">[수정]</a>
 			</c:if>
 		</td>
 		
 		<td>
 			<c:if test = "${sessionScope.loginId == reply.freereply_id}">
-				<a href = "deletereply?freereply_replynum=${reply.freereply_replynum}&free_boardnum=${reply.free_boardnum}">삭제</a>
+				<a id = "deletereplywarp" href="#none" onclick = "deletereplywarp('${reply.freereply_replynum}', '${reply.free_boardnum}')">[삭제]</a>				
 			</c:if>
 		</td>
 		
 	</tr>
-	
 	</c:forEach>
+	
 </table>
-
-
-
-
-
 
 
 

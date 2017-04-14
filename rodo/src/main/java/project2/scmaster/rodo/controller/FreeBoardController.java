@@ -15,6 +15,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import project2.scmaster.rodo.dao.Rodo_FreeBoardDao;
@@ -136,7 +137,7 @@ public class FreeBoardController
 		return "freeboard/freeboardread";
 	}
 	
-	@RequestMapping(value = "deleteFreeboard", method = RequestMethod.GET)
+	@RequestMapping(value = "deletefreeboard", method = RequestMethod.GET)
 	public String delete(int free_boardnum, HttpSession session)
 	{
 		Rodo_FreeBoard board = new Rodo_FreeBoard();
@@ -195,7 +196,7 @@ public class FreeBoardController
 		return "redirect:/freeboardlist";
 	}
 	
-	@RequestMapping(value = "downloadFree", method = RequestMethod.GET)
+	@RequestMapping(value = "freedownload", method = RequestMethod.GET)
 	public String download(int free_boardnum, HttpServletResponse response)
 	{
 		Rodo_FreeBoard board = dao.selectOne(free_boardnum);
@@ -237,31 +238,42 @@ public class FreeBoardController
 		return null;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "replywrite", method = RequestMethod.POST)
-	public String replywrite(Rodo_FreeReply reply, HttpSession session, Model model)
+	public List<Rodo_FreeReply> replywrite(Rodo_FreeReply reply, HttpSession session, Model model)
 	{	
 		String id = (String)session.getAttribute("loginId");
 		reply.setFreereply_id(id);
 		
-		int result = dao.writereply(reply);
+		dao.writereply(reply);
 		
-		if (result == 1)
+		List<Rodo_FreeReply> list = dao.findreply(reply.getFree_boardnum());
+		
+		/*if (result == 1)
 		{
 			return "redirect:read?free_boardnum="+reply.getFree_boardnum();
 		}
 		
-		return "freeboard/freeboardread";
+		return "freeboard/freeboardread";*/
+		
+		return list;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "deletereply", method = RequestMethod.GET)
-	public String deletereply(Rodo_FreeReply reply, HttpSession session, Model model)
+	public List<Rodo_FreeReply> deletereply(Rodo_FreeReply reply, HttpSession session, Model model)
 	{	
 	//	Rodo_FreeReply reply = dao.selectreply(freereply_replynum);
 		
-		System.out.println(reply.toString());
+		String id = (String)session.getAttribute("loginId");
+		reply.setFreereply_id(id);
 		
 		dao.deletereply(reply);
 		
-		return "redirect:/read?free_boardnum="+reply.getFree_boardnum();
+		List<Rodo_FreeReply> list = dao.findreply(reply.getFree_boardnum());
+		
+	//	return "redirect:/read?free_boardnum="+reply.getFree_boardnum();
+		
+		return list;
 	}
 }

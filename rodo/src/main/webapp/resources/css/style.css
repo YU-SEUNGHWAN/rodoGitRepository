@@ -537,6 +537,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #portfolio .portfolio-item .details {
 	height: 260px;
+	background: #fff;
 	display: table-cell;
 	vertical-align: middle;
 	opacity: 0;
@@ -567,7 +568,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 #portfolio .portfolio-item:hover .details {
-	background: #fff;
 	opacity: 0.8;
 }
 
@@ -579,19 +579,6 @@ body.mobile-nav-active #mobile-nav-toggle {
 #portfolio .portfolio-item:hover .details span {
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
-}
-
-#portfolio .portfolio-item .play{
-	background-image: url(../img/play.png);
-	background-size: 100%;
-	opacity: 0.5;
-}
-#portfolio .portfolio-item .play h4, #portfolio .portfolio-item .play span{
-	opacity: 0;
-}
-#portfolio .portfolio-item .play:hover{
-	background: #fff;
-	opacity: 0.8;
 }
 
 .page-navi {

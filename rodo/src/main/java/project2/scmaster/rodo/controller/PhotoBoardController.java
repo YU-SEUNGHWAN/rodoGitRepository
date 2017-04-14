@@ -244,7 +244,7 @@ public class PhotoBoardController {
 		}
 	}
 	
-	@RequestMapping(value = "delete", method = RequestMethod.GET)
+	@RequestMapping(value = "deletePhoto", method = RequestMethod.GET)
 	public String deletePhoto(int photo_boardnum){
 		ArrayList<HashMap> fileList = dao.PhotoFileList(photo_boardnum);
 

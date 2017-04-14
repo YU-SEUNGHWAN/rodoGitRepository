@@ -10,68 +10,112 @@
 
 	insert
 		into
-			rodo_message
+			rodo_sendmessage
 			(
-				message_num
-				, message_sender
-				, message_receiver
-				, message_title
-				, message_text
-				
+				sendmessage_num
+				, sendmessage_sender
+				, sendmessage_receiver
+				, sendmessage_title
+				, sendmessage_text
 			)
 			
 	values
 			(
-				rodo_message_seq.nextval
+				rodo_sendmessage_seq.nextval
 				, #{sender}
 				, #{receiver}
 				, #{title}
 				, #{text}
-
 			)
 
 </insert>
 
 
+<insert id = "writereceiveMessage" parameterType = "Message">
+
+	insert
+		into
+			rodo_receivemessage
+			(
+				receivemessage_num
+				, receivemessage_sender
+				, receivemessage_receiver
+				, receivemessage_title
+				, receivemessage_text
+			)
+			
+	values
+			(
+				rodo_receivemessage_seq.nextval
+				, #{sender}
+				, #{receiver}
+				, #{title}
+				, #{text}
+			)
+		
+</insert>
+
 
 <select id = "receivedMessage" parameterType="String" resultType ="Message">
 
 	select
-		message_num messagenum
-		, message_sender sender
-		, message_receiver receiver
-		, message_title title
-		, message_text text
-		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
-		, message_read_fl flag
+		receivemessage_num messagenum
+		, receivemessage_sender sender
+		, receivemessage_receiver receiver
+		, receivemessage_title title
+		, receivemessage_text text
+		, to_char(receivemessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, receivemessage_read_fl flag
 
 	from 
-		rodo_message
+		rodo_receivemessage
 		
-	where
-		message_receiver = #{id}
+	<if test = "_parameter != null">
+		where
+			receivemessage_receiver = #{id}
+	</if>	
 		
 	order by
-		message_num desc
+		receivemessage_num desc
 	
 </select>
 
-<select id = "readMessage" parameterType="int" resultType ="Message">
+<select id = "sendreadMessage" parameterType="int" resultType ="Message">
 
 	select
-		message_num messagenum
-		, message_sender sender
-		, message_receiver receiver
-		, message_title title
-		, message_text text
-		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
-		, message_read_fl flag
+		sendmessage_num messagenum
+		, sendmessage_sender sender
+		, sendmessage_receiver receiver
+		, sendmessage_title title
+		, sendmessage_text text
+		, to_char(sendmessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, sendmessage_read_fl flag
 
 	from 
-		rodo_message
+		rodo_sendmessage
 		
 	where
-		message_num = #{messagenum}
+		sendmessage_num = #{sendmessagenum}
+		
+</select>
+
+
+<select id = "receivedreadMessage" parameterType = "int" resultType = "Message">
+
+	select
+		receivemessage_num messagenum
+		, receivemessage_sender sender
+		, receivemessage_receiver receiver
+		, receivemessage_title title
+		, receivemessage_text text
+		, to_char(receivemessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, receivemessage_read_fl flag
+		
+	from 
+		rodo_receivemessage
+		
+	where
+		receivemessage_num = #{receivemessagenum}
 		
 </select>
 
@@ -79,23 +123,24 @@
 <select id = "newMessage" parameterType="String" resultType = "Message">
 
 	select
-		message_num messagenum
-		, message_sender sender
-		, message_receiver receiver
-		, message_title title
-		, message_text text
-		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
-		, message_read_fl flag
+		receivemessage_num messagenum
+		, receivemessage_sender sender
+		, receivemessage_receiver receiver
+		, receivemessage_title title
+		, receivemessage_text text
+		, to_char(receivemessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, receivemessage_read_fl flag
 
 	from 
-		rodo_message
+		rodo_receivemessage
 	
 	where
-		message_receiver = #{id} 
-		and message_read_fl = 0
+		receivemessage_receiver = #{id} 
+		
+		and receivemessage_read_fl = 0
 		
 	order by
-		message_num desc
+		receivemessage_num desc
 	
 </select>
 
@@ -103,24 +148,161 @@
 <select id = "sentMessage" parameterType="String" resultType = "Message">
 
 	select
-		message_num messagenum
-		, message_sender sender
-		, message_receiver receiver
-		, message_title title
-		, message_text text
-		, to_char(message_send_dt, 'yyyy.MM.dd HH:MI') senddate
-		, message_read_fl flag
+		sendmessage_num messagenum
+		, sendmessage_sender sender
+		, sendmessage_receiver receiver
+		, sendmessage_title title
+		, sendmessage_text text
+		, to_char(sendmessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, sendmessage_read_fl flag
 
 	from 
-		rodo_message
+		rodo_sendmessage
 		
 	where
-		message_sender = #{id}
+		sendmessage_sender = #{id}
 		
 	order by
-		message_num desc
+		sendmessage_num desc
 	
 </select>
+
+
+<select id = "receivelistsize" parameterType = "String" resultType = "int">
+
+	select
+		count(*)
+		
+	from
+		rodo_receivemessage
+		
+	<if test = "_parameter != null">
+		where
+			receivemessage_receiver = #{id}
+	</if>
+
+</select>
+
+
+<select id = "sendlistsize" parameterType = "String" resultType = "int">
+
+	select
+		count(*)
+		
+	from
+		rodo_sendmessage
+		
+	<if test = "_parameter != null">
+		where
+			sendmessage_sender = #{id}
+	</if>
+
+</select>
+
+
+<select id = "receivelist" parameterType = "String" resultType = "Message">
+
+	select
+		receivemessage_num messagenum
+		, receivemessage_sender sender
+		, receivemessage_receiver receiver
+		, receivemessage_title title
+		, receivemessage_text text
+		, to_char(receivemessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, receivemessage_read_fl flag
+
+	from 
+		rodo_receivemessage
+	
+	<if test = "_parameter != null">
+		where
+			receivemessage_receiver = #{id}
+	</if>	
+	
+	order by
+		receivemessage_num desc
+		
+</select>
+
+
+<select id = "sendlist" parameterType = "String" resultType = "Message">
+
+	select
+		sendmessage_num messagenum
+		, sendmessage_sender sender
+		, sendmessage_receiver receiver
+		, sendmessage_title title
+		, sendmessage_text text
+		, to_char(sendmessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, sendmessage_read_fl flag
+
+	from 
+		rodo_sendmessage
+	
+	<if test = "_parameter != null">	
+		where
+			sendmessage_sender = #{id}
+	</if>
+		
+	order by
+		sendmessage_num desc
+
+</select>
+
+
+<delete id = "deletereceiveMessage" parameterType ="Message">
+
+	delete
+		from
+			rodo_receivemessage
+			
+	where
+		receivemessage_num = #{messagenum}
+		
+	and
+		receivemessage_receiver = #{receiver}
+
+</delete>
+
+
+<delete id = "deletesendMessage" parameterType = "Message">
+
+	delete
+		from
+			rodo_sendmessage
+			
+	where
+		sendmessage_num = #{messagenum}
+		
+	and
+		sendmessage_sender = #{sender}
+
+</delete>
+
+
+<delete id = "alldeleteReceive" parameterType = "Message">
+
+	delete
+		from
+			rodo_receivemessage
+	
+	where
+		receivemessage_receiver = #{receiver}
+		
+
+</delete>
+
+
+<delete id = "alldeleteSend" parameterType = "String">
+
+	delete
+		from
+			rodo_sendmessage
+			
+	where
+		sendmessage_sender = #{sender}
+
+</delete>
 
 
 </mapper>

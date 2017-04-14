@@ -15,7 +15,7 @@ $(document).ready(function(){
 });
 
 function Delete(){
-	location.href="delete?photo_boardnum="+${pt_board.photo_boardnum}; 
+	location.href="deletePhoto?photo_boardnum="+${pt_board.photo_boardnum}; 
 }
 
 function updatePhoto(){

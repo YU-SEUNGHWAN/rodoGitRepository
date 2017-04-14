@@ -11,6 +11,7 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery-3.1.1.js"></script>
 
+
 <style>
 h3
 {
@@ -48,11 +49,7 @@ margin-left: 5px;
 </style>
 
 
-<script src="resources/js/jquery-3.1.1.js"></script>
-<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
-
 <script>
-
 
 function pagingFormSubmit(currentPage)
 {
@@ -74,114 +71,32 @@ function readMessage(messagenum)
 	location.href='readMessage?messagenum='+messagenum;
 }
 
-function deletereceiveMessage(messagenum, receiver)
+function deletesendMessage(messagenum, sender)
 {
-	location.href='deletereceiveMessage?messagenum='+messagenum+'&receiver='+receiver;
+	location.href='deletesendMessage?messagenum='+messagenum+'&sender='+sender;
 }
 
-function alldeleteReceive()
+function alldeleteSend()
 {
-	location.href='alldeleteReceive';
+	location.href='alldeleteSend';	
 }
-
-
-
-/* function receivedMsg()
-{
-	$.ajax
-	({
-		type : "get",
-		url : "ajaxReceived",
-		success : function(data)
-		{
-			var html = "<table class='table-striped' style='width:300px;'>"	
-				+"<tr>"
-				+"<td>보낸사람</td>"
-				+"<td>제목</td>"
-				+"<td>보낸날짜</td>"
-				+"</tr>";
-	
-			$.each(data, function(index,item)
-			{
-			html += "<tr>"
-						+"<td>"+item.sender+"</td>"
-						+"<td><a href='#none' onclick='readMessage("+item.messagenum+")'>"
-						+item.title+"</a></td>"
-						+"<td>"+item.senddate+"</td>"
-					+"</tr>";
-			});
-
-			html +=  "</table>";
-			
-			$("#messageTable").html(html);
-			
-			
-		},
-		
-		error : function(e)
-		{
-			console.log(e);
-		}
-		
-	});
-} */
-
-/* function sentMsg()
-{
-	$.ajax
-	({
-		type : "get",
-		url : "ajaxSent",
-		success : function(data)
-		{
-				var html = "<table class='table-striped' style='width:300px;'>"	
-				+ "<tr>"
-				+"<td>받는사람</td>"
-				+"<td>제목</td>"
-				+"<td>보낸날짜</td>"
-				+"</tr>"; 
-	
-			$.each(data, function(index,item)
-			{
-			html += "<tr>"
-						+"<td>"+item.receiver+"</td>"
-						+"<td><a href='#none' onclick='readMessage("+item.messagenum+")'>"
-						+item.title+"</a></td>"
-						+"<td>"+item.senddate+"</td>"
-					+"</tr>";
-			});
-
-			html +=  "</table>";
-			
-			$("#messageTable").html(html);
-			
-			
-		},
-		
-		error : function(e)
-		{
-			console.log(e);
-		}
-	});
-} */
-
-
 
 
 </script>
+
 </head>
 <body>
+
 
 <header>
 	<h3>쪽지함</h3>
 	
 	<div class="slice"></div>
 	<div class="message-menu">
-   
+	
 	<!-- <a href="#none" onclick="receivedMsg()">받은 쪽지함</a>
 	<a href="#none" onclick="sentMsg()">보낸 쪽지함</a>
 	<a href='writeMessage'>쪽지 보내기</a> -->
-	
 	
 	<a href="messageList">받은 쪽지함</a>
 	<a href="sendlist">보낸 쪽지함</a>
@@ -192,26 +107,26 @@ function alldeleteReceive()
 	
 </header>
 
+
 <div id="messageTable">
 	<table class="table-striped" style="width:500px;">
 		<tr style="background: #666464; color:white;">
-			<td style='width:90px;'>보낸사람</td>
+			<td style='width:90px;'>받는사람</td>
 			<td style='width:220px;'>제목</td>
 			<td style='width:130px;'>보낸날짜</td>
 			<td></td>
 		</tr>
-		<c:forEach var="message" items="${received}">
+		<c:forEach var="message" items="${sent}">
 			<tr>
-				<td>${message.sender}</td>
+				<td>${message.receiver}</td>
 				<td><a href="#none" onclick="readMessage('${message.messagenum}')">${message.title}</a></td>
 				<td>${message.senddate}</td>
-				<td><a href="#none" onclick="deletereceiveMessage('${message.messagenum}', '${message.receiver}')">삭제</a></td>
+				<td><a href="#none" onclick="deletesendMessage('${message.messagenum}', '${message.sender}')">삭제</a>
 			</tr>
 		</c:forEach>
 		
 	</table>
 </div>
-
 
 
 <div class="container wow fadeInUp"> 
@@ -234,12 +149,12 @@ function alldeleteReceive()
 				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
 				</span>
 			</td>
-		</tr>
+			</tr>
 	</table>
 </div>
 
 
-<form action = "receivelist" class="pull-right position" method = "get" id = "pagingForm">
+<form action = "sendlist" class="pull-right position" method = "get" id = "pagingForm">
 
 	<div class="input-append">
 	

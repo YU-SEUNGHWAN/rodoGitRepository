@@ -5,10 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery-3.1.1.js"></script>
+<link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script>
 
-var wsUri = "ws://203.233.196.103:8888/rodo/echo.do";
+var wsUri = "ws://203.233.196.105:8899/rodo/echo.do";
 var websocket;
 
 function init() {
@@ -34,7 +36,8 @@ function doSend(message) {
 window.addEventListener("load", init, false);
 
 
-function writeMessage(){
+function writeMessage()
+{
 	var receiver = $("#receiver").val();
 	var title = $("#title").val();
 	var text = $("#text").val();
@@ -58,6 +61,7 @@ function writeMessage(){
 	
 	})
 }
+
 </script>
 </head>
 <body>

@@ -117,3 +117,35 @@ create sequence rodo_video_seq start with 1 increment by 1;
 
 select * from rodo_videoboard;
 
+
+
+
+create table rodo_sendmessage
+(
+	sendmessage_num number primary key
+	, sendmessage_sender varchar2(30) not null
+	, sendmessage_receiver varchar2(30) not null
+	, sendmessage_title varchar2(30) not null
+	, sendmessage_text varchar2(600) not null
+	, sendmessage_send_dt date default sysdate
+	, sendmessage_read_fl number default 0
+);
+
+create sequence rodo_sendmessage_seq start with 1 increment by 1;
+
+
+create table rodo_receivemessage
+(
+	receivemessage_num number primary key
+	, receivemessage_sender varchar2(30) not null
+	, receivemessage_receiver varchar2(30) not null
+	, receivemessage_title varchar2(30) not null
+	, receivemessage_text varchar2(600) not null
+	, receivemessage_send_dt date default sysdate
+	, receivemessage_read_fl number default 0
+)
+
+create sequence rodo_receivemessage_seq start with 1 increment by 1;
+
+select * from rodo_sendmessage;
+select * from rodo_receivemessage;
