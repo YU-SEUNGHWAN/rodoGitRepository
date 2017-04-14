@@ -34,9 +34,6 @@ import project2.scmaster.rodo.vo.videoBoard;
 
 @Controller
 public class VideoBoardController {
-	final String videouploadPath = "/videoboardfile"; // 파일 업로드 경로
-	final String videotnUploadPath = "/videothumbnail";// 섬네일 업로드 경로
-	final String videoviUploadPath = "/videovi";// 섬네일 업로드 경로
 
 	@Autowired
 	VideoBoardDao dao;
@@ -68,6 +65,7 @@ public class VideoBoardController {
         		if (!mpf.isEmpty())
         		{
         			fullPath = "./resources/thumbvideo/" + FileService.saveFile(mpf, tempPath);
+        			System.out.println(tempPath);
         		}
             }
             catch (IOException e){

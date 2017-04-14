@@ -25,7 +25,7 @@ create table rodo_photoboard
 	, photo_update_dt date default sysdate
 	, photo_hit number default 0
 	, photofile_tn varchar2(200) not null
-)
+);
 
 alter table rodo_photoboard add foreign key(photo_id) references rodo_member (id);
 
@@ -61,7 +61,7 @@ create table rodo_freefile
 	free_boardnum number not null
 	, freefile_original varchar2(200)
 	, freefile_saved varchar2(200)
-)
+);
 
 alter table rodo_freefile add foreign key(free_boardnum) references rodo_freeboard (free_boardnum);
 
@@ -78,25 +78,6 @@ create table rodo_freereply
 
 alter table rodo_freereply add foreign key(free_boardnum) references rodo_freeboard (free_boardnum);
 create sequence rodo_freereply_seq start with 1 increment by 1;
-
-select * from rodo_freereply;
-
-
-
-create table rodo_message(
-	message_num number primary key
-	, message_sender varchar2(30) not null
-	, message_receiver varchar2(30) not null
-	, message_title varchar2(30) not null
-	, message_text varchar2(600) not null
-	, message_send_dt date default sysdate
-	, message_read_fl number default 0
-);
-
-create sequence rodo_message_seq start with 1 increment by 1;
-
-
-select * from RODO_MESSAGE
 
 
 create table rodo_videoboard
@@ -143,9 +124,6 @@ create table rodo_receivemessage
 	, receivemessage_text varchar2(600) not null
 	, receivemessage_send_dt date default sysdate
 	, receivemessage_read_fl number default 0
-)
+);
 
 create sequence rodo_receivemessage_seq start with 1 increment by 1;
-
-select * from rodo_sendmessage;
-select * from rodo_receivemessage;
