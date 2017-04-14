@@ -165,6 +165,14 @@ public class MessageController
 		return message;
 	}
 	
+	@RequestMapping(value = "henjiMessage", method=RequestMethod.GET)
+	public String henjiMessage(String sender, Model model)
+	{
+		model.addAttribute("sender", sender);
+		
+		return "Message/henjiMessage";
+	}
+	
 	@RequestMapping(value="readMessage", method=RequestMethod.GET)
 	public String readMessage(Model model, int messagenum)
 	{
@@ -227,4 +235,6 @@ public class MessageController
 
 		return "redirect:/sendlist";
 	}
+	
+	
 }

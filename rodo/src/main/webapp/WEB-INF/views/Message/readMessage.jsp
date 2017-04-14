@@ -13,7 +13,7 @@
 
 <script>
 
-var wsUri = "ws://203.233.196.103:8888/rodo/echo.do";
+var wsUri = "ws://203.233.196.105:8899/rodo/echo.do";
 var websocket;
 
 function init() {
@@ -48,14 +48,33 @@ $(function()
 	})
 })
 
-$(function()
+function henjiMessage()
+{
+	var receivemessagesender = $("#receivemessagesender").val();
+	var sendmessagesender = $("#sendmessagesender").val();
+	
+	if (receivemessagesender != null)
+	{
+		var sender = receivemessagesender;
+		location.href='henjiMessage?sender='+sender;
+	}
+	
+	else if (sendmessagesender != null)
+	{
+		var sender = sendmessagesender;
+		location.href='henjiMessage?sender='+sender;
+	}
+	
+}
+
+/* $(function()
 {
 	$("#henji").on("click", function()
 	{
-		var receiver = $("#receiver").val();
+		var sender = $("#sender").val();
 		var title = $("#title").val();
 		var text = $("#text").val();
-		
+
 		$.ajax({
 			
 			type : "post",
@@ -65,17 +84,21 @@ $(function()
 				title : title,
 				text : text
 			},
-			success : function(data){
+			
+			success : function(data)
+			{
 				doSend(receiver);
 				location.href="messageList";
 			},
-			error : function(e){
+			
+			error : function(e)
+			{
 				console.log(e);
 			}
 		
-		})
+		}) 
 	})
-})
+}) */
 
 </script>
 
@@ -83,23 +106,33 @@ $(function()
 </head>
 <body>
 
-<c:if test="${sendmessage!=null}">
-	보낸이 <input type="text" id="receiver" value="${sendmessage.sender}"><br>
-	제목 <input type="text" id="title" value="${sendmessage.title}"><br>
-	보낸 날짜 <input type="text" value="${sendmessage.senddate}"><br>
-	<textarea id="text"> ${sendmessage.text}</textarea><br>
-	<input type="button" id = "messagelist" value="목록으로">
-	<input type="button" id = "henji" value="답장하기">
-</c:if>
+<c:choose>
+	<c:when test="${sendmessage!=null}">
+	
+		보낸이 <input type="text" id="sender" value="${sendmessage.sender}"><br>
+		제목 <input type="text" id="title" value="${sendmessage.title}"><br>
+		보낸 날짜 <input type="text" value="${sendmessage.senddate}"><br>
+		<textarea id="text">${sendmessage.text}</textarea><br>
+		<input type="button" id = "messagelist" value="목록으로">
+		<!-- <input type="button" id = "henji" value="답장하기" onclick="henjiMessage()"> -->
+	
+	</c:when>
+	
+	<c:otherwise>
+	
+		보낸이 <input type="text" id="sender" value="${receivemessage.sender}"><br>
+		제목 <input type="text" id="title" value="${receivemessage.title}"><br>
+		보낸 날짜 <input type="text" value="${receivemessage.senddate}"><br>
+		<textarea id="text">${receivemessage.text}</textarea><br>
+		<input type="button" id = "messagelist" value="목록으로">
+		<input type="button" id = "henji" value="답장하기" onclick="henjiMessage()">
+	
+	</c:otherwise>
+</c:choose>	
 
-<c:if test="${receivemessage!=null}">
-	보낸이 <input type="text" id="receiver" value="${receivemessage.sender}"><br>
-	제목 <input type="text" id="title" value="${receivemessage.title}"><br>
-	보낸 날짜 <input type="text" value="${receivemessage.senddate}"><br>
-	<textarea id="text"> ${receivemessage.text}</textarea><br>
-	<input type="button" id = "messagelist" value="목록으로">
-	<input type="button" id = "henji" value="답장하기">
-</c:if>
+	<input type = "hidden" id = "receivemessagesender" value = "${receivemessage.sender}">
+	<input type = "hidden" id = "sendmessagesender" value = "${sendmessage.sender}">
 
+	
 </body>
 </html>
