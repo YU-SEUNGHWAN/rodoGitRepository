@@ -8,14 +8,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -35,7 +30,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import project2.scmaster.rodo.dao.VideoBoardDao;
 import project2.scmaster.rodo.util.FileService;
-import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
 import project2.scmaster.rodo.vo.videoBoard;
 
 @Controller
@@ -133,7 +127,7 @@ public class VideoBoardController {
                 
         		if (!mpf.isEmpty())
         		{
-        			videoSavedFile = "./resources/thumbvideo/" + FileService.saveFile(mpf, videoPath);
+        			videoSavedFile = "./resources/video/" + FileService.saveFile(mpf, videoPath);
         		}
             }
             catch (IOException e){
@@ -182,7 +176,7 @@ public class VideoBoardController {
 		System.out.println(video_boardnum);
 		videoBoard videoBoard = dao.readVideo(video_boardnum);
 		model.addAttribute("videoBoard", videoBoard);
-		return "videoRead";
+		return "videoboard/readVideo";
 	}
 	
 }

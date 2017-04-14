@@ -86,6 +86,8 @@
 					dataType : "text",
 					success : function(data){
 	
+						alert(data);
+						
 						var html = "<div>"
 						   		   +"<video height='380' id='videoForm' controls='controls'>"
 	 						   	   +"<source src='"+data+"' />"

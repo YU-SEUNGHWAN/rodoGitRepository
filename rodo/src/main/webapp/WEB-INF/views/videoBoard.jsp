@@ -78,7 +78,7 @@ $(function(){
       <div class="row">
       <c:forEach items="${videoList}" var="video">
         <div class="col-md-4">
-          <a class="portfolio-item" style="background-image: url('downloadVideo?origin=${video.video_savedfile}&tn=${video.video_thumbnail }');"
+          <a class="portfolio-item" style="background-image: url('${video.video_thumbnail }');"
            href="readVideo?video_boardnum=${video.video_boardnum }">
              <div class="details play">
 	              <h4>${video.video_title}</h4>

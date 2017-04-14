@@ -44,15 +44,16 @@
 	</select>
 	
 	<!-- 게시글 읽기 -->
-	<select id="readPhoto" parameterType="int" resultType="Rodo_PhotoBoard">
+	<select id="readVideo" parameterType="int" resultType="Video">
 		select 
-			photo_id, photo_boardnum, photo_title, photo_content, photo_share,
-			photo_input_dt, photo_update_dt, photo_hit, photofile_tn
+			video_id, video_boardnum, video_title, video_content, 
+			video_input_dt, video_update_dt, video_hits, 
+			video_originalfile, video_savedfile, video_thumbnail
 		from 
-			rodo_photoboard
+			rodo_videoboard
 		where 
-			photo_boardnum = #{photo_boardnum}
+			video_boardnum = #{video_boardnum}
 		order by 
-			photo_boardnum asc
+			video_boardnum asc
 	</select>
 </mapper>
