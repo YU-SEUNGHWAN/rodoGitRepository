@@ -31,249 +31,28 @@
 				, #{video_savedfile}
 				, #{video_thumbnail}
 			)
-
 </insert>
 
-
-
-<select id="getsequence" resultType="int">
-	
-	select
-		MAX(free_boardnum)
-			
-	from
-		rodo_freeboard
-	
-</select>
-
-
-<!-- <insert id = "writefile" parameterType = "Rodo_FreeFile">
-
-	insert
-		into
-			rodo_freefile
-			(
-				free_boardnum
-				, freefile_original
-				, freefile_saved
-			)
-			
-			values
-			(
-				, #{free_boardnum}
-				, #{freefile_original}
-				, #{freefile_saved}
-			)
-
-</insert> -->
-
-
-<select id = "list" resultType = "Rodo_FreeBoard">
-
-	select
-		free_boardnum
-		, free_id
-		, free_title
-		, free_content
-		, free_input_dt
-		, free_update_dt
-		, free_hit
-
-	from 
-		rodo_freeboard
-		
-		<if test = "_parameter != null">
-			where
-				free_title like '%' || #{searchText} || '%'
-		</if>
-		
-	order by
-		free_boardnum desc
-	
-</select>
-
-
-<select id = "selectOne" parameterType = "int" resultType = "Rodo_FreeBoard">
-
-		select
-			b.free_boardnum
-			, b.free_id
-			, b.free_title
-			, b.free_content
-			, b.free_input_dt
-			, b.free_update_dt
-			, b.free_hit
-			, f.freefile_original
-			, f.freefile_saved
-			
-		from
-			rodo_freeboard b, rodo_freefile f
-	
-		where
-			b.free_boardnum = #{free_boardnum}
-	
-		and
-			b.free_boardnum = f.free_boardnum
-
-</select>
-
-
-<select id = "selectnofile" parameterType = "int" resultType ="Rodo_FreeBoard">
-
-		select
-			free_boardnum
-			, free_id
-			, free_title
-			, free_content
-			, free_input_dt
-			, free_update_dt
-			, free_hit
-			
-		from
-			rodo_freeboard
-			
-		where 
-			free_boardnum = #{free_boardnum}
-
-</select>
-
-
-<delete id = "delete" parameterType = "Rodo_FreeBoard">
-
-	delete 
-		from
-			rodo_freeboard
-			
-		where 
-			free_boardnum = #{free_boardnum}
-			
-		and
-			free_id = #{free_id}
-
-</delete>
-
-
-<update id = "update" parameterType = "Rodo_FreeBoard">
-
-	update
-		rodo_freeboard
-		
-	set 
-		free_title = #{free_title}
-		, free_content = #{free_content}
-		
-		<if test = "freefile_original != null and freefile_saved != null">
-		
-			, freefile_original = #{freefile_original}
-			, freefile_saved = #{freefile_saved}
-			
-		</if>
-	
-	where 
-		free_boardnum = #{free_boardnum}
-	
-</update>
-
-
-
-<!-- ********************************** 리플 ********************************** -->
-
-
-<insert id = "writereply" parameterType = "Rodo_FreeReply">
-
-	insert
-		into
-			rodo_freereply
-			(
-				freereply_replynum
-				, free_boardnum
-				, freereply_id
-				, freereply_text
-			)
-			
-		values
-			(
-				rodo_freereply_seq.nextval
-				, #{free_boardnum}
-				, #{freereply_id}
-				, #{freereply_text}
-			)
-		
-</insert>
-
-
-<select id = "findreply" parameterType = "int" resultType = "Rodo_FreeReply">
-
-	select
-		freereply_replynum
-		, free_boardnum
-		, freereply_id
-		, freereply_text
-		, freereply_input_dt
-		
-	from
-		rodo_freereply
-		
-	where
-		free_boardnum = #{free_boardnum}
-	
-	order by
-		freereply_replynum
-	
-</select>
-
-
-<select id = "selectreply" parameterType = "int" resultType = "Rodo_FreeReply">
-
-	select 
-		freereply_replynum
-		, free_boardnum
-		, freereply_id
-		, freereply_text
-		, freereply_input_dt
-		, freereply_update_dt
-		
-	from
-		rodo_freereply
-		
-	where
-		freereply_replynum = #{freereply_replynum}
-
-</select>
-
-
-<delete id = "deletereply" parameterType = "Rodo_FreeReply">
-
-	delete
-		from
-			rodo_freereply
-			
-		where
-			freereply_replynum = #{freereply_replynum}
-			
-		and
-			free_boardnum = #{free_boardnum}
-
-</delete>
-
-
-<!-- ********************************** 페이징 ********************************** -->
-
-
-	<select id = "listsize" parameterType = "String" resultType = "int">
-	
+	<!-- 보드리스트 가져오기 -->
+	<select id = "Videolist" resultType = "Video">
 		select 
-			count(*)
-			
-		from
-			rodo_freeboard
-		
-		<if test = "_parameter != null">
-			where
-				free_title like '%' || #{searchText} || '%'
-		</if>
-		
+			*
+		from 
+			rodo_videoboard
+		order by 
+			video_boardnum asc
 	</select>
-
-
+	
+	<!-- 게시글 읽기 -->
+	<select id="readPhoto" parameterType="int" resultType="Rodo_PhotoBoard">
+		select 
+			photo_id, photo_boardnum, photo_title, photo_content, photo_share,
+			photo_input_dt, photo_update_dt, photo_hit, photofile_tn
+		from 
+			rodo_photoboard
+		where 
+			photo_boardnum = #{photo_boardnum}
+		order by 
+			photo_boardnum asc
+	</select>
 </mapper>

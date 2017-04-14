@@ -98,8 +98,8 @@
 		
 			<c:if test = "${board.freefile_original != null}">
 			
-				<img alt = "" src = "download?free_boardnum=${board.free_boardnum}"><br>
-				<a href = "download?free_boardnum=${board.free_boardnum}">
+				<img alt = "" src = "downloadFree?free_boardnum=${board.free_boardnum}"><br>
+				<a href = "downloadFree?free_boardnum=${board.free_boardnum}">
 					${board.freefile_original}
 				</a>
 				
@@ -114,7 +114,7 @@
 			<c:if test = "${sessionScope.loginId!=null}">
 				<c:if test = "${sessionScope.loginId == board.free_id}">
 					<a href = "updateboard?free_boardnum=${board.free_boardnum}">수정</a>
-					<a href = "delete?free_boardnum=${board.free_boardnum}">삭제</a>
+					<a href = "deleteFreeboard?free_boardnum=${board.free_boardnum}">삭제</a>
 				</c:if>
 			</c:if>
 				<a href = "freeboardlist">목록보기</a>

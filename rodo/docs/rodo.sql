@@ -14,8 +14,6 @@ create table rodo_member
 
 select * from rodo_member;
 
-insert into rodo_member values('aaa', 'aaa', 'aaa', 'aaa');
-
 create table rodo_photoboard
 (
 	photo_boardnum number primary key
@@ -26,12 +24,8 @@ create table rodo_photoboard
 	, photo_input_dt date default sysdate
 	, photo_update_dt date default sysdate
 	, photo_hit number default 0
-<<<<<<< HEAD
 	, photofile_tn varchar2(200) not null
 )
-=======
-);
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 
 alter table rodo_photoboard add foreign key(photo_id) references rodo_member (id);
 
@@ -45,7 +39,6 @@ create table rodo_photofile
 );
 
 alter table rodo_photofile add foreign key(photo_boardnum) references rodo_photoboard (photo_boardnum);
-
 
 
 create table rodo_freeboard
@@ -117,9 +110,10 @@ create table rodo_videoboard
 	, video_originalfile varchar2(150) not null
 	, video_savedfile varchar2(150) not null
 	, video_thumbnail varchar2(150) not null
-	, free_hit number default 0
+	, video_hits number default 0
 );
 
 create sequence rodo_video_seq start with 1 increment by 1;
 
 select * from rodo_videoboard;
+

@@ -3,22 +3,30 @@ package project2.scmaster.rodo.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,17 +35,20 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import project2.scmaster.rodo.dao.VideoBoardDao;
 import project2.scmaster.rodo.util.FileService;
+import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
 import project2.scmaster.rodo.vo.videoBoard;
 
 @Controller
 public class VideoBoardController {
+	final String videouploadPath = "/videoboardfile"; // 파일 업로드 경로
+	final String videotnUploadPath = "/videothumbnail";// 섬네일 업로드 경로
+	final String videoviUploadPath = "/videovi";// 섬네일 업로드 경로
 
 	@Autowired
 	VideoBoardDao dao;
 	
 	@RequestMapping(value="writeVideoForm", method=RequestMethod.GET)
 	public String writeVideoForm(){
-		
 		return "videoboard/videoWrite";
 	}
 	
@@ -130,15 +141,48 @@ public class VideoBoardController {
             }
 	    }
 		
-		
-		
 		video.setVideo_id(id);
 		video.setVideo_thumbnail("./resources/thumbnail/"+thumbnailFile);
 		video.setVideo_originalfile(videoOriginaiFile);
 		video.setVideo_savedfile(videoSavedFile);
 		
 		dao.write(video);
+	}
+	
+	@RequestMapping(value = "downloadVideo", method = RequestMethod.GET)
+	public void fileDownload(HttpServletResponse response, String origin, String tn) {
+		try {
+			System.out.println("세이브파일 : " + origin);
+			System.out.println("섬네일파일 : " + tn);
+			response.setHeader("Content-Disposition", " attachment;filename=" + URLEncoder.encode(origin, "UTF-8"));
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
+		FileInputStream filein0 = null;
+		ServletOutputStream fileout0 = null;
+
+		try {
+			filein0 = new FileInputStream(tn);
+			fileout0 = response.getOutputStream();
+
+			// Spring의 파일 관련 유틸
+			FileCopyUtils.copy(filein0, fileout0);
+
+			filein0.close();
+			fileout0.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value = "readVideo", method = RequestMethod.GET)
+	public String readVideo(Model model, int video_boardnum){
+		System.out.println(video_boardnum);
+		videoBoard videoBoard = dao.readVideo(video_boardnum);
+		model.addAttribute("videoBoard", videoBoard);
+		return "videoRead";
 	}
 	
 }

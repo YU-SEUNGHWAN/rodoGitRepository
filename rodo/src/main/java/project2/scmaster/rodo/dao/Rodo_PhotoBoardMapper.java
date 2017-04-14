@@ -28,5 +28,4 @@ public interface Rodo_PhotoBoardMapper {
 	public void deletePhotoFile(int photo_boardnum);
 	
 	public int updatePhoto(Rodo_PhotoBoard board);
-	
 }

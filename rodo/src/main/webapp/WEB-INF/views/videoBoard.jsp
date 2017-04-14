@@ -76,62 +76,19 @@ $(function(){
       </div>
       
       <div class="row">
-      
+      <c:forEach items="${videoList}" var="video">
         <div class="col-md-4">
-          <a class="portfolio-item" style="background-image: url(resources/img/hero-bg.jpg);" href="">
-            <div class="details play">
-	              <h4>Portfolio 1</h4>
-	              <span>Alored dono par</span>
+          <a class="portfolio-item" style="background-image: url('downloadVideo?origin=${video.video_savedfile}&tn=${video.video_thumbnail }');"
+           href="readVideo?video_boardnum=${video.video_boardnum }">
+             <div class="details play">
+	              <h4>${video.video_title}</h4>
+	              <span>${video.video_id}</span>
+             	  <span>${video.video_input_dt}</span>
             </div>
           </a>
         </div>
-        
-        <div class="col-md-4">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-7.jpg);" href="">
-            <div class="details play">
-              <h4>Portfolio 2</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-4">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-3.jpg);" href="">
-            <div class="details play">
-              <h4>Portfolio 3</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-4">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-4.jpg);" href="">
-            <div class="details play">
-              <h4>Portfolio 4</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-4">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-5.jpg);" href="">
-            <div class="details play">
-              <h4>Portfolio 5</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-        <div class="col-md-4">
-          <a class="portfolio-item" style="background-image: url(resources/img/portfolio-6.jpg);" href="">
-            <div class="details play">
-              <h4>Portfolio 6</h4>
-              <span>Alored dono par</span>
-            </div>
-          </a>
-        </div>
-        
-      </div>
+        </c:forEach>
+                
 
         <table style="width:100%" class="board-navi">
 		  	<tr><td style="width:20%"></td>

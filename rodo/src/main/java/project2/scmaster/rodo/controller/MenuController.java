@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import project2.scmaster.rodo.dao.Rodo_PhotoBoardDAO;
+import project2.scmaster.rodo.dao.VideoBoardDao;
 import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
+import project2.scmaster.rodo.vo.videoBoard;
 
 @Controller
 public class MenuController {
 
 	@Autowired
 	Rodo_PhotoBoardDAO photo_dao;
+	@Autowired
+	VideoBoardDao video_dao;
 	
 	@RequestMapping(value="index", method=RequestMethod.GET)
 	public String bootstrap(){
@@ -37,7 +41,10 @@ public class MenuController {
 	}
 	
 	@RequestMapping(value="videoBoard", method=RequestMethod.GET)
-	public String videoBoard(){
+	public String videoBoard(Model model){
+		ArrayList<videoBoard> video_board = new ArrayList<>();
+		video_board = video_dao.Videolist();
+		model.addAttribute("videoList", video_board);
 		return "videoBoard";
 	}
 	

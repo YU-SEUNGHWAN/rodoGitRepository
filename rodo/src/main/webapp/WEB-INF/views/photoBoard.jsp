@@ -96,7 +96,6 @@
 	      		      	<td style="width:20%"><a href="writePhoto" class="btn-write">Write</a></td></tr>
       	</table>
       </div>
-
     </div>        
   </section>
 

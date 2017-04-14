@@ -136,7 +136,7 @@ public class FreeBoardController
 		return "freeboard/freeboardread";
 	}
 	
-	@RequestMapping(value = "delete", method = RequestMethod.GET)
+	@RequestMapping(value = "deleteFreeboard", method = RequestMethod.GET)
 	public String delete(int free_boardnum, HttpSession session)
 	{
 		Rodo_FreeBoard board = new Rodo_FreeBoard();
@@ -195,7 +195,7 @@ public class FreeBoardController
 		return "redirect:/freeboardlist";
 	}
 	
-	@RequestMapping(value = "download", method = RequestMethod.GET)
+	@RequestMapping(value = "downloadFree", method = RequestMethod.GET)
 	public String download(int free_boardnum, HttpServletResponse response)
 	{
 		Rodo_FreeBoard board = dao.selectOne(free_boardnum);
