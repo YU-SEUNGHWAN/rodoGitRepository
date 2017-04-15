@@ -16,23 +16,30 @@
 var wsUri = "ws://203.233.196.105:8899/rodo/echo.do";
 var websocket;
 
-function init() {
+function init() 
+{
     websocket = new WebSocket(wsUri);
-    websocket.onopen = function(evt) {
+    websocket.onopen = function(evt) 
+    {
+    	
     };
 }
 
-function receiveMessage(){
-    websocket.onerror = function(evt) {
+function receiveMessage()
+{
+    websocket.onerror = function(evt) 
+    {
         onError(evt)
     };
 }
 
-function onError(evt) {
+function onError(evt) 
+{
 	 console.log('ERROR: ' + evt.data);
 }
 
-function doSend(message) {
+function doSend(message) 
+{
 	websocket.send(message);
 }
 
@@ -45,6 +52,14 @@ $(function()
 	$("#messagelist").on("click", function()
 	{
 		location.href='messageList';
+	})
+})
+
+$(function()
+{
+	$("#sendlist").on("click", function()
+	{
+		location.href='sendlist';
 	})
 })
 
@@ -63,8 +78,7 @@ function henjiMessage()
 	{
 		var sender = sendmessagesender;
 		location.href='henjiMessage?sender='+sender;
-	}
-	
+	}	
 }
 
 /* $(function()
@@ -106,14 +120,17 @@ function henjiMessage()
 </head>
 <body>
 
+<!-- 왜 안되 개같은노무거 -->
+
 <c:choose>
+
 	<c:when test="${sendmessage!=null}">
 	
 		보낸이 <input type="text" id="sender" value="${sendmessage.sender}"><br>
 		제목 <input type="text" id="title" value="${sendmessage.title}"><br>
 		보낸 날짜 <input type="text" value="${sendmessage.senddate}"><br>
 		<textarea id="text">${sendmessage.text}</textarea><br>
-		<input type="button" id = "messagelist" value="목록으로">
+		<input type="button" id = "sendlist" value="목록으로">
 		<!-- <input type="button" id = "henji" value="답장하기" onclick="henjiMessage()"> -->
 	
 	</c:when>
@@ -128,6 +145,7 @@ function henjiMessage()
 		<input type="button" id = "henji" value="답장하기" onclick="henjiMessage()">
 	
 	</c:otherwise>
+	
 </c:choose>	
 
 	<input type = "hidden" id = "receivemessagesender" value = "${receivemessage.sender}">

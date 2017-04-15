@@ -68,7 +68,7 @@ function pagingFormSubmit(currentPage)
 
 function readMessage(messagenum)
 {
-	location.href='readMessage?messagenum='+messagenum;
+	location.href='readsentMessage?messagenum='+messagenum;
 }
 
 function deletesendMessage(messagenum, sender)
@@ -101,7 +101,7 @@ function alldeleteSend()
 	<a href="messageList">받은 쪽지함</a>
 	<a href="sendlist">보낸 쪽지함</a>
 	<a href='writeMessage'>쪽지 보내기</a>
-	<a id = "alldeletereceive" href="#none" onclick="alldeleteReceive()" style="margin-left : 125px;">쪽지함 비우기</a>
+	<a id = "alldeleteSend" href="#none" onclick="alldeleteSend()" style="margin-left : 125px;">쪽지함 비우기</a>
 	
 	</div>
 	

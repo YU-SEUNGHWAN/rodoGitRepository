@@ -71,7 +71,7 @@ function pagingFormSubmit(currentPage)
 
 function readMessage(messagenum)
 {
-	location.href='readMessage?messagenum='+messagenum;
+	location.href='readreceivedMessage?messagenum='+messagenum;
 }
 
 function deletereceiveMessage(messagenum, receiver)
