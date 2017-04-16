@@ -66,12 +66,25 @@
 	<!-- 보드리스트 가져오기 -->
 	<select id = "Photolist" resultType = "Rodo_PhotoBoard">
 		select 
-			photo_id, photo_boardnum, photo_title, photo_content, photo_share,
-			photo_input_dt, photo_update_dt, photo_hit, photofile_tn
+			photo_boardnum
+			, photo_id
+			, photo_title
+			, photo_content
+			, photo_share
+			, photo_input_dt
+			, photo_update_dt
+			, photo_hit
+			, photofile_tn
 		from 
 			rodo_photoboard
+			
+			<if test = "_parameter != null">
+				where
+					photo_title like '%' || #{searchText} || '%'
+			</if>
+			
 		order by 
-			photo_boardnum asc
+			photo_boardnum desc
 	</select>
 
 	<!-- 보드파일리스트 가져오기 -->
@@ -127,4 +140,83 @@
 		where 
 			photo_boardnum = #{photo_boardnum}
 	</update>  -->
+	
+	
+	<select id = "listsize" parameterType = "String" resultType = "int">
+		
+		select 
+			count(*)
+			
+		from
+			rodo_photoboard
+		
+		<if test = "_parameter != null">
+			where
+				photo_title like '%' || #{searchText} || '%'
+		</if>
+		
+	</select>
+	
+	
+	<!--  =========================== 이 밑부턴 댓글 =========================== -->
+	
+	<insert id = "writephotoreply" parameterType = "Rodo_PhotoReply">
+	
+		insert
+			into
+				rodo_photoreply
+				(
+					photoreply_replynum
+					, photo_boardnum
+					, photoreply_id
+					, photoreply_text
+				)
+				
+			values
+				(
+					rodo_photoreply_seq.nextval
+					, #{photo_boardnum}
+					, #{photoreply_id}
+					, #{photoreply_text}
+				)
+	
+	</insert>
+	
+	
+	<select id = "findreply" parameterType = "int" resultType = "Rodo_PhotoReply">
+	
+	select
+		photoreply_replynum
+		, photo_boardnum
+		, photoreply_id
+		, photoreply_text
+		, photoreply_input_dt
+		
+	from
+		rodo_photoreply
+		
+	where
+		photo_boardnum = #{photo_boardnum}
+	
+	order by
+		photoreply_replynum
+	
+	</select>
+
+	
+	<delete id = "deletereply" parameterType = "Rodo_PhotoReply">
+	
+		delete
+			from
+				rodo_photoreply
+				
+			where
+				photoreply_replynum = #{photoreply_replynum}
+			
+			and
+				photo_boardnum = #{photo_boardnum}
+	
+	</delete>
+	
+
 </mapper>

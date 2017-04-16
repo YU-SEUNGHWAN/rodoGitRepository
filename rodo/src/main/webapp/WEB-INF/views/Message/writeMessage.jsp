@@ -10,7 +10,7 @@
 <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script>
 
-var wsUri = "ws://203.233.196.103:8888/rodo/echo.do";
+var wsUri = "ws://203.233.196.105:8899/rodo/echo.do";
 var websocket;
 
 function init() {
@@ -77,7 +77,7 @@ function writeMessage()
 받는이 <input type="text" id="receiver"><br>
 제목 <input type="text" id = "title"><br>
 <textarea id ="text"></textarea><br>
-<input type="button" id="cancel" value="취소">
+<input type="button" id = "cancel" value="취소">
 <input type="button" value="보내기" onclick="writeMessage()">
 </body>
 </html>

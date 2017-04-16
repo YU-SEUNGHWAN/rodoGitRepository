@@ -108,8 +108,8 @@ function deletereplywarp(replynum, boardnum)
 		                     +"<td id='"+item.freereply_replynum+"' class='retext'>"+item.freereply_text+"</td>"
 		                     +"<td class='redate'>"+item.freereply_input_dt+"</td>"
 		                     +"<td class='reetc'>"
-		                           +"<td><a href='javascript:replyUpdateForm("+item.freereply_replynum+","+item.free_boardnum+")'>[수정]</a></td>"
-		                     	   +"<td><a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a></td>"
+		                           +"<a href='javascript:replyUpdateForm("+item.freereply_replynum+","+item.free_boardnum+")'>[수정]</a>"
+		                     	   +"<a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a>"
 		                     +"</td>"
 		                  +"</tr>";
 	         });
@@ -239,14 +239,15 @@ function deletereplywarp(replynum, boardnum)
 		<td>
 			<c:if test = "${sessionScope.loginId == reply.freereply_id}">
 				<a href = "">[수정]</a>
+				<a id = "deletereplywarp" href="#none" onclick = "deletereplywarp('${reply.freereply_replynum}', '${reply.free_boardnum}')">[삭제]</a>
 			</c:if>
 		</td>
 		
-		<td>
+		<%-- <td>
 			<c:if test = "${sessionScope.loginId == reply.freereply_id}">
-				<a id = "deletereplywarp" href="#none" onclick = "deletereplywarp('${reply.freereply_replynum}', '${reply.free_boardnum}')">[삭제]</a>				
+								
 			</c:if>
-		</td>
+		</td> --%>
 		
 	</tr>
 	</c:forEach>

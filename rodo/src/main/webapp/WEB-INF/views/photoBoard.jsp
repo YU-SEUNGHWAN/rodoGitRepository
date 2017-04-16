@@ -3,9 +3,31 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
+<style>
+	
+.pagingset
+{
+	color : white;
+}
+
+</style>
+
 <head>
   <meta charset="utf-8">
   <script type="text/javascript">
+  
+  function pagingFormSubmit(currentPage)
+  {
+  	var form = document.getElementById("pagingForm");
+  	var page = document.getElementById("page");
+  	page.value = currentPage;
+  	
+  	form.submit();
+  }
+  
+  
+  
   
   </script>
   <title>Share Your Road</title>
@@ -44,7 +66,6 @@
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
   
-
 </head>
 
 <body>
@@ -80,7 +101,45 @@
         </div>
       </c:forEach>
         
-        <table style="width:100%" class="board-navi">
+        
+	<table style="width:100%" class="board-navi">
+		<tr>
+			<td style="width:20%"></td>
+			<td style="width:60%; text-align:center;">
+				<span class="page-navi">
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})">&lt;&lt;</a></span>
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - 1})">&lt;</a></span>
+				
+				<c:forEach var = "count" begin = "${navi.startPageGroup}" end = "${navi.endPageGroup}">
+				
+				<span class="btn-page">
+						<a class = "pagingset" href = "javascript:pagingFormSubmit(${count})">${count}</a>
+				</span>
+				
+				</c:forEach>
+				
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + 1})">&gt;</a></span>
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
+				</span>
+			</td>
+		<td style="width:20%"><a href="writePhoto" class="btn-write">Write</a></td></tr>
+	</table>
+        
+        
+     <div class="inbox-head">
+     
+        <form action="photoBoard" class="pull-right position" method = "get" id = "pagingForm">
+          <div class="input-append">
+          	<input type = "hidden" name = "page" id = "page">
+              <input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text" value = "${searchText}">
+              <button class="btn sr-btn" type="button" onclick = "pagingFormSubmit(1)"><i class="fa fa-search"></i></button>
+          </div>
+      </form>
+        
+         </div>
+        
+        
+       <!--  <table style="width:100%" class="board-navi">
 		  	<tr><td style="width:20%"></td>
 			<td style="width:60%; text-align:center;"><span class="page-navi">
 				<span class="btn-page">&lt;&lt;</span>
@@ -90,7 +149,7 @@
 				<span class="btn-page">&gt;&gt;</span>
 			</span></td>
 	      		      	<td style="width:20%"><a href="writePhoto" class="btn-write">Write</a></td></tr>
-      	</table>
+      	</table> -->
       </div>
     </div>        
   </section>

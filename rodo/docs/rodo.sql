@@ -40,6 +40,19 @@ create table rodo_photofile
 
 alter table rodo_photofile add foreign key(photo_boardnum) references rodo_photoboard (photo_boardnum);
 
+create table rodo_photoreply
+(
+	photoreply_replynum number primary key
+	, photo_boardnum number not null
+	, photoreply_id varchar2(20) not null
+	, photoreply_text varchar2(300) not null
+	, photoreply_input_dt date default sysdate
+	, photoreply_update_dt date default sysdate
+)
+
+alter table rodo_photoreply add foreign key(photo_boardnum) references rodo_photoboard (photo_boardnum);
+create sequence rodo_photoreply_seq start with 1 increment by 1;
+
 
 create table rodo_freeboard
 (
@@ -95,10 +108,30 @@ create table rodo_videoboard
 );
 
 alter table rodo_videoboard add foreign key(video_id) references rodo_member (id);
-
 create sequence rodo_video_seq start with 1 increment by 1;
 
 select * from rodo_videoboard;
+
+
+create table rodo_gpsboard
+(
+	gps_boardnum number primary key
+	, gps_id varchar2(20) not null
+	, gps_title varchar2(100) not null
+	, gps_content varchar2(2000) not null
+	, gps_gpxinfo varchar2(4000) not null
+	, gps_location varchar2(10) not null
+	, gps_input_dt date default sysdate
+	, gps_update_dt date default sysdate
+	, gps_marker varchar2(1000) 
+	, gps_hit number default 0
+)
+
+create sequence rodo_gpsboard_seq start with 1 increment by 1;
+alter table rodo_gpsboard add foreign key(gps_id) references rodo_member (id);
+
+select * from rodo_gpsboard;
+
 
 
 

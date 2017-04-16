@@ -6,11 +6,17 @@
 	
 	<typeAliases>
 		<typeAlias type="project2.scmaster.rodo.vo.Member" alias="Member" />
-		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeBoard" alias="Rodo_FreeBoard" />
-		<typeAlias type="project2.scmaster.rodo.vo.Rodo_PhotoBoard" alias="Rodo_PhotoBoard" />
-		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeReply" alias="Rodo_FreeReply" />
 		<typeAlias type="project2.scmaster.rodo.vo.Message" alias="Message" />
+		
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeBoard" alias="Rodo_FreeBoard" />
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_FreeReply" alias="Rodo_FreeReply" />
+		
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_PhotoBoard" alias="Rodo_PhotoBoard" />
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_PhotoReply" alias="Rodo_PhotoReply" />
+		
 		<typeAlias type="project2.scmaster.rodo.vo.videoBoard" alias="Video" />
+		
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_GpsBoard" alias="Rodo_GpsBoard" />
 	</typeAliases>
 	
 	
@@ -19,6 +25,7 @@
 		<mapper resource="Mapper/Rodo_FreeBoardMapper.xml" />
 		<mapper resource="Mapper/Rodo_PhotoBoardMapper.xml" />
 		<mapper resource="Mapper/VideoBoardMapper.xml" />
+		<mapper resource="Mapper/Rodo_GpsBoardMapper.xml" />
 		<mapper resource="Mapper/MessageMapper.xml" />
 	</mappers>
 	
