@@ -529,7 +529,6 @@ $(document).ready(function()
                				<form action="#" method="post" enctype="multipart/form-data">
             					
 			                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your ID">
-			                    <input type="button" value="id check" class="submit">
 			                    
 			                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
              						    

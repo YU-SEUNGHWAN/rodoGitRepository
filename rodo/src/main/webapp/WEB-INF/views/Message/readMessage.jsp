@@ -114,7 +114,6 @@ function henjiMessage()
 		보낸 날짜 <input type="text" value="${sendmessage.senddate}"><br>
 		<textarea id="text">${sendmessage.text}</textarea><br>
 		<input type="button" id = "messagelist" value="목록으로">
-		<!-- <input type="button" id = "henji" value="답장하기" onclick="henjiMessage()"> -->
 	
 	</c:when>
 	
