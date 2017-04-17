@@ -126,7 +126,6 @@ public class MessageController
 		
 		PageNavigator navi2 = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
-		
 		ArrayList<Message> received = dao.receivedMessage(navi2.getStartRecord(), navi2.getCountPerPage(), id);
 		
 		model.addAttribute("navi2", navi2);
@@ -173,27 +172,30 @@ public class MessageController
 		return "Message/henjiMessage";
 	}
 	
-	@RequestMapping(value="readMessage", method=RequestMethod.GET)
-	public String readMessage(Model model, int messagenum)
+	@RequestMapping(value="readreceivedMessage", method=RequestMethod.GET)
+	public String readreceivedMessage(Model model, int messagenum)
+	{
+		System.out.println(messagenum);
+		
+		Message receivemessage = dao.receivedreadMessage(messagenum);
+
+		model.addAttribute("receivemessage", receivemessage);
+		System.out.println(receivemessage.toString());
+		
+		return "Message/readMessage";
+	}
+	
+	@RequestMapping(value="readsentMessage", method=RequestMethod.GET)
+	public String readsendtMessage(Model model, int messagenum)
 	{
 		System.out.println(messagenum);
 		
 		Message sendmessage = dao.sendreadMessage(messagenum);
-		Message receivemessage = dao.receivedreadMessage(messagenum);
+	
+		model.addAttribute("sendmessage", sendmessage);
+		System.out.println(sendmessage.toString());
 		
-		if (sendmessage != null)
-		{
-			model.addAttribute("sendmessage", sendmessage);
-			System.out.println(sendmessage.toString());
-			return "Message/readMessage";
-		}
-		
-		else
-		{
-			model.addAttribute("receivemessage", receivemessage);
-			System.out.println(receivemessage.toString());
-			return "Message/readMessage";
-		}
+		return "Message/readMessage";
 	}
 	
 	@RequestMapping(value="deletereceiveMessage", method=RequestMethod.GET)
@@ -235,6 +237,4 @@ public class MessageController
 
 		return "redirect:/sendlist";
 	}
-	
-	
 }

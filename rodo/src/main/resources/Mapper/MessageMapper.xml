@@ -95,7 +95,7 @@
 		rodo_sendmessage
 		
 	where
-		sendmessage_num = #{sendmessagenum}
+		sendmessage_num = #{messagenum}
 		
 </select>
 
@@ -115,7 +115,7 @@
 		rodo_receivemessage
 		
 	where
-		receivemessage_num = #{receivemessagenum}
+		receivemessage_num = #{messagenum}
 		
 </select>
 

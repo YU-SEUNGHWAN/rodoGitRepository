@@ -2,12 +2,15 @@ package project2.scmaster.rodo.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
+import project2.scmaster.rodo.vo.Rodo_PhotoReply;
 
 /**
  * 게시판 관련 DAO
@@ -71,10 +74,14 @@ public class Rodo_PhotoBoardDAO {
 		return board;
 	}
 
-	public ArrayList<Rodo_PhotoBoard> Photolist() {
+	public ArrayList<Rodo_PhotoBoard> Photolist(int startRecode, int countPerPage, String searchText) 
+	{
 		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
-		ArrayList<Rodo_PhotoBoard> board = new ArrayList<>();
-		board = mapper.Photolist();
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		ArrayList<Rodo_PhotoBoard> board = mapper.Photolist(rb, searchText);
+		
 		return board;
 	}
 	
@@ -113,5 +120,40 @@ public class Rodo_PhotoBoardDAO {
 		doroku = mapper.updatePhoto(board);
 		return doroku;
 	}
+	
+	public int listsize(String searchText)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		int result = mapper.listsize(searchText);
+		
+		return result;
+	}
+	
+	public int writephotoreply(Rodo_PhotoReply reply)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		int result = mapper.writephotoreply(reply);
+		
+		return result;
+	}
+	
+	public List<Rodo_PhotoReply> findreply(int photo_boardnum)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		List<Rodo_PhotoReply> list = mapper.findreply(photo_boardnum);
+		
+		return list;
+	}
+	
+	public int deletereply(Rodo_PhotoReply reply)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		int result = mapper.deletereply(reply);
+		
+		return result;
+	}
 }
-

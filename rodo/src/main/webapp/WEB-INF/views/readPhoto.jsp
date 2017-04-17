@@ -6,21 +6,135 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> -->
+
+<script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
+
 <link href="resources/css/jquery.bxslider.css" rel="stylesheet" />
 
 <script>
-$(document).ready(function(){
+$(document).ready(function()
+{
 	$('.bxslider').bxSlider();
 });
 
-function Delete(){
+function Delete()
+{
 	location.href="deletePhoto?photo_boardnum="+${pt_board.photo_boardnum}; 
 }
 
-function updatePhoto(){
+function updatePhoto()
+{
 	location.href="updatePhoto?photo_boardnum="+${pt_board.photo_boardnum}; 
 }
+
+
+
+function deletereplywarp(replynum, boardnum)
+{
+	console.log(replynum);
+	console.log(boardnum);
+	
+	$.ajax
+	({
+		type : "get",
+		url : "deletephotoreply",
+		
+		data :
+		{
+			photoreply_replynum : replynum,
+			photo_boardnum : boardnum
+		},
+		
+		success : function(data)
+		{
+	         var html =    "<tr class='repwtr'>"
+	                  +"<td class='id'>아이디</td>"
+	                  +"<td class='reply'>댓글</td>"
+	                  +"<td class='repdate'>날짜</td>"
+	                  +"<td></td>"
+	                  +"</tr>"; 
+	         
+	            $.each(data, function(index,item)
+	            {
+		            html += "<tr class='repwtr'>"
+		                     +"<td class='id'>"+item.photoreply_id+"</td>"
+		                     +"<td id='"+item.photoreply_replynum+"' class='reply'>"+item.photoreply_text+"</td>"
+		                     +"<td class='repdate'>"+item.photoreply_input_dt+"</td>"
+		                     +"<td class='repdate'>"
+		                           +"<a href='javascript:replyUpdateForm("+item.photoreply_replynum+","+item.photo_boardnum+")'>[수정]</a>"
+		                           +"<a href='#none' onclick='deletereplywarp("+item.photoreply_replynum+", "+item.photo_boardnum+")'>[삭제]</a>"
+		                     +"</td>"
+		                  +"</tr>";
+	         });
+			
+	         $("#photoreply_text").val("");
+	         $("#replytable").html(html);
+		},
+		
+		error : function(e)
+		{
+			console.log(e);
+		}
+	})
+}
+
+
+$(function()
+{
+	$("#regist").on("click", function()
+	{
+		var boardnum = $("#photo_boardnum").val();
+		var reply = $("#photoreply_text").val();
+		
+		$.ajax
+		({
+			type : "post",
+			url : "writephotoreply",
+			
+			data : 
+			{
+				photoreply_text : reply,
+				photo_boardnum : boardnum
+			},
+			
+			success : function(data)
+			{
+				console.log(data);
+				
+		         var html =    "<tr class='repwtr'>"
+		                  +"<td class='id'>아이디</td>"
+		                  +"<td class='reply'>댓글</td>"
+		                  +"<td class='repdate'>날짜</td>"
+		                  +"<td></td>"
+		                  +"</tr>"; 
+		         
+		            $.each(data, function(index,item)
+		            {
+			            html += "<tr class='repwtr'>"
+			                     +"<td class='id'>"+item.photoreply_id+"</td>"
+			                     +"<td id='"+item.photoreply_replynum+"' class='reply'>"+item.photoreply_text+"</td>"
+			                     +"<td class='repdate'>"+item.photoreply_input_dt+"</td>"
+			                     +"<td class='repdate'>"
+			                           +"<a href='javascript:replyUpdateForm("+item.photoreply_replynum+","+item.photo_boardnum+")'>[수정]</a>"
+			                           +"<a href='#none' onclick='deletereplywarp("+item.photoreply_replynum+", "+item.photo_boardnum+")'>[삭제]</a>"
+			                     +"</td>"
+			                  +"</tr>";
+		         });
+				
+		         $("#photoreply_text").val("");
+		         $("#replytable").html(html);
+			},
+			
+			error : function(e)
+			{
+				console.log(e);
+			}
+		})
+	})
+})
+
 
 </script>
 </head>
@@ -61,35 +175,53 @@ function updatePhoto(){
 	
 	
 	<div class="board-reply">
-	
-		<form>
-			reply <input class="inputReply" type="text">
+			
+			<input type = "hidden" id = "photo_boardnum" value = "${pt_board.photo_boardnum}">
+			reply <input class="inputReply" type="text" id = "photoreply_text">
+			
+			<input type = "hidden" id = "replynum" value = "${reply.photoreply_replynum}">
+			<input type = "hidden" id = "boardnum" value = "${reply.photo_boardnum}">
+			
 			<input style="margin-left:10px;" type="button" id="regist" value="등록" />
-		</form>
 		
 		<div class="reviewDiv ">
-			<table class="table-striped replyTable">
+			<table class="table-striped replyTable" id = "replytable">
+				
 				<tr class="repwtr">
-					<td class="id">홍길동</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
+					<td class="id">아이디</td>
+					<td class="reply">댓글</td>
+					<td class="repdate">날짜</td>
+					<td></td>
 				</tr>
-				<tr class="repwtr">
-					<td class="id">schasd51</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
-				</tr>
-				<tr class="repwtr">
-					<td class="id">홍길동</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
-				</tr>
+				
+				<c:forEach var = "reply" items = "${replylist}">
+				
+					<tr class="repwtr">
+						<td class="id">
+							${reply.photoreply_id}
+						</td>
+						
+						<td class="reply">
+							${reply.photoreply_text}
+						</td>
+							
+						<td class="repdate">
+							${reply.photoreply_input_dt}
+						</td>
+						
+						<td class="repdate">
+							<c:if test = "${sessionScope.loginId == reply.photoreply_id}">
+									<a href= "">[수정]</a>
+									<a href='#none' onclick="deletereplywarp('${reply.photoreply_replynum}', '${reply.photo_boardnum}')">[삭제]</a>
+							</c:if>
+						</td>
+
+					</tr>
+					
+				</c:forEach>
+				
 			</table>
 		</div>
-		
 	</div>
 	
 	</div>

@@ -4,13 +4,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -32,6 +32,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import project2.scmaster.rodo.dao.Rodo_PhotoBoardDAO;
 import project2.scmaster.rodo.util.FileService;
 import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
+import project2.scmaster.rodo.vo.Rodo_PhotoReply;
 
 @Controller
 public class PhotoBoardController {
@@ -44,7 +45,8 @@ public class PhotoBoardController {
 	Rodo_PhotoBoardDAO dao;
 	
 	@RequestMapping(value = "readPhoto", method = RequestMethod.GET)
-	public String readPhoto(Model model, int photo_boardnum){
+	public String readPhoto(HttpSession session, Model model, int photo_boardnum)
+	{
 		System.out.println(photo_boardnum);
 		Rodo_PhotoBoard pt_board = dao.readPhoto(photo_boardnum);
 		ArrayList<HashMap> fileList = dao.PhotoFileList(photo_boardnum);
@@ -52,7 +54,8 @@ public class PhotoBoardController {
 		ArrayList<String> oglist = new ArrayList<>();
 		ArrayList<String> svlist = new ArrayList<>();
 		
-		for(HashMap file : fileList){
+		for(HashMap file : fileList)
+		{
 			System.out.println((String)file.get("PHOTOFILE_SAVED"));
 			oglist.add((String)file.get("PHOTOFILE_ORIGINAL"));
 			svlist.add((String)file.get("PHOTOFILE_SAVED"));
@@ -64,7 +67,12 @@ public class PhotoBoardController {
 		pt_board.setPhotofile_original(oglist);
 		pt_board.setPhotofile_saved(svlist);
 		
+		List<Rodo_PhotoReply> replylist = dao.findreply(photo_boardnum);
+		
 		model.addAttribute("pt_board", pt_board);
+		model.addAttribute("id", (String)session.getAttribute("loginId"));
+		model.addAttribute("replylist", replylist);
+		
 		return "readPhoto";
 	}
 
@@ -318,4 +326,39 @@ public class PhotoBoardController {
 		 return "fail";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="writephotoreply", method=RequestMethod.POST)
+	public List<Rodo_PhotoReply> writephotoreply(Rodo_PhotoReply reply, HttpSession session, Model model)
+	{
+		System.out.println("==============================");
+		System.out.println(reply.toString());
+		
+		String id = (String)session.getAttribute("loginId");
+		reply.setPhotoreply_id(id);
+		
+		dao.writephotoreply(reply);
+		
+		List<Rodo_PhotoReply> list = dao.findreply(reply.getPhoto_boardnum());
+		
+		return list;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "deletephotoreply", method = RequestMethod.GET)
+	public List<Rodo_PhotoReply> deletephotoreply(Rodo_PhotoReply reply, HttpSession session, Model model)
+	{		
+		String id = (String)session.getAttribute("loginId");
+		reply.setPhotoreply_id(id);
+		
+		System.out.println(reply.toString());
+		
+		dao.deletereply(reply);
+		
+		List<Rodo_PhotoReply> list = dao.findreply(reply.getPhoto_boardnum());
+		
+		System.out.println("==============================");
+		System.out.println(list);
+		
+		return list;
+	}
 }

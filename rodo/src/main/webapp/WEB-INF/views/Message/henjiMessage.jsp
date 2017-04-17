@@ -36,6 +36,15 @@ function doSend(message) {
 window.addEventListener("load", init, false);
 
 
+$(function()
+{
+	$("#cancel").on("click", function()
+	{
+		history.go(-1);
+	})
+})
+
+
 function writeMessage()
 {
 	var receiver = $("#receiver").val();
@@ -68,7 +77,7 @@ function writeMessage()
 받는이 <input type="text" id="receiver" value="${sender}"><br>
 제목 <input type="text" id = "title"><br>
 <textarea id ="text"></textarea><br>
-<input type="button" value="취소">
+<input type="button" id="cancel" value="취소">
 <input type="button" value="보내기" onclick="writeMessage()">
 </body>
 </html>
