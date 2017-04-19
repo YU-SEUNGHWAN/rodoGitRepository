@@ -45,10 +45,12 @@ public class GpsBoardController
 		String id = (String)session.getAttribute("loginId");
 		board.setGps_id(id);
 		
+		board.setGps_gpxinfo("info");
+		board.setGps_location("tokyo");
+		
 		System.out.println(board.toString());
 		
-		int result = dao.writegps(board);
-		int result2 = 0;
+		int result = 0;
 		
 		System.out.println();
 		System.out.println(result);
@@ -60,19 +62,8 @@ public class GpsBoardController
 			board.setGpsfile_original(upload.getOriginalFilename());
 			board.setGpsfile_saved(savedfile);
 			
-			int seq = dao.getsequence();
-			board.setGps_boardnum(seq);
+			result = dao.writegps(board);
 			
-			result2 = dao.writegpsfile(board);
-		}
-		
-		if (result == 1 && result2 == 1)
-		{
-			return "redirect:/logBoard";
-		}
-		
-		else if (result == 1)
-		{
 			return "redirect:/logBoard";
 		}
 		

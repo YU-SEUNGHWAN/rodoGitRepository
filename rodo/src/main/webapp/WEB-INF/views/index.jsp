@@ -31,10 +31,44 @@
 <script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
 <script src="resources/js/message.js"></script>
 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+</head>
+
+
+
 <style>
 a:hover{
 	text-decoration: none;
 }
+
+
+.modal-header, h4, .close {
+      background-color: rgb(50,50,50);
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+  
+  #btnsubmit
+  {
+  	background-color: rgb(50,50,50);;
+  	border-color: rgb(50,50,50);;
+  }
+  
+  .moto
+  {	
+  	color: blue;
+  }
+
+
 </style>
 
 <script>
@@ -333,7 +367,7 @@ $(function()
     <div class="container">
     
       <div id="logo" class="pull-left">
-<<<<<<< Upstream, based on origin/master
+
     	  <a href='#hero'><img src="resources/img/logo.png" alt="" title="" /></img></a>
       </div>
       <nav id="nav-menu-container">
@@ -351,7 +385,7 @@ $(function()
           </li>
 		  <c:choose>
           	<c:when test="${loginId==null}">
-	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
+	          	<li style="padding-left:100px;"><a href="index#login">login</a></li>
 	       	</c:when>
 	        <c:otherwise>
 			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
@@ -363,7 +397,6 @@ $(function()
 			    </ul>  
 			 </li>
 			 <li><a style="padding-left: 0px;" href="#none" onclick="messageWindow()" class="messagestatus"></a></li>
-			 
        		</c:otherwise>
 	      </c:choose>
         </ul>
@@ -372,84 +405,7 @@ $(function()
   </header><!-- #header -->
 
   <input type="hidden" id="loginId" value="${loginId}">
-
-=======
-        <a href="#hero"><img src="resources/img/logo.png" alt="" title="" /></img></a>
-      </div>
-        
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="#hero">Home</a></li>
-          <li><a href="#none" onclick="javascript:location.href='logBoard'">log</a></li>
-          <li><a href="#none" onclick="javascript:location.href='photoBoard'">photo</a></li>
-          <li><a href="#none" onclick="javascript:location.href='videoBoard'">video</a></li>
-          <li class="menu-has-children"><a href="#none">community</a>
-            <ul>
-              <li><a href="freeboardlist">free board</a></li>
-              <li><a href="#">Q&A</a></li>
-            </ul>
-          </li>
-          <c:choose>
-          	<c:when test="${loginId==null}">
-	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
-	       	</c:when>
-	        <c:otherwise>
-			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
-		        <ul>
-		             <li><a href="checkupdate">my info</a></li>
-		             <li><a href="#">my List</a></li>
-		             <li><a href="#none" onclick="messageWindow()">message</a></li>
-		             <li><a href="logout">log out</a></li>
-			    </ul>  
-			 </li>
-			 <li><a style="padding-left: 0px;" href="#none" onclick="messageWindow()" class="messagestatus"></a></li>
-       		</c:otherwise>
-	      </c:choose>
-		 
-        </ul>
-      </nav><!-- #nav-menu-container -->
-    </div>
-    
-    <input type="hidden" id="loginId" value="${loginId}">
-    
-  </header><!-- #header -->
-
-
-
-
-  
-  
-  
-  
->>>>>>> d7e1b27 2017-04-19 김상훈
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-
-  .modal-header, h4, .close {
-      background-color: rgb(50,50,50);
-      color:white !important;
-      text-align: center;
-      font-size: 30px;
-  }
-  .modal-footer {
-      background-color: #f9f9f9;
-  }
-  
-  #btnsubmit
-  {
-  	background-color: rgb(50,50,50);;
-  	border-color: rgb(50,50,50);;
-  }
-  
-  .moto
-  {	
-  	color: blue;
-  }
-  
-  </style>
-</head>
+ 
 <body>
 
 <div class="container">
@@ -512,9 +468,6 @@ $(document).ready(function()
 });
 	
 </script>
-
-
-
 
 
 

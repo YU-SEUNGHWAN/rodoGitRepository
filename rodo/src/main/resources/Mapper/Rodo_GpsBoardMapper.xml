@@ -73,6 +73,8 @@
 					, gps_content
 					, gps_gpxinfo
 					, gps_location
+					, gpsfile_original
+					, gpsfile_saved
 				)
 				
 				values
@@ -83,31 +85,12 @@
 					, #{gps_content}
 					, #{gps_gpxinfo}
 					, #{gps_location}
-				)
-			
-	</insert>
-	
-	
-	<insert id = "writegpsfile" parameterType = "Rodo_GpsBoard">
-	
-		insert
-			into
-				rodo_gpsfile
-				(
-					gps_boardnum
-					, gpsfile_original
-					, gpsfile_saved
-				)
-				
-				values
-				(
-					#{gps_boardnum}
 					, #{gpsfile_original}
 					, #{gpsfile_saved}
 				)
-					
+			
 	</insert>
-	
+		
 	
 	<select id = "selectOne" parameterType = "int" resultType = "Rodo_GpsBoard">
 	
