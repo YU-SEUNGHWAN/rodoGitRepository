@@ -73,6 +73,7 @@ public class SocketHandler extends TextWebSocketHandler {
 
 	public void sendMessage(String message) {
 		for (WebSocketSession session : this.sessionSet) {
+			System.out.println(message);
 			if (session.isOpen() && message.equals(sessionMap.get(session.getId()))) {
 				try {
 					session.sendMessage(new TextMessage(message));
@@ -81,14 +82,6 @@ public class SocketHandler extends TextWebSocketHandler {
 				}
 			}
 		}
-	}
-
-	private String getSession(ServerHttpRequest request) {
-		if (request instanceof ServletServerHttpRequest) {
-			ServletServerHttpRequest serverRequest = (ServletServerHttpRequest) request;
-			String id = (String) serverRequest.getServletRequest().getSession().getAttribute("loginId");
-		}
-		return null;
 	}
 
 }

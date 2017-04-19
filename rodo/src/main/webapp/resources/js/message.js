@@ -25,13 +25,15 @@
          
         
          function onOpen(evt) {
-             //writeToScreen("Connected to Endpoint!");
          }
          
          function onMessage(evt) {
         	console.log(evt.data);
-			var inner = $(".loginstatus").html();
-			$(".loginstatus").html("<img style='width:20px;' src='resources/img/message.png'> "+inner);
+        	var message = "<img style='width:20px;' src='resources/img/message.png'> ";
+			var inner = $(".messagestatus").html();
+			if(!inner.includes("message")){
+				$(".messagestatus").html(message+inner);
+			}
          }
          
          function onError(evt) {
@@ -41,7 +43,6 @@
          function doSend() {
          	var message = document.getElementById("loginId").value;
             websocket.send("login*Session:"+message);
-            //websocket.close();
          }
          
          
@@ -49,6 +50,6 @@
          
          function messageWindow(){
         	 
-        	 window.open("messageList", "", "width=520, height=350, left=400, top=100");
+        	 window.open("messageList", "", "width=540, height=350, left=400, top=100");
         	 
          }

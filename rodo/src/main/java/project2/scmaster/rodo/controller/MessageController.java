@@ -41,7 +41,6 @@ public class MessageController
 		
 		ArrayList<Message> received = dao.receivedMessage(navi.getStartRecord(), navi.getCountPerPage(), id);
 		
-	//	ArrayList<Message> list = dao.sendlist(navi.getStartRecord(), navi.getCountPerPage(), id);
 		
 		model.addAttribute("received", received);
 		model.addAttribute("navi", navi);

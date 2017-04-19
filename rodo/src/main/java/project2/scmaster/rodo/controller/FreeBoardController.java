@@ -27,7 +27,7 @@ import project2.scmaster.rodo.vo.Rodo_FreeReply;
 @Controller
 public class FreeBoardController 
 {
-	final int countPerPage = 10;		// 페이지 당 글 수
+	final int countPerPage = 15;		// 페이지 당 글 수
 	final int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
 	
 	@Autowired
@@ -73,30 +73,12 @@ public class FreeBoardController
 		
 		int result2 = 0;
 		
-		/*if (!upload.isEmpty()) // upload != null 로 하면 안된다. 얘는 반드시 이렇게 써야 함
-		{
-			String savedfile = FileService.saveFile(upload, uploadPath);
-			board.setFreefile_original(upload.getOriginalFilename());
-			board.setFreefile_saved(savedfile);
-			
-			int seq = dao.getsequence();
-			board.setFree_boardnum(seq);
-			
-			System.out.println(seq+"kkkkkkkkkkkkk");
-			System.out.println(board.toString());
-			
-			result2 = dao.writefile(board);
-		}*/
 		
 		if (result == 1)
 		{
 			return "redirect:/freeboardlist";
 		}
 		
-		/*else if (result == 1 && result2 == 1)
-		{
-			return "redirect:/freeboardlist";
-		}*/
 
 		return "freeboard/freeboardwrite";
 	}

@@ -138,18 +138,6 @@
         
          </div>
         
-        
-       <!--  <table style="width:100%" class="board-navi">
-		  	<tr><td style="width:20%"></td>
-			<td style="width:60%; text-align:center;"><span class="page-navi">
-				<span class="btn-page">&lt;&lt;</span>
-				<span class="btn-page">&lt;</span>
-				<span class="btn-page">1</span>
-				<span class="btn-page">&gt;</span>
-				<span class="btn-page">&gt;&gt;</span>
-			</span></td>
-	      		      	<td style="width:20%"><a href="writePhoto" class="btn-write">Write</a></td></tr>
-      	</table> -->
       </div>
     </div>        
   </section>

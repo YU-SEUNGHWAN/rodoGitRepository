@@ -38,10 +38,7 @@
 			<li><p><a href = "logout">로그아웃</a></p></li>
 	</c:otherwise>
 </c:choose>
-<<<<<<< HEAD
-=======
 
-=======
 <li><a href="index">부트스트랩 테스트</a></li>
 <li><a href="socketTest">웹소켓 테스트</a></li>
 >>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git

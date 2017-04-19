@@ -40,20 +40,27 @@
 		from 
 			rodo_videoboard
 		order by 
-			video_boardnum asc
+			video_boardnum desc
 	</select>
 	
 	<!-- 게시글 읽기 -->
 	<select id="readVideo" parameterType="int" resultType="Video">
 		select 
-			video_id, video_boardnum, video_title, video_content, 
-			video_input_dt, video_update_dt, video_hits, 
-			video_originalfile, video_savedfile, video_thumbnail
+			video_id
+			, video_boardnum
+			, video_title
+			, video_content
+			, video_input_dt
+			, video_update_dt
+			, video_hits
+			, video_originalfile
+			, video_savedfile
+			, video_thumbnail
 		from 
 			rodo_videoboard
 		where 
 			video_boardnum = #{video_boardnum}
 		order by 
-			video_boardnum asc
+			video_boardnum desc
 	</select>
 </mapper>

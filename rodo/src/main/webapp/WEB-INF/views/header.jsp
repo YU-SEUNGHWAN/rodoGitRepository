@@ -18,7 +18,7 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
-  
+      
   <script src="resources/js/message.js"></script>
         
 </head>
@@ -31,9 +31,7 @@
     <div class="container">
     
       <div id="logo" class="pull-left">
-        <a href="#none" onclick="javascript:location.href='index'"><img src="resources/img/logo.png" alt="" title="" /></img></a>
-        <!-- Uncomment below if you prefer to use a text image -->
-        <!--<h1><a href="#hero">Header 1</a></h1>-->
+    	  <a href='index'><img src="resources/img/logo.png" alt="" title="" /></img></a>
       </div>
       <nav id="nav-menu-container">
         <ul class="nav-menu">
@@ -44,19 +42,6 @@
           <li class="menu-has-children"><a href="#none">community</a>
             <ul>
               <li><a href="freeboardlist">free board</a></li>
-              
-              <!-- <li class="menu-has-children"><a href="#none">local board</a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              
-              <li><a href="">free board</a></li> -->
-              
               <li><a href="#">Q&A</a></li>
               
             </ul>
@@ -74,6 +59,8 @@
 		             <li><a href="logout">log out</a></li>
 			    </ul>  
 			 </li>
+			 <li><a style="padding-left: 0px;" href="#none" onclick="messageWindow()" class="messagestatus"></a></li>
+			 
        		</c:otherwise>
 	      </c:choose>
         </ul>

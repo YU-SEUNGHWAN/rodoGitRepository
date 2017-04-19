@@ -102,7 +102,11 @@ public class VideoBoardController {
 		  
 		  ByteArrayInputStream inputStream = new ByteArrayInputStream(decodedBytes);
 		  BufferedImage bufferedImage;
-			try {
+		  File path = new File(thumbPath);
+		  if (!path.isDirectory()) {
+			path.mkdirs();
+		  }
+		  try {
 				bufferedImage = ImageIO.read(inputStream);
 				ImageIO.write(bufferedImage, "png", new File(thumbPath+thumbnailFile));
 			} catch (IOException e) {

@@ -10,6 +10,7 @@
   <meta content="" name="keywords">
   <meta content="" name="description">
     
+  
   <!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
   <link href="favicon.ico" rel="shortcut icon">
   
@@ -26,46 +27,21 @@
   <!-- Main Stylesheet File -->
   <link href="resources/css/style.css" rel="stylesheet">
   <link href="resources/css/login.css" rel="stylesheet">
-   
-	<script src="resources/js/message.js"></script>
-
-	<script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	
+  
+<script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
+<script src="resources/js/message.js"></script>
 
 <style>
-
-  .modal-header, h4, .close {
-      background-color: rgb(50,50,50);
-      color:white !important;
-      text-align: center;
-      font-size: 30px;
-  }
-  .modal-footer {
-      background-color: #f9f9f9;
-  }
-  
-  #btnsubmit
-  {
-  	background-color: rgb(50,50,50);;
-  	border-color: rgb(50,50,50);;
-  }
-  
-  .moto
-  {	
-  	color: blue;
-  }
-  
+a:hover{
+	text-decoration: none;
+}
 </style>
-
 
 <script>
 
 var emailflag = false;
 var checknumflag = false;
 var idflag = false;
-
 
 
 $(function()
@@ -344,25 +320,89 @@ $(function()
 	})
 })
 
-
-$(document).ready(function()
-{
-    $("#mailcheck").click(function()
-    {
-    	if (emailflag == true)
-    	{
-    		$("#myModal").modal();
-    	}
-    });
-});
-
-
 </script>
+
+
 </head>
 <body>
  
+<!--==========================
+  Header Section
+============================-->
+  <header id="header">
+    <div class="container">
+    
+      <div id="logo" class="pull-left">
+    	  <a href='#hero'><img src="resources/img/logo.png" alt="" title="" /></img></a>
+      </div>
+      <nav id="nav-menu-container">
+        <ul class="nav-menu">
+          <li><a href="#none" onclick="javascript:location.href='index'">Home</a></li>
+          <li><a href="#none" id="log" onclick="javascript:location.href='logBoard'">log</a></li>
+          <li><a href="#none" id="photo" onclick="javascript:location.href='photoBoard'">photo</a></li>
+          <li><a href="#none" id="video" onclick="javascript:location.href='videoBoard'">video</a></li>
+          <li class="menu-has-children"><a href="#none">community</a>
+            <ul>
+              <li><a href="freeboardlist">free board</a></li>
+              <li><a href="#">Q&A</a></li>
+              
+            </ul>
+          </li>
+		  <c:choose>
+          	<c:when test="${loginId==null}">
+	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
+	       	</c:when>
+	        <c:otherwise>
+			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
+		        <ul>
+		             <li><a href="checkupdate">my info</a></li>
+		             <li><a href="#">my List</a></li>
+		             <li><a href="#none" onclick="messageWindow()">message</a></li>
+		             <li><a href="logout">log out</a></li>
+			    </ul>  
+			 </li>
+			 <li><a style="padding-left: 0px;" href="#none" onclick="messageWindow()" class="messagestatus"></a></li>
+			 
+       		</c:otherwise>
+	      </c:choose>
+        </ul>
+      </nav><!-- #nav-menu-container -->
+    </div>
+  </header><!-- #header -->
 
- <div class="container">
+  <input type="hidden" id="loginId" value="${loginId}">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+
+  .modal-header, h4, .close {
+      background-color: rgb(50,50,50);
+      color:white !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-footer {
+      background-color: #f9f9f9;
+  }
+  
+  #btnsubmit
+  {
+  	background-color: rgb(50,50,50);;
+  	border-color: rgb(50,50,50);;
+  }
+  
+  .moto
+  {	
+  	color: blue;
+  }
+  
+  </style>
+</head>
+<body>
+
+<div class="container">
   <!-- <h2>Modal Login Example</h2> -->
   <!-- Trigger the modal with a button -->
 
@@ -386,16 +426,6 @@ $(document).ready(function()
               <input type="text" class="form-control" id="checknumber" placeholder="Input Number">
             </div>
             
-            <!-- <div class="form-group">
-              <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-              <input type="text" class="form-control" id="psw" placeholder="Enter password">
-            </div> -->
-            
-            <!-- <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
-            </div> -->
-            
-              <!-- <button type="button" id = "btnsubmit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> OK</button> -->
         
         <button type="button" id = "btnsubmit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> OK</button>
        
@@ -418,57 +448,26 @@ $(document).ready(function()
   </div> 
 </div>
  
- 
- 
- 
-<!--==========================
-  Header Section
-============================-->
-  <header id="header">
-    <div class="container">
-    
-      <div id="logo" class="pull-left">
-        <a href="#hero"><img src="resources/img/logo.png" alt="" title="" /></img></a>
-        <!-- Uncomment below if you prefer to use a text image -->
-        <!--<h1><a href="#hero">Header 1</a></h1>-->
-      </div>
-        
-      <nav id="nav-menu-container">
-        <ul class="nav-menu">
-          <li class="menu-active"><a href="#hero">Home</a></li>
-          <li><a href="#none" onclick="javascript:location.href='logBoard'">log</a></li>
-          <li><a href="#none" onclick="javascript:location.href='photoBoard'">photo</a></li>
-          <li><a href="#none" onclick="javascript:location.href='videoBoard'">video</a></li>
-          <li class="menu-has-children"><a href="#none">community</a>
-            <ul>
-              <li><a href="freeboardlist">free board</a></li>
-              <li><a href="#">Q&A</a></li>
-            </ul>
-          </li>
-          <c:choose>
-          	<c:when test="${loginId==null}">
-	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
-	       	</c:when>
-	        <c:otherwise>
-			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
-		        <ul>
-		             <li><a href="checkupdate">my info</a></li>
-		             <li><a href="#">my List</a></li>
-		             <li><a href="#none" onclick="messageWindow()">message</a></li>
-		             <li><a href="logout">log out</a></li>
-			    </ul>  
-			 </li>
-       		</c:otherwise>
-	      </c:choose>
-		 
-        </ul>
-      </nav><!-- #nav-menu-container -->
-    </div>
-    
-    <input type="hidden" id="loginId" value="${loginId}">
-    
-  </header><!-- #header -->
-  
+<script>
+
+$(document).ready(function()
+{
+    $("#mailcheck").click(function()
+    {
+    	if (emailflag == true)
+    	{
+    		$("#myModal").modal();
+    	}
+    });
+});
+	
+</script>
+
+
+
+
+
+
 <!--==========================
   Hero Section
 ============================-->
@@ -508,7 +507,7 @@ $(document).ready(function()
 	        </div>
 	        <div class="content">
 		            <div class="signin-cont cont">
-			                 <form action="login" method="post" enctype="multipart/form-data">
+			                <form action="login" method="post" enctype="multipart/form-data">
 			                
 			                    <input type="text" name="loginid" id="loginid" class="inpt" required="required" placeholder="Your ID">
 			                    <label for="text">Your email</label>
@@ -526,9 +525,10 @@ $(document).ready(function()
    					        </form>
  				      </div>
     				  <div class="signup-cont cont">
-               				<form action="#" method="post" enctype="multipart/form-data">
+               				<form action="join" method="post" enctype="multipart/form-data">
             					
 			                    <input type="text" name="id" id="id" class="inpt" required="required" placeholder="Your ID">
+			                   	<div class = "id2" id = "idlabel"></div>
 			                    
 			                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
              						    
@@ -537,8 +537,14 @@ $(document).ready(function()
              					<input type="text" name="name" id="name" class="inpt" required="required" placeholder="Your Name">
              						    
              					<input type="text" name="email" id="email" class="inpt" required="required" placeholder="Your Email">
-             					<input type="button" value="mail check" class="submit">
-             						    
+             					<div class = "maillabel2" id = "maillabel"></div>
+             					
+             					<div class = "modal" id = "modal"><div class = "modal-dialog" ></div></div>
+             					
+             					<input type="button" value="check number" id = "mailcheck" class="submit">
+             					
+             					<input type = "hidden" id = "numcheckflag" value = "false">
+             					
 			                    <div class="submit-wrap">
 				                	<input type="submit" value="Sign up" class="submit" style="margin-top: 25px;">
 			                    </div>
@@ -592,7 +598,7 @@ $(document).ready(function()
         </div>
       </div>
   </footer><!-- #footer -->
-  
+
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
     
   <!-- Required JavaScript Libraries -->
@@ -606,7 +612,10 @@ $(document).ready(function()
   <script src="resources/lib/stickyjs/sticky.js"></script>
   <script src="resources/lib/easing/easing.js"></script>
   
+  <!-- Template Specisifc Custom Javascript File -->
   <script src="resources/js/custom.js"></script>
-  
+
+
+
 </body>
 </html>

@@ -110,6 +110,8 @@ create table rodo_videoboard
 alter table rodo_videoboard add foreign key(video_id) references rodo_member (id);
 create sequence rodo_video_seq start with 1 increment by 1;
 
+delete rodo_videoboard;
+
 select * from rodo_videoboard;
 
 

@@ -130,12 +130,8 @@ function henjiMessage()
 		제목 <input type="text" id="title" value="${sendmessage.title}"><br>
 		보낸 날짜 <input type="text" value="${sendmessage.senddate}"><br>
 		<textarea id="text">${sendmessage.text}</textarea><br>
-<<<<<<< HEAD
-		<input type="button" id = "messagelist" value="목록으로">
-=======
+
 		<input type="button" id = "sendlist" value="목록으로">
-		<!-- <input type="button" id = "henji" value="답장하기" onclick="henjiMessage()"> -->
->>>>>>> branch 'master' of https://github.com/YU-SEUNGHWAN/rodoGitRepository.git
 	
 	</c:when>
 	

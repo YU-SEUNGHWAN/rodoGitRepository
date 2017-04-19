@@ -10,7 +10,7 @@
 <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script>
 
-var wsUri = "ws://203.233.196.105:8899/rodo/echo.do";
+var wsUri = "ws://203.233.196.103:8888/rodo/echo.do";
 var websocket;
 
 function init() {

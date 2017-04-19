@@ -140,7 +140,6 @@ $(function()
 </head>
 <body>
 
-<h1>사진게시판</h1>
 <!--==========================
   Header Section
 ============================-->
@@ -184,7 +183,7 @@ $(function()
 			
 			<input style="margin-left:10px;" type="button" id="regist" value="등록" />
 		
-		<div class="reviewDiv ">
+		<div class="reviewDiv">
 			<table class="table-striped replyTable" id = "replytable">
 				
 				<tr class="repwtr">
