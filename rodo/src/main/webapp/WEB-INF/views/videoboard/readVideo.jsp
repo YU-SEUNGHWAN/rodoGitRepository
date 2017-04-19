@@ -5,18 +5,137 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
+
+<script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
+<link href="resources/css/jquery.bxslider.css" rel="stylesheet" />
+
 <script>
-$(document).ready(function(){
+
+$(document).ready(function()
+{
 	$('.bxslider').bxSlider();
 });
 
-function deleteVideo(){
-	location.href="deleteVideo?video_boardnum="+${videoBoard.video_boardnum}; 
+function deleteVideo()
+{
+	if(confirm("정말 삭제하시겠습니까?"))
+	{
+		location.href="deleteVideo?video_boardnum="+${videoBoard.video_boardnum}; 
+	}
 }
 
 function updateVideo(){
 	location.href="updateVideo?video_boardnum="+${videoBoard.video_boardnum}; 
 }
+
+
+
+function deletereplywarp(replynum, boardnum)
+{
+	console.log(replynum);
+	console.log(boardnum);
+	
+	$.ajax
+	({
+		type : "post",
+		url : "deletevideoreply",
+		
+		data : 
+		{
+			videoreply_replynum : replynum,
+			video_boardnum : boardnum
+		},
+		
+		success : function(data)
+		{
+			var html =    "<tr class='repwtr'>"
+                +"<td class='id'>아이디</td>"
+                +"<td class='reply'>댓글</td>"
+                +"<td class='repdate'>날짜</td>"
+                +"<td></td>"
+                +"</tr>"; 
+       
+          $.each(data, function(index,item)
+          {
+	            html += "<tr class='repwtr'>"
+	                     +"<td class='id'>"+item.videoreply_id+"</td>"
+	                     +"<td id='"+item.videoreply_replynum+"' class='reply'>"+item.videoreply_text+"</td>"
+	                     +"<td class='repdate'>"+item.videoreply_input_dt+"</td>"
+	                     +"<td class='repdate'>"
+	                 		    +"<a href='javascript:replyUpdateForm("+item.videoreply_replynum+","+item.video_boardnum+")'>[수정]</a>"
+	                           +"<a href='#none' onclick='deletereplywarp("+item.videoreply_replynum+", "+item.video_boardnum+")'>[삭제]</a>"
+	                     +"</td>"
+	                  +"</tr>";
+       	});
+		
+	         $("#videoreply_text").val("");
+	         $("#replytable").html(html);
+		},
+		
+		error : function(e)
+		{
+			console.log(e);
+		}
+	})
+	
+}
+
+
+
+$(function()
+{
+	$("#regist").on("click", function()
+	{
+		var boardnum = $("#video_boardnum").val();
+		var reply = $("#videoreply_text").val();
+		
+		$.ajax
+		({
+			type : "post",
+			url : "writevideoreply",
+			
+			data : 
+			{
+				video_boardnum : boardnum,
+				videoreply_text : reply
+			},
+			
+			success : function(data)
+			{
+				var html =    "<tr class='repwtr'>"
+	                  +"<td class='id'>아이디</td>"
+	                  +"<td class='reply'>댓글</td>"
+	                  +"<td class='repdate'>날짜</td>"
+	                  +"<td></td>"
+	                  +"</tr>"; 
+	         
+	            $.each(data, function(index,item)
+	            {
+		            html += "<tr class='repwtr'>"
+		                     +"<td class='id'>"+item.videoreply_id+"</td>"
+		                     +"<td id='"+item.videoreply_replynum+"' class='reply'>"+item.videoreply_text+"</td>"
+		                     +"<td class='repdate'>"+item.videoreply_input_dt+"</td>"
+		                     +"<td class='repdate'>"
+		                     +"<a href='javascript:replyUpdateForm("+item.videoreply_replynum+","+item.video_boardnum+")'>[수정]</a>"
+		                           +"<a href='#none' onclick='deletereplywarp("+item.videoreply_replynum+", "+item.video_boardnum+")'>[삭제]</a>"
+		                     +"</td>"
+		                  +"</tr>";
+	         	});
+			
+		         $("#videoreply_text").val("");
+		         $("#replytable").html(html);
+			},
+			
+			error : function(e)
+			{
+				console.log(e);
+			}
+		})
+	})
+})
+
 
 </script>
 
@@ -54,31 +173,51 @@ function updateVideo(){
 	
 	<div class="board-reply">
 	
-		<form>
-			reply <input class="inputReply" type="text">
+		<input type = "hidden" id = "video_boardnum" value = "${videoBoard.video_boardnum}">
+			reply <input class="inputReply" type="text" id = "videoreply_text">
+			
+			<input type = "hidden" id = "replynum" value = "${reply.videoreply_replynum}">
+			<input type = "hidden" id = "boardnum" value = "${reply.video_boardnum}">
+			
 			<input style="margin-left:10px;" type="button" id="regist" value="등록" />
-		</form>
+		
 		
 		<div class="reviewDiv ">
-			<table class="table-striped replyTable">
+			<table class="table-striped replyTable" id = "replytable">
+			
 				<tr class="repwtr">
-					<td class="id">홍길동</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
+					<td class="id">아이디</td>
+					<td class="reply">댓글</td>
+					<td class="repdate">날짜</td>
+					<td></td>
 				</tr>
-				<tr class="repwtr">
-					<td class="id">schasd51</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
-				</tr>
-				<tr class="repwtr">
-					<td class="id">홍길동</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
-				</tr>
+				
+				<c:forEach var = "reply" items = "${replylist}">
+				
+					<tr class="repwtr">
+						<td class="id">
+							${reply.videoreply_id}
+						</td>
+						
+						<td class="reply">
+							${reply.videoreply_text}
+						</td>
+							
+						<td class="repdate">
+							${reply.videoreply_input_dt}
+						</td>
+						
+						<td class="repdate">
+							<c:if test = "${sessionScope.loginId == reply.videoreply_id}">
+									<a href= "">[수정]</a>
+									<a href='#none' onclick="deletereplywarp('${reply.videoreply_replynum}', '${reply.video_boardnum}')">[삭제]</a>
+							</c:if>
+						</td>
+
+					</tr>
+					
+				</c:forEach>
+
 			</table>
 		</div>
 		

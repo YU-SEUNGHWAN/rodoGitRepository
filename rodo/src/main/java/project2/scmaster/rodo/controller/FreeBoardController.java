@@ -258,4 +258,15 @@ public class FreeBoardController
 		
 		return list;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "replypage", method = RequestMethod.POST)
+	public List<Rodo_FreeReply> replypage(Rodo_FreeReply reply, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
+		
+		
+		return null;
+	}
 }

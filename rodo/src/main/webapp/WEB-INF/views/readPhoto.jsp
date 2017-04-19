@@ -21,7 +21,10 @@ $(document).ready(function()
 
 function Delete()
 {
-	location.href="deletePhoto?photo_boardnum="+${pt_board.photo_boardnum}; 
+	if(confirm("정말 삭제하시겠습니까?"))
+	{
+		location.href="deletePhoto?photo_boardnum="+${pt_board.photo_boardnum}; 
+	}
 }
 
 function updatePhoto()

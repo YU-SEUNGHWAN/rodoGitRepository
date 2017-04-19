@@ -34,8 +34,8 @@
 		$("#output1").empty();
 	}
 	
-	function videoWrite(){
-		
+	function videoWrite()
+	{	
 		var formData = new FormData();
 		formData.append("file", $("#upload")[0].files[0]);
 		formData.append("video_thumbnail", canvas.toDataURL());
@@ -64,28 +64,29 @@
 	}
 	
 
-	$(function(){
-		
-		
-		$("#upload").change(function(){
-			
-			
+	$(function()
+	{
+		$("#upload").change(function()
+		{
 			var formData = new FormData();
 			formData.append("file",$("#upload")[0].files[0]);
 			
-			
-			if($("#upload")[0].files[0] != undefined){
-			
-				$.ajax({
-					
+			if($("#upload")[0].files[0] != undefined)
+			{
+				$.ajax
+				({
 					type : "POST",						
 					url : "getTempVideo",
+					
 					data : formData,
+					
 					processData : false,
 				    contentType : false,
+				    
 					dataType : "text",
-					success : function(data){
-	
+					
+					success : function(data)
+					{
 						alert(data);
 						
 						var html = "<div>"
@@ -98,35 +99,42 @@
 		 						   +"<input type='button' onclick='del1()' value='삭제'>"
 	 						       +"</div></div>"
 		  						   
-		  						   
 							$("#videoDiv").empty();
-							$("#videoDiv").html(html);
-					
+							$("#videoDiv").html(html);	
 					},
-					error : function(e){
+					
+					error : function(e)
+					{
 						console.log(e);
 					}
 				
 				});
-				
-		  }else{
+			}
+			
+			else
+			{
 			  $("#videoDiv").empty();
-		  }
+			}
 	 
 		})
-	
 	})
 
-	
 </script>
+
 <style>
-.contentDiv{
+
+.contentDiv
+{
+	
 }
-#content{
+#content
+{
 	height:400px;
 	width:700px;
 }
+
 </style>
+
 </head>
 <body>
 

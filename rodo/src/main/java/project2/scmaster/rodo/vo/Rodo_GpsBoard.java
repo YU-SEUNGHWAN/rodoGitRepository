@@ -11,11 +11,13 @@ public class Rodo_GpsBoard
 	private String gps_input_dt;
 	private String gps_update_dt;
 	private String gps_marker;
+	private String gpsfile_original;
+	private String gpsfile_saved;
 	private int gps_hit;
 	
 	public Rodo_GpsBoard(int gps_boardnum, String gps_id, String gps_title, String gps_content, String gps_gpxinfo,
-			String gps_location, String gps_input_dt, String gps_update_dt, String gps_marker, int gps_hit)
-	{
+			String gps_location, String gps_input_dt, String gps_update_dt, String gps_marker, String gpsfile_original,
+			String gpsfile_saved, int gps_hit) {
 		super();
 		this.gps_boardnum = gps_boardnum;
 		this.gps_id = gps_id;
@@ -26,11 +28,12 @@ public class Rodo_GpsBoard
 		this.gps_input_dt = gps_input_dt;
 		this.gps_update_dt = gps_update_dt;
 		this.gps_marker = gps_marker;
+		this.gpsfile_original = gpsfile_original;
+		this.gpsfile_saved = gpsfile_saved;
 		this.gps_hit = gps_hit;
 	}
 	
-	public Rodo_GpsBoard() 
-	{
+	public Rodo_GpsBoard() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -106,6 +109,22 @@ public class Rodo_GpsBoard
 		this.gps_marker = gps_marker;
 	}
 
+	public String getGpsfile_original() {
+		return gpsfile_original;
+	}
+
+	public void setGpsfile_original(String gpsfile_original) {
+		this.gpsfile_original = gpsfile_original;
+	}
+
+	public String getGpsfile_saved() {
+		return gpsfile_saved;
+	}
+
+	public void setGpsfile_saved(String gpsfile_saved) {
+		this.gpsfile_saved = gpsfile_saved;
+	}
+
 	public int getGps_hit() {
 		return gps_hit;
 	}
@@ -115,11 +134,12 @@ public class Rodo_GpsBoard
 	}
 
 	@Override
-	public String toString() 
+	public String toString()
 	{
 		return "Rodo_GpsBoard [gps_boardnum=" + gps_boardnum + ", gps_id=" + gps_id + ", gps_title=" + gps_title
 				+ ", gps_content=" + gps_content + ", gps_gpxinfo=" + gps_gpxinfo + ", gps_location=" + gps_location
 				+ ", gps_input_dt=" + gps_input_dt + ", gps_update_dt=" + gps_update_dt + ", gps_marker=" + gps_marker
-				+ ", gps_hit=" + gps_hit + "]";
+				+ ", gpsfile_original=" + gpsfile_original + ", gpsfile_saved=" + gpsfile_saved + ", gps_hit=" + gps_hit
+				+ "]";
 	}
 }

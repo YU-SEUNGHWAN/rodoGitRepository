@@ -2,13 +2,16 @@ package project2.scmaster.rodo.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
+import project2.scmaster.rodo.vo.Rodo_VideoReply;
 import project2.scmaster.rodo.vo.videoBoard;
+
 
 
 @Repository
@@ -29,28 +32,7 @@ public class VideoBoardDao
 		return result;
 	}
 
-	/*public int VideofileInsertBoard(videoBoard board) {
-		System.out.println(board.toString());
-		int fileBoardnum = board.getPhoto_boardnum();
-		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
-		//int result = mapper.PhotoInsertBoard(board);
-		
-		HashMap<String, Object> fileTable = new HashMap<String, Object>();
-		int result = 0;
-		System.out.println("프로필 칸 수" + board.getPhotofile_original().size());
-		fileTable.put("photo_boardnum", fileBoardnum);
-		for(int i = 0; i<board.getPhotofile_original().size(); i++){
-			fileTable.put("photofile_original", board.getPhotofile_original().get(i));
-			fileTable.put("photofile_saved", board.getPhotofile_saved().get(i));
-			System.out.println("다오 보드넘은?" + board.getPhoto_boardnum());
-			System.out.println(fileTable.get("photofile_original"));
-			System.out.println(fileTable.get("photofile_saved"));
-			System.out.println(fileTable.get("photo_boardnum"));
-			result = mapper.VideofileInsertBoard(fileTable);
-		}
-		return result;
-	}*/
-
+	
 	/**
 	 * 글 번호로 해당 게시글 읽기
 	 * 
@@ -65,10 +47,19 @@ public class VideoBoardDao
 		return board;
 	}
 
-	public ArrayList<videoBoard> Videolist() {
+	public int listsize(String searchText)
+	{
 		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		int result = mapper.listsize(searchText);
+		return result;
+	}
+	
+	
+	public ArrayList<videoBoard> Videolist(int startRecode, int countPerPage, String searchText) {
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
 		ArrayList<videoBoard> board = new ArrayList<>();
-		board = mapper.Videolist();
+		board = mapper.Videolist(rb, searchText);
 		return board;
 	}
 	
@@ -81,32 +72,46 @@ public class VideoBoardDao
 	
 	public void deleteVideo(int Photo_boardnum){
 		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
-		mapper.deleteVideoFile(Photo_boardnum);
 		mapper.deleteVideo(Photo_boardnum);
 	}
 	
-	/*public int updateVideo(videoBoard board){
+	public int updateVideo(videoBoard board){
 		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
-		System.out.println(board.toString());
-		int updateFileBoardnum = board.getPhoto_boardnum();
 		int doroku = 0;
-		HashMap<String, Object> fileTable = new HashMap<String, Object>();
-		fileTable.put("photo_boardnum", updateFileBoardnum);
-			if(board.getPhotofile_original().size()!=0){
-				mapper.deletePhotoFile(updateFileBoardnum);
-				for(int i = 0; i<board.getPhotofile_original().size(); i++){
-					fileTable.put("photofile_original", board.getPhotofile_original().get(i));
-					fileTable.put("photofile_saved", board.getPhotofile_saved().get(i));
-					mapper.PhotofileInsertBoard(fileTable);
-				}
-			}else{
-				videoBoard a = readPhoto(board.getPhoto_boardnum());
-				 board.setPhotofile_tn(a.getPhotofile_tn());
-				 System.out.println(board.toString());
-			}
-		doroku = mapper.updatePhoto(board);
+		doroku = mapper.updateVideo(board);
+		System.out.println(board.toString());
 		return doroku;
-	}*/
+	}
+	
+	
+	
+	
+	public int writevideoreply(Rodo_VideoReply reply)
+	{
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		
+		int result = mapper.writevideoreply(reply);
+		
+		return result;
+	}
+	
+	public List<Rodo_VideoReply> findreply(int video_boardnum)
+	{
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		
+		List<Rodo_VideoReply> list = mapper.findreply(video_boardnum);
+		
+		return list;
+	}
+	
+	public int deletevideoreply(Rodo_VideoReply reply)
+	{
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		
+		int result = mapper.deletevideoreply(reply);
+		
+		return result;
+	}
 	
 	
 	

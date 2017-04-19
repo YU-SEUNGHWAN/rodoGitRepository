@@ -172,7 +172,7 @@
 					, photoreply_text
 				)
 				
-			values
+				values
 				(
 					rodo_photoreply_seq.nextval
 					, #{photo_boardnum}
@@ -185,21 +185,21 @@
 	
 	<select id = "findreply" parameterType = "int" resultType = "Rodo_PhotoReply">
 	
-	select
-		photoreply_replynum
-		, photo_boardnum
-		, photoreply_id
-		, photoreply_text
-		, photoreply_input_dt
+		select
+			photoreply_replynum
+			, photo_boardnum
+			, photoreply_id
+			, photoreply_text
+			, photoreply_input_dt
+			
+		from
+			rodo_photoreply
+			
+		where
+			photo_boardnum = #{photo_boardnum}
 		
-	from
-		rodo_photoreply
-		
-	where
-		photo_boardnum = #{photo_boardnum}
-	
-	order by
-		photoreply_replynum
+		order by
+			photoreply_replynum
 	
 	</select>
 

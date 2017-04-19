@@ -2,7 +2,7 @@ package project2.scmaster.rodo.vo;
 
 public class videoBoard {
 
-	public String video_boardnum;
+	public int video_boardnum;
 	public String video_id;
 	public String video_title;
 	public String video_content;
@@ -11,15 +11,15 @@ public class videoBoard {
 	public String video_originalfile;
 	public String video_savedfile;
 	public String video_thumbnail;
-	public String video_hits;
+	public int video_hits;
 
 	public videoBoard() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public videoBoard(String video_boardnum, String video_id, String video_title, String video_content,
+	public videoBoard(int video_boardnum, String video_id, String video_title, String video_content,
 			String video_input_dt, String video_update_dt, String video_originalfile, String video_savedfile,
-			String video_thumbnail, String video_hits) {
+			String video_thumbnail, int video_hits) {
 		super();
 		this.video_boardnum = video_boardnum;
 		this.video_id = video_id;
@@ -33,11 +33,11 @@ public class videoBoard {
 		this.video_hits = video_hits;
 	}
 
-	public String getVideo_boardnum() {
+	public int getVideo_boardnum() {
 		return video_boardnum;
 	}
 
-	public void setVideo_boardnum(String video_boardnum) {
+	public void setVideo_boardnum(int video_boardnum) {
 		this.video_boardnum = video_boardnum;
 	}
 
@@ -105,11 +105,11 @@ public class videoBoard {
 		this.video_thumbnail = video_thumbnail;
 	}
 
-	public String getVideo_hits() {
+	public int getVideo_hits() {
 		return video_hits;
 	}
 
-	public void setVideo_hits(String video_hits) {
+	public void setVideo_hits(int video_hits) {
 		this.video_hits = video_hits;
 	}
 

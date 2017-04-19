@@ -39,9 +39,29 @@
 			*
 		from 
 			rodo_videoboard
+			<if test = "_parameter != null">
+				where
+					video_title like '%' || #{searchText} || '%'
+			</if>
 		order by 
 			video_boardnum desc
 	</select>
+	
+	<select id = "listsize" parameterType = "String" resultType = "int">
+		
+		select 
+			count(*)
+		from
+			rodo_videoboard
+		
+		<if test = "_parameter != null">
+			where
+				video_title like '%' || #{searchText} || '%'
+		</if>
+		
+	</select>
+	
+	
 	
 	<!-- 게시글 읽기 -->
 	<select id="readVideo" parameterType="int" resultType="Video">
@@ -63,4 +83,90 @@
 		order by 
 			video_boardnum desc
 	</select>
+	
+	<!-- 보드리스트 삭제하기 -->
+	<delete id="deleteVideo" parameterType="int">
+		delete
+			rodo_videoboard
+		where 
+			video_boardnum = #{video_boardnum}
+	</delete>
+	
+	<update id="updateVideo" parameterType="Video">
+		update  
+			rodo_videoboard
+		set
+			video_title = #{video_title},
+			video_content = #{video_content},
+			video_originalfile = #{video_originalfile}, 
+			video_savedfile = #{video_savedfile}, 
+			video_thumbnail = #{video_thumbnail},
+			video_update_dt = sysdate
+		where 
+			video_boardnum = #{video_boardnum}
+	</update>
+	
+	
+	<insert id = "writevideoreply" parameterType = "Rodo_VideoReply">
+	
+		insert
+			into
+				rodo_videoreply
+				(
+					videoreply_replynum
+					, video_boardnum
+					, videoreply_id
+					, videoreply_text
+				)
+				
+				values
+				(
+					rodo_videoreply_seq.nextval
+					, #{video_boardnum}
+					, #{videoreply_id}
+					, #{videoreply_text}
+				)
+	
+	</insert>
+	
+	
+	<select id = "findreply" parameterType = "int" resultType = "Rodo_VideoReply">
+	
+		select
+			videoreply_replynum
+			, video_boardnum
+			, videoreply_id
+			, videoreply_text
+			, videoreply_input_dt
+			
+		from
+			rodo_videoreply
+			
+		where
+			video_boardnum = #{video_boardnum}
+		
+		order by
+			videoreply_replynum
+	
+	</select>
+	
+	
+	<delete id = "deletevideoreply" parameterType = "Rodo_VideoReply">
+	
+		delete
+			from
+				rodo_videoreply
+				
+			where
+				videoreply_replynum = #{videoreply_replynum}
+				
+			and
+				video_boardnum = #{video_boardnum}
+	
+	</delete>
+	
+	
+	
+	
+	
 </mapper>

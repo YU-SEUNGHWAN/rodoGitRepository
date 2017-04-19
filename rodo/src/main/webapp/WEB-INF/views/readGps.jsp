@@ -20,86 +20,129 @@
 <%@ include file="header.jsp" %>
 		
 <section id="portfolio" style="background-color: #f6f6f6;">
+
     <div class="container wow fadeInUp board-main">   
+    
       <div class="row">
         <div class="col-md-12" style="padding-bottom:35px; padding-top: 40px;">
-          <span class="board-title">북한산 등반 다녀왔습니다 (17.03.21)</span>
+        
+          <span class="board-title">${gps_board.gps_title} ${gps_board.gps_input_dt}</span>
+          
           <div class="board-title-divider"></div>
         </div>
       </div> 
+      
 		<div id="container" class="map_wrap">
 		    <div id="rvWrapper">
 	        <div id="roadview" style="width:100%;height:100%;"></div> <!-- 로드뷰를 표시할 div 입니다 -->
 	    </div>
+	    
 	    <div id="mapWrapper">
 	      	<div id="map"></div>
 	        <div id="roadviewControl" onclick="setRoadviewRoad()"><span>로드뷰</span></div>
 	    </div>
+	    
 		    <ul id="category" style="padding-left:0px;margin-top 0px;margin-bottom: 0px;">
+		      
 		        <li id="BK9" data-order="0"> 
 		            <span class="category_bg bank"></span>
 		            은행
-		        </li>       
+		        </li> 
+		              
 		        <li id="MT1" data-order="1"> 
 		            <span class="category_bg mart"></span>
 		            마트
-		        </li>  
+		        </li> 
+		         
 		        <li id="HP8" data-order="2"> 
 		            <span class="category_bg hospital"></span>
 		            병원
 		        </li>  
-		       <li id="AT4" data-order="3">
+		        
+		        <li id="AT4" data-order="3">
 		            <span class="category_bg sights"></span>
 		            관광명소
 		        </li>  
+		        
 		        <li id="CE7" data-order="4"> 
 		            <span class="category_bg cafe"></span>
 		            카페
 		        </li>  
+		        
 		        <li id="CS2" data-order="5"> 
 		            <span class="category_bg store"></span>
 		            편의점
 		        </li>
+		        
 		    </ul>
+		    
 		</div>
+		
 		<div class="autoview">
+		
 			<img style="width:220px" src="resources/img/roadview.png">
 			<input type="button" id="ajaxTest" onclick="viewStart()" value="start">
 			<input type="button" id="ajaxTest" onclick="viewPause()" value="pause">
 			<input type="button" id="ajaxTest" onclick="viewStop()" value="stop">
+			
 		</div>
+		
 		<div id="chart_div"></div>
-		<div id="content" class="board-content"><pre>넘나 재밌었삼
-담에는 가족들하고 같이 오고싶은것</pre></div>
+		
+		<div id="content" class="board-content"><pre> ${gps_board.gps_content} </pre></div>
+
+
+
 	<div class="board-reply">
+	
 		<form>
 			reply <input class="inputReply" type="text">
 			<input style="margin-left:10px;" type="button" id="regist" value="등록" />
 		</form>
+		
 		<div class="reviewDiv ">
-			<table class="table-striped replyTable">
+		
+			<table class="table-striped replyTable" id = "replytable">
+				
 				<tr class="repwtr">
-					<td class="id">홍길동</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
+					<td class="id">아이디</td>
+					<td class="reply">댓글</td>
+					<td class="repdate">날짜</td>
+					<td></td>
 				</tr>
-				<tr class="repwtr">
-					<td class="id">schasd51</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
-				</tr>
-				<tr class="repwtr">
-					<td class="id">홍길동</td>
-					<td class="reply">정말 재밌어보여요 저도 한번 다녀와야겠어요</td>
-					<td class="repdate">2017.04.03</td>
-					<td><input type="button" class="delbtn" value="삭제" /></td>
-				</tr>
+				
+				<c:forEach var = "reply" items = "${replylist}">
+				
+					<tr class="repwtr">
+						<td class="id">
+							${reply.photoreply_id}
+						</td>
+						
+						<td class="reply">
+							${reply.photoreply_text}
+						</td>
+							
+						<td class="repdate">
+							${reply.photoreply_input_dt}
+						</td>
+						
+						<td class="repdate">
+							<c:if test = "${sessionScope.loginId == reply.photoreply_id}">
+									<a href= "">[수정]</a>
+									<a href='#none' onclick="deletereplywarp('${reply.photoreply_replynum}', '${reply.photo_boardnum}')">[삭제]</a>
+							</c:if>
+						</td>
+
+					</tr>
+					
+				</c:forEach>
+				
 			</table>
 		</div>
+		
 	</div>
 	</div>
+	
 </section>
 
 <footer id="footer">

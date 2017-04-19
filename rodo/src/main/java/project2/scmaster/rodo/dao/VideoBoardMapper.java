@@ -6,9 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import project2.scmaster.rodo.vo.Rodo_FreeBoard;
-import project2.scmaster.rodo.vo.Rodo_FreeReply;
-import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
+import project2.scmaster.rodo.vo.Rodo_VideoReply;
 import project2.scmaster.rodo.vo.videoBoard;
 
 public interface VideoBoardMapper{
@@ -24,14 +22,21 @@ public interface VideoBoardMapper{
 	//글번호로 해당 게시글 검색
 	public videoBoard readVideo(int video_boardnum);
 
-	public ArrayList<videoBoard> Videolist();
+	public ArrayList<videoBoard> Videolist(RowBounds rb, String searchText);
 	
 	public ArrayList<HashMap> VideoFileList(int photo_boardnum);
 
-	public void deleteVideo(int photo_boardnum);
+	public int listsize(String searchText);
+	
+	public void deleteVideo(int video_boardnum);
 	
 	public void deleteVideoFile(int photo_boardnum);
 	
 	public int updateVideo(videoBoard board);
-
+	
+	public int writevideoreply(Rodo_VideoReply reply);
+	
+	public List<Rodo_VideoReply> findreply(int video_boardnum);
+	
+	public int deletevideoreply(Rodo_VideoReply reply);
 }

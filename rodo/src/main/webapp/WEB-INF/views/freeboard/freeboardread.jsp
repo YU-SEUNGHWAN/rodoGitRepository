@@ -126,6 +126,14 @@ function deletereplywarp(replynum, boardnum)
 }
 
 
+function deletefreeboard(free_boardnum)
+{
+	if(confirm("정말 삭제하시겠습니까?"))
+	{
+		location.href="deletefreeboard?free_boardnum="+${board.free_boardnum};
+	}
+}
+
 
 </script>
 
@@ -186,7 +194,7 @@ function deletereplywarp(replynum, boardnum)
 			<c:if test = "${sessionScope.loginId!=null}">
 				<c:if test = "${sessionScope.loginId == board.free_id}">
 					<a href = "updateboard?free_boardnum=${board.free_boardnum}">[수정]</a>
-					<a href = "deletefreeboard?free_boardnum=${board.free_boardnum}">[삭제]</a>
+					<a href ='#none' onclick="deletefreeboard('${board.free_boardnum}')">[삭제]</a>
 				</c:if>
 			</c:if>
 				<a href = "freeboardlist">목록보기</a>

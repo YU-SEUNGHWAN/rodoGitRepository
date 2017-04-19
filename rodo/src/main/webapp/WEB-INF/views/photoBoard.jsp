@@ -90,8 +90,10 @@
       <div class="row">
       <c:forEach items="${photoList}" var="photo">
       	<div class="col-md-3">
+      	
       	  <a class="portfolio-item" style="background-image: url('download?origin=${photo.photofile_saved}&tn=${photo.photofile_tn }');" 
       	  href="readPhoto?photo_boardnum=${photo.photo_boardnum }">
+           
             <div class="details">
               <h4>${photo.photo_title}</h4>
               <span>${photo.photo_id}</span>

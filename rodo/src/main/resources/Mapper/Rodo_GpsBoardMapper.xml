@@ -50,6 +50,91 @@
 	</select>
 	
 	
+	<select id = "getsequence" resultType = "int">
 	
-
+		select
+			MAX(gps_boardnum)
+			
+		from
+			rodo_gpsboard
+	
+	</select>
+	
+	
+	<insert id = "writegps" parameterType = "Rodo_GpsBoard">
+	
+		insert 
+			into
+				rodo_gpsboard
+				(
+					gps_boardnum
+					, gps_id
+					, gps_title
+					, gps_content
+					, gps_gpxinfo
+					, gps_location
+				)
+				
+				values
+				(
+					rodo_gpsboard_seq.nextval
+					, #{gps_id}
+					, #{gps_title}
+					, #{gps_content}
+					, #{gps_gpxinfo}
+					, #{gps_location}
+				)
+			
+	</insert>
+	
+	
+	<insert id = "writegpsfile" parameterType = "Rodo_GpsBoard">
+	
+		insert
+			into
+				rodo_gpsfile
+				(
+					gps_boardnum
+					, gpsfile_original
+					, gpsfile_saved
+				)
+				
+				values
+				(
+					#{gps_boardnum}
+					, #{gpsfile_original}
+					, #{gpsfile_saved}
+				)
+					
+	</insert>
+	
+	
+	<select id = "selectOne" parameterType = "int" resultType = "Rodo_GpsBoard">
+	
+		select
+			b.gps_boardnum
+			, b.gps_id
+			, b.gps_title
+			, b.gps_content
+			, b.gps_gpxinfo
+			, b.gps_location
+			, b.gps_input_dt
+			, b.gps_update_dt
+			, b.gps_marker
+			, b.gps_hit
+			, f.gpsfile_original
+			, f.gpsfile_saved
+		
+		from
+			rodo_gpsboard
+			
+		where
+			b.gps_boardnum = #{gps_boardnum}
+			
+		and
+			b.gps_boardnum = f.gps_boardnum
+		
+	</select>
+	
+	
 </mapper>

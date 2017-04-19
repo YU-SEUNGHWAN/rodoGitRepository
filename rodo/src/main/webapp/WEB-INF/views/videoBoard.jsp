@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+
+<style>
+.pagingset{
+	color : white;
+}
+</style>
+	
 <head>
   <meta charset="utf-8">
   <title>Share Your Road</title>
@@ -44,6 +50,7 @@
   <link href="resources/css/login.css" rel="stylesheet">
 
 <script>
+
 $(function(){
 	$(".portfolio-item").mouseover(function(){
 		$(this).find("h4").css('opacity', 0.8);
@@ -54,6 +61,16 @@ $(function(){
 		$(this).find("span").css('opacity', 0);
 	});	
 })
+
+function pagingFormSubmit(currentPage)
+{
+	var form = document.getElementById("pagingForm");
+	var page = document.getElementById("page");
+	page.value = currentPage;
+	
+	form.submit();
+}
+
 </script>
 </head>
 
@@ -95,15 +112,36 @@ $(function(){
 		  	<tr><td style="width:20%"></td>
 			<td style="width:60%; text-align:center;">
 			<span class="page-navi">
-				<span class="btn-page">&lt;&lt;</span>
-				<span class="btn-page">&lt;</span>
-				<span class="btn-page">1</span>
-				<span class="btn-page">&gt;</span>
-				<span class="btn-page">&gt;&gt;</span>
-			</span></td>
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})">&lt;&lt;</a></span>
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - 1})">&lt;</a></span>
+				
+				<c:forEach var = "count" begin = "${navi.startPageGroup}" end = "${navi.endPageGroup}">
+				
+				<span class="btn-page">
+						<a class = "pagingset" href = "javascript:pagingFormSubmit(${count})">${count}</a>
+				</span>
+				
+				</c:forEach>
+				
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + 1})">&gt;</a></span>
+				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
+				</span>
+			</td>
 	      	<td style="width:20%"><a href="writeVideoForm" class="btn-write">Write</a></td></tr>
       	</table>
+      	
+     <div class="inbox-head">
+     
+        <form action="videoBoard" class="pull-right position" method = "get" id = "pagingForm">
+          <div class="input-append">
+          	<input type = "hidden" name = "page" id = "page">
+              <input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text" value = "${searchText}">
+              <button class="btn sr-btn" type="button" onclick = "pagingFormSubmit(1)"><i class="fa fa-search"></i></button>
+          </div>
+      </form>
+      </div>	
       </div>
+      
     </div>
   </section>
 

@@ -35,5 +35,42 @@ public class Rodo_GpsBoardDao
 		return result;
 	}
 	
+	public int getsequence()
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.getsequence();
+		
+		return result;
+	}
+	
+	public int writegps(Rodo_GpsBoard board)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.writegps(board);
+		
+		return result;
+	}
+	
+	public int writegpsfile(Rodo_GpsBoard board)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.writegpsfile(board);
+		
+		return result;
+	}
+	
+	public Rodo_GpsBoard selectOne(int gps_boardnum)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		Rodo_GpsBoard board = mapper.selectOne(gps_boardnum);
+		
+		return board;
+	}
+	
+	
 	
 }

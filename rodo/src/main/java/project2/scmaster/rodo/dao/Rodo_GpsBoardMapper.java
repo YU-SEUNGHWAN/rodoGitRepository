@@ -12,5 +12,11 @@ public interface Rodo_GpsBoardMapper
 	
 	public int listsize(String searchText);
 	
+	public int getsequence();
 	
+	public int writegps(Rodo_GpsBoard board);
+	
+	public int writegpsfile(Rodo_GpsBoard board);
+	
+	public Rodo_GpsBoard selectOne(int gps_boardnum);
 }

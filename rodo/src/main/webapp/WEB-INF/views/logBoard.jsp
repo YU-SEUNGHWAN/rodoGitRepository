@@ -47,6 +47,13 @@
   Author URL: https://bootstrapmade.com
 ======================================================= -->
 
+<style>
+	.pagingset
+	{
+		color : white;
+	}
+</style>
+
 <script type="text/javascript">
 
 function pagingFormSubmit(currentPage)
@@ -81,12 +88,36 @@ function pagingFormSubmit(currentPage)
           <div class="section-title-divider"></div>
         </div>
       </div>
+      
       <div class="row" style="height:450px;">
+      <c:forEach items = "${gpslist}" var ="gps">
+      	<div class="col-md-6 service-item">
+                 
+          <div class="service-icon">
+          	<i class="fa fa-bicycle"></i>
+          </div>
+          
+          <h4 class="service-title">
+         	 <a href="readGps?gps_boardnum="${gps_boardnum}>${gps.gps_title}</a>
+          </h4>
+          <p class="service-description">작성자 : ${gps.gps_id}<br>작성일 : ${gps.gps_input_dt}<br>지역 : ${gps.gps_location}</p>
+     	
+      </div> 	
+      </c:forEach>
+
+      	
+
+      	
+       <!--  <div class="col-md-6 service-item">
+          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
+          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
+          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
+        </div>
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
           <h4 class="service-title"><a href="readGps">북한산 등반</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-      	</div>
+        </div>
         <div class="col-md-6 service-item">
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
           <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
@@ -101,17 +132,8 @@ function pagingFormSubmit(currentPage)
           <div class="service-icon"><i class="fa fa-bicycle"></i></div>
           <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
           <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div>
-        <div class="col-md-6 service-item">
-          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="readGps">북한산 등반</a></h4>
-          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div>
-        <div class="col-md-6 service-item">
-          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
-          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div>
+        </div> -->
+        
         
         
         
@@ -135,7 +157,7 @@ function pagingFormSubmit(currentPage)
 		<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
 		</span>
 	</td>
-	<td style="width:20%"><a href="writePhoto" class="btn-write">Write</a></td></tr>
+	<td style="width:20%"><a href="writeGps" class="btn-write">Write</a></td></tr>
 </table>
         
         
@@ -156,7 +178,7 @@ function pagingFormSubmit(currentPage)
       
       <div class="inbox-head">
      
-        <form action="photoBoard" class="pull-right position" method = "get" id = "pagingForm">
+        <form action="logBoard" class="pull-right position" method = "get" id = "pagingForm">
           <div class="input-append">
           	<input type = "hidden" name = "page" id = "page">
               <input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text" value = "${searchText}">

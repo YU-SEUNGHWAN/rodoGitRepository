@@ -2,18 +2,21 @@ package project2.scmaster.rodo.vo;
 
 import java.util.Date;
 
-public class GPX {
+public class GPX 
+{
 	private String lat;
 	private String lng;
 	private String ele;
 	private Date time;
 	private String dist;
 	
-	public GPX() {
+	public GPX() 
+	{
 		// TODO Auto-generated constructor stub
 	}
 
-	public GPX(String lat, String lng, String ele, Date time, String dist) {
+	public GPX(String lat, String lng, String ele, Date time, String dist) 
+	{
 		super();
 		this.lat = lat;
 		this.lng = lng;

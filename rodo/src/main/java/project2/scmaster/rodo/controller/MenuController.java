@@ -64,10 +64,21 @@ public class MenuController {
 	}
 	
 	@RequestMapping(value="videoBoard", method=RequestMethod.GET)
-	public String videoBoard(Model model){
+	public String videoBoard(Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
+			)
+	{
 		ArrayList<videoBoard> video_board = new ArrayList<>();
-		video_board = video_dao.Videolist();
+		
+		int total = video_dao.listsize(searchText); 
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		video_board = video_dao.Videolist(navi.getStartRecord(), navi.getCountPerPage(), searchText);
+		model.addAttribute("searchText", searchText);
 		model.addAttribute("videoList", video_board);
+		model.addAttribute("navi", navi);
 		return "videoBoard";
 	}
 	
@@ -91,9 +102,9 @@ public class MenuController {
 	}
 
 	@RequestMapping(value="socketTest", method=RequestMethod.GET)
-	public String socketTest(){
+	public String socketTest()
+	{
 		
 		return "socketTest";
 	}
-
 }

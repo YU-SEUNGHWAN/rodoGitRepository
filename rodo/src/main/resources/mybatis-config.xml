@@ -14,7 +14,8 @@
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_PhotoBoard" alias="Rodo_PhotoBoard" />
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_PhotoReply" alias="Rodo_PhotoReply" />
 		
-		<typeAlias type="project2.scmaster.rodo.vo.videoBoard" alias="Video" />
+		<typeAlias type="project2.scmaster.rodo.vo.videoBoard" alias="Video"/>
+		<typeAlias type="project2.scmaster.rodo.vo.Rodo_VideoReply" alias="Rodo_VideoReply"/>
 		
 		<typeAlias type="project2.scmaster.rodo.vo.Rodo_GpsBoard" alias="Rodo_GpsBoard" />
 	</typeAliases>
