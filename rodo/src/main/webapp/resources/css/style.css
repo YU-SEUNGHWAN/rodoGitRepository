@@ -477,6 +477,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 		center;
 	background-size: cover;
 	padding: 80px 0 60px 0;
+	height : 83vh;
 }
 
 #services .service-item {
@@ -523,13 +524,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 /* Portfolio Section
 --------------------------------*/
-#portfolio {
-	background: #fff;
-	padding: 40px;
-	padding-bottom: 70px;
-}
-
-#portfolio .portfolio-item {
+#services .portfolio-item {
 	background-position: center center;
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -541,7 +536,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 	margin-bottom: 30px;
 }
 
-#portfolio .portfolio-item .details {
+#services .portfolio-item .details {
 	height: 260px;
 	background: #fff;
 	display: table-cell;
@@ -551,7 +546,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 	text-align: center;
 }
 
-#portfolio .portfolio-item .details h4 {
+#services .portfolio-item .details h4 {
 	font-size: 16px;
 	transition: opacity 0.3s, -webkit-transform 0.3s;
 	transition: transform 0.3s, opacity 0.3s;
@@ -562,7 +557,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 	color: #333333;
 }
 
-#portfolio .portfolio-item .details span {
+#services .portfolio-item .details span {
 	display: block;
 	color: #666666;
 	font-size: 13px;
@@ -573,16 +568,16 @@ body.mobile-nav-active #mobile-nav-toggle {
 	transform: translate3d(0, 15px, 0);
 }
 
-#portfolio .portfolio-item:hover .details {
+#services .portfolio-item:hover .details {
 	opacity: 0.8;
 }
 
-#portfolio .portfolio-item:hover .details h4 {
+#services .portfolio-item:hover .details h4 {
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }
 
-#portfolio .portfolio-item:hover .details span {
+#services .portfolio-item:hover .details span {
 	-webkit-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
 }

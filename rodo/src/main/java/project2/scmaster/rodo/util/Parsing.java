@@ -16,15 +16,15 @@ import org.w3c.dom.NodeList;
 
 import project2.scmaster.rodo.vo.GPX;
 
-public class Parsing 
-{
-	private final String GPX_FILE_PATH = "D:\\test.gpx";
+public class Parsing {
 	
-	public ArrayList<GPX> GpxParse(){
+	public ArrayList<GPX> GpxParse(String gpx_file_path){
+		
+		System.out.println(gpx_file_path);
 		
 		ArrayList<GPX> gpxList= new ArrayList();
 
-		File xmlFile = new File(GPX_FILE_PATH);
+		File xmlFile = new File(gpx_file_path);
 
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db = null;

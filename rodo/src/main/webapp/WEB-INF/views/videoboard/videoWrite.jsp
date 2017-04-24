@@ -8,7 +8,6 @@
 <script src="resources/js/jquery-3.1.1.js"></script>
 <link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<link href="resources/css/jquery.bxslider.css" rel="stylesheet" />
 <script>
 
 	var video, $output1;
@@ -87,8 +86,6 @@
 					
 					success : function(data)
 					{
-						alert(data);
-						
 						var html = "<div>"
 						   		   +"<video height='380' id='videoForm' controls='controls'>"
 	 						   	   +"<source src='"+data+"' />"
@@ -152,15 +149,14 @@
 			<div>
 				<div>제목 <input type="text" name="title" id="title"></div>
 				<br>
-				내용
-				
+
 				<div id="contents">
 			
 					<div id="videoDiv">
 					</div>
 					
 					<div class="contentDiv">
-						<textarea id="content"></textarea>
+					내용	<textarea id="content"></textarea>
 					</div>
 					
 				</div>

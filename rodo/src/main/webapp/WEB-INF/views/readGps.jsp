@@ -12,6 +12,11 @@
 <script src="resources/js/maps.js"></script>
 <script src="resources/js/chart.js"></script>
 <link href="resources/css/ReadGps.css" rel="stylesheet" type="text/css">
+<script>
+	function gpsUpdate(boardnum){
+		location.href="gpsUpdate?boardnum="+boardnum;
+	}
+</script>
 </head>
 <body>
 <!--==========================
@@ -89,7 +94,13 @@
 		
 		<div id="chart_div"></div>
 		
-		<div id="content" class="board-content"><pre> ${gps_board.gps_content} </pre></div>
+		<div id="content" class="board-content">
+			<pre> ${gps_board.gps_content} </pre>
+			<input type='hidden' id='savedfile' value='${gps_board.gpsfile_saved}'>
+		</div>
+		<div>
+			<input type="button" value="update" onclick="gpsUpdate(${gps_board.gps_boardnum})">
+		</div>
 
 
 
@@ -112,7 +123,6 @@
 				</tr>
 				
 				<c:forEach var = "reply" items = "${replylist}">
-				
 					<tr class="repwtr">
 						<td class="id">
 							${reply.photoreply_id}
@@ -139,7 +149,7 @@
 				
 			</table>
 		</div>
-		
+		<input type='hidden' id='myMarks' value='${myMarks}'>
 	</div>
 	</div>
 	

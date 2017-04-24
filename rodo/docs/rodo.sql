@@ -1,18 +1,33 @@
-drop table rodo_member;
+drop table rodo_photofile;
+drop table rodo_photoreply;
+drop table rodo_photoboard;
+drop sequence rodo_photoboard_seq;
+drop sequence rodo_photoreply_seq;
+drop table rodo_freereply;
+drop sequence rodo_freereply_seq;
+drop table rodo_freefile;
 drop table rodo_freeboard;
 drop sequence rodo_freeboard_seq;
-drop table rodo_freefile;
+drop table rodo_videoreply;
+drop sequence rodo_videoreply_seq;
+drop sequence rodo_video_seq;
+drop table rodo_videoboard;
+drop table rodo_sendmessage;
+drop table rodo_receivemessage;
+drop sequence rodo_sendmessage_seq;
+drop sequence rodo_receivemessage_seq;
+drop sequence rodo_gpsboard_seq;
+drop table rodo_gpsboard;
+drop table rodo_member;
 
 
 create table rodo_member
 (
 	id varchar2(20) primary key
 	, password varchar2(20) not null
-	, name varchar2(20) not null
 	, email varchar2(50) unique
 );
 
-select * from rodo_member;
 
 create table rodo_photoboard
 (
@@ -48,7 +63,7 @@ create table rodo_photoreply
 	, photoreply_text varchar2(300) not null
 	, photoreply_input_dt date default sysdate
 	, photoreply_update_dt date default sysdate
-)
+);
 
 alter table rodo_photoreply add foreign key(photo_boardnum) references rodo_photoboard (photo_boardnum);
 create sequence rodo_photoreply_seq start with 1 increment by 1;
@@ -87,7 +102,7 @@ create table rodo_freereply
 	, freereply_text varchar2(300) not null
 	, freereply_input_dt date default sysdate
 	, freereply_update_dt date default sysdate
-)
+);
 
 alter table rodo_freereply add foreign key(free_boardnum) references rodo_freeboard (free_boardnum);
 create sequence rodo_freereply_seq start with 1 increment by 1;
@@ -111,11 +126,6 @@ create table rodo_videoboard
 alter table rodo_videoboard add foreign key(video_id) references rodo_member (id);
 create sequence rodo_video_seq start with 1 increment by 1;
 
-delete rodo_videoboard;
-
-select * from rodo_videoboard;
-
-
 create table rodo_videoreply
 (
 	videoreply_replynum number primary key
@@ -124,7 +134,7 @@ create table rodo_videoreply
 	, videoreply_text varchar2(300 )not null
 	, videoreply_input_dt date default sysdate
 	, videoreply_update_dt date default sysdate
-)
+);
 
 alter table rodo_videoreply add foreign key(video_boardnum) references rodo_videoboard (video_boardnum);
 create sequence rodo_videoreply_seq start with 1 increment by 1;
@@ -145,13 +155,12 @@ create table rodo_gpsboard
 	, gps_hit number default 0
 	, gpsfile_original varchar2(200) not null
 	, gpsfile_saved varchar2(200) not null
-)
+);
 
 create sequence rodo_gpsboard_seq start with 1 increment by 1;
 alter table rodo_gpsboard add foreign key(gps_id) references rodo_member (id);
 
-select * from rodo_gpsboard;
-
+delete rodo_gpsboard
 
 create table rodo_sendmessage
 (

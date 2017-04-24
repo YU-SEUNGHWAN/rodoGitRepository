@@ -15,7 +15,7 @@
 <script>
 var arr = [];
 
-function gpsWrite()
+function gpsUpdate()
 {	
 	var formData = new FormData();
 	
@@ -35,17 +35,18 @@ function gpsWrite()
 	formData.append("gps_title", $("#gps_title").val());
 	formData.append("gps_content", $("#gps_content").val());
 	formData.append("gps_marker", jarr);
+	formData.append("gps_boardnum", $("#gps_bn").val());
 	
 	$.ajax({
 		
 		type : "POST",						
-		url : "writeGps",
+		url : "updateGps",
 		data : formData,
 		processData : false,
 	    contentType : false,
 		success : function(data){
 
-			location.href="logBoard";
+			location.href="gpsread?gps_boardnum="+$("#gps_bn").val();
 			
 		},
 		error : function(e){
@@ -136,13 +137,13 @@ $(function(){
 	    <div class="container wow fadeInUp board-main">  
 	      <div class="row">
 	        <div class="col-md-12" style="padding-bottom:35px; padding-top: 40px;">
-	          <span class="board-title">Write</span>
+	          <span class="board-title">Update</span>
 	          <div class="board-title-divider"></div>
 	        </div>
 	      </div> 
 
 			<div>
-				<div>TITLE <input type="text" name = "gps_title" id = "gps_title"></div>
+				<div>TITLE <input type="text" name = "gps_title" id = "gps_title" value="${gpsboard.gps_title}"></div>
 
 				<div id="contents">
 					
@@ -154,7 +155,8 @@ $(function(){
 					<div id = "mapDiv"></div>					
 						
 					<div class="contentDiv">
-						CONTENTS <br><textarea id = "gps_content" name = "gps_content"></textarea>
+						CONTENTS <br><textarea id = "gps_content" name = "gps_content">${gpsboard.gps_content}</textarea>
+						<input type="hidden" id="gps_bn" value="${gpsboard.gps_boardnum}">
 					</div>
 					
 				</div>
@@ -162,7 +164,7 @@ $(function(){
 			</div>
 
 			<div>
-				<input type="button" id="videoWrite" value="write" onclick="gpsWrite()">
+				<input type="button" id="videoWrite" value="write" onclick="gpsUpdate()">
 			</div>			
 		</div>
 	</section>

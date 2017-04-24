@@ -14,7 +14,6 @@
 			(
 				id
 				, password
-				, name
 				, email
 			)
 			
@@ -22,7 +21,6 @@
 			(
 				#{id}
 				, #{password}
-				, #{name}
 				, #{email}
 			)
 
@@ -33,7 +31,6 @@
 	select
 		id
 		, password
-		, name
 		, email
 		
 	from
@@ -78,7 +75,6 @@
 		
 	set
 		password = #{password}
-		, name = #{name}
 		, email = #{email}
 		
 	where

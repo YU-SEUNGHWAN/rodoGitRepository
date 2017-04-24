@@ -164,8 +164,8 @@ public class VideoBoardController {
 	}
 
 	@RequestMapping(value = "readVideo", method = RequestMethod.GET)
-	public String readVideo(Model model, int video_boardnum) 
-	{
+	public String readVideo(Model model, int video_boardnum){
+		
 		System.out.println(video_boardnum);
 		
 		videoBoard videoBoard = dao.readVideo(video_boardnum);
@@ -175,6 +175,7 @@ public class VideoBoardController {
 		model.addAttribute("replylist", list);
 		
 		return "videoboard/readVideo";
+		
 	}
 
 	@RequestMapping(value = "deleteVideo", method = RequestMethod.GET)
@@ -185,13 +186,16 @@ public class VideoBoardController {
 
 		dao.deleteVideo(videoBoard.getVideo_boardnum());
 		return "redirect:videoBoard";
+		
 	}
 
 	@RequestMapping(value = "updateVideo", method = RequestMethod.GET)
 	public String updateVideo(int video_boardnum, Model model) {
+		
 		videoBoard videoBoard = dao.readVideo(video_boardnum);
 		model.addAttribute("videoBoard", videoBoard);
 		return "videoboard/updateVideo";
+		
 	}
 
 	@ResponseBody

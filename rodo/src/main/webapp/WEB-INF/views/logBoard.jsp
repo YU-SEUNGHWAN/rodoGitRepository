@@ -98,44 +98,13 @@ function pagingFormSubmit(currentPage)
           </div>
           
           <h4 class="service-title">
-         	 <a href="readGps?gps_boardnum="${gps_boardnum}>${gps.gps_title}</a>
+         	 <a href="gpsread?gps_boardnum=${gps.gps_boardnum}">${gps.gps_title}</a>
           </h4>
           <p class="service-description">작성자 : ${gps.gps_id}<br>작성일 : ${gps.gps_input_dt}<br>지역 : ${gps.gps_location}</p>
      	
       </div> 	
       </c:forEach>
 
-      	
-
-      	
-       <!--  <div class="col-md-6 service-item">
-          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
-          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div>
-        <div class="col-md-6 service-item">
-          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="readGps">북한산 등반</a></h4>
-          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div>
-        <div class="col-md-6 service-item">
-          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
-          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div>
-        <div class="col-md-6 service-item">
-          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="readGps">북한산 등반</a></h4>
-          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div>
-        <div class="col-md-6 service-item">
-          <div class="service-icon"><i class="fa fa-bicycle"></i></div>
-          <h4 class="service-title"><a href="readGps">북한산 등반하고 왔습니다</a></h4>
-          <p class="service-description">작성자 : 북한산신선<br>작성일 : 2017.04.01<br>지역 : 서울</p>
-        </div> -->
-        
-        
-        
         
 <table style="width:100%" class="board-navi">
 <tr>
@@ -159,22 +128,6 @@ function pagingFormSubmit(currentPage)
 	</td>
 	<td style="width:20%"><a href="writeGps" class="btn-write">Write</a></td></tr>
 </table>
-        
-        
-        
-	<!-- <table style="width:100%" class="board-navi">
-	  	<tr><td style="width:20%"></td>
-		<td style="width:60%; text-align:center;"><span class="page-navi">
-			<span class="btn-page">&lt;&lt;</span>
-			<span class="btn-page">&lt;</span>
-			<span class="btn-page">1</span>
-			<span class="btn-page">&gt;</span>
-			<span class="btn-page">&gt;&gt;</span>
-		</span></td>
-      	<td style="width:20%"><a href="#services" class="btn-write">Write</a></td></tr>
-	</table> -->
-      
-      
       
       <div class="inbox-head">
      
@@ -187,8 +140,6 @@ function pagingFormSubmit(currentPage)
       </form>
         
          </div>
-      
-      
       
       </div>
     </div>  
@@ -205,12 +156,6 @@ function pagingFormSubmit(currentPage)
               &copy; Copyright <strong>Imperial Theme</strong>. All Rights Reserved
             </div>
             <div class="credits">
-              <!-- 
-                All the links in the footer should remain intact. 
-                You can delete the links only if you purchased the pro version.
-                Licensing information: https://bootstrapmade.com/license/
-                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Imperial
-              -->
               Bootstrap Themes by <a href="https://bootstrapmade.com/">BootstrapMade</a>
             </div>
           </div>
@@ -220,7 +165,7 @@ function pagingFormSubmit(currentPage)
   
   <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
     
-  <!-- Required JavaScript Libraries -->
+  <!--  Required JavaScript Libraries -->
   <script src="resources/lib/jquery/jquery.min.js"></script>
   <script src="resources/lib/jquery/jquery-migrate.min.js"></script>
   <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
@@ -229,10 +174,8 @@ function pagingFormSubmit(currentPage)
   <script src="resources/lib/morphext/morphext.min.js"></script>
   <script src="resources/lib/wow/wow.min.js"></script>
   <script src="resources/lib/stickyjs/sticky.js"></script>
-  <script src="resources/lib/easing/easing.js"></script>
-  
+  <script src="resources/lib/easing/easing.js"></script> 
   <!-- Template Specisifc Custom Javascript File -->
   <script src="resources/js/custom.js"></script>
-  
 </body>
 </html>

@@ -21,7 +21,6 @@ $(function()
 	$("#submmit").on("click", function()
 	{
 		var id = $("#id").val();
-		var name = $("#name").val();
 		
 		//	입력된 ID 값이 없다면..
 		if(id == "") 
@@ -54,12 +53,6 @@ $(function()
 		{
 			alert("email 체크를 하고 인증번호를 발급 받으세요.")
 			
-			return false;
-		}
-		
-		if (name == "")
-		{
-			alert("이름을 입력하세요.");
 			return false;
 		}
 		
@@ -238,12 +231,6 @@ $(function()
 		<tr>	
 			<td>
 				비밀번호 확인 <input type = "password" name = "passwordc" id = "passwordc" placeholder = "비밀번호와 동일하게 입력">
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				이름 <input type = "text" name = "name" id = "name" placeholder = "이름 입력">
 			</td>
 		</tr>
 		
