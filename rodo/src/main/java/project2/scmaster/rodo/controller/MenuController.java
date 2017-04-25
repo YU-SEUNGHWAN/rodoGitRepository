@@ -37,12 +37,6 @@ public class MenuController {
 	public String bootstrap(){
 		return "index";
 	}
-
-	@RequestMapping(value="index2", method=RequestMethod.GET)
-	public String index2(){
-		
-		return "index2";
-	}
 	
 	@RequestMapping(value="photoBoard", method=RequestMethod.GET)
 	public String photoBoard(Model model,
@@ -86,8 +80,8 @@ public class MenuController {
 	public String logBoard(Model model,
 			@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "searchText", defaultValue = "") String searchText
-			)
-	{
+			){
+		
 		int total = gps_dao.listsize(searchText);
 		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);

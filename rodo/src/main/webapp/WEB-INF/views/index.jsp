@@ -82,7 +82,6 @@ $(function()
 {
 	$("#submmit").on("click", function()
 	{
-		var name = $("#name").val();
 		
 		//	입력된 ID 값이 없다면..
 		if(idflag == false) 
@@ -115,12 +114,6 @@ $(function()
 		{
 			alert("email 체크를 하고 인증번호를 발급 받으세요.")
 			
-			return false;
-		}
-		
-		if (name == "")
-		{
-			alert("이름을 입력하세요.");
 			return false;
 		}
 		
@@ -536,8 +529,6 @@ $(document).ready(function()
 			                    <input type="password" name="password" id="password" class="inpt" required="required" placeholder="Your Password">
              						    
 								<input type="password" name="passwordc" id="passwordc" class="inpt" required="required" placeholder="One more Password">
-             						    
-             					<input type="text" name="name" id="name" class="inpt" required="required" placeholder="Your Name">
              						    
              					<input type="text" name="email" id="email" class="inpt" required="required" placeholder="Your Email">
              					<div class = "maillabel2" id = "maillabel"></div>

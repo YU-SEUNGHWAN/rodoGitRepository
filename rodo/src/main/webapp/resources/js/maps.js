@@ -4,9 +4,10 @@
 	mapCenter, rv, rvClient, markImage, marker;
 	var startLat, startLng, arriveLat, arriveLng;
 	
-	$(function() {
+	$(function(){
 		$.ajax({
 			type : "GET",
+			data : { savedfile : $('#savedfile').val() },
 			url : "getGpsList",
 			success : function(data) {
 				$.each(data, function(index, item) {
@@ -24,7 +25,9 @@
 						eleChart.push(ele);
 					}
 				})
-				initMap(startLat, startLng, arriveLat, arriveLng);
+				var m = $('#myMarks').val();
+				marks = JSON.parse(m);
+				initMap(startLat, startLng, arriveLat, arriveLng, marks);
 			},
 			error : function(e) {
 				console.log(e);
@@ -32,8 +35,7 @@
 		})
 		
 	});
-
-   
+	
    	function initMap(){
   	    var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
   	    mapOption = { 
@@ -103,6 +105,39 @@
    		    image: arriveImage // 도착 마커이미지를 설정합니다
    		});
    	
+   		// 추천 마커
+   		var positions = [];
+	    
+	    for(var i = 0; i < marks.length; i++){
+	    	var mk = {
+	    		content : "<div style='padding:5px; height:100px;'>"+marks[i].content+"</div>",
+	    		latlng : new daum.maps.LatLng(parseFloat(marks[i].lng), parseFloat(marks[i].lat))
+	    	}
+	    	positions.push(mk);
+	    }
+	    
+	    for (var i = 0; i < positions.length; i ++) {
+	     // 마커를 생성합니다
+	    	var myMarker = new daum.maps.Marker({
+	    		map : map, // 마커를 표시할 지도
+	    		position : positions[i].latlng // 마커의 위치
+	    	});
+	    	console.log(myMarker);
+	  
+	    	// 마커에 표시할 인포윈도우를 생성합니다 
+		    var infowindow = new daum.maps.InfoWindow({
+		        content: positions[i].content // 인포윈도우에 표시할 내용
+		    });
+		    
+		    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+		    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+		    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+		    daum.maps.event.addListener(myMarker, 'mouseover', makeOverListener(map, myMarker, infowindow));
+		    daum.maps.event.addListener(myMarker, 'mouseout', makeOutListener(infowindow));
+	    }
+   		
+   		
+	    // 커스텀오버레이
    		placeOverlay = new daum.maps.CustomOverlay({zIndex:1}); 
    	    contentNode = document.createElement('div'), // 커스텀 오버레이의 컨텐츠 엘리먼트 입니다 
    	    markers = []; // 마커를 담을 배열입니다
@@ -203,9 +238,14 @@
 	        // 클락한 위치를 기준으로 로드뷰를 설정합니다
 	        toggleRoadview(position);
 	    });
+	    
+	    // 마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
+	    
 
-   	    
-  	} 
+  	}  // init 끝
+   	
+   	
+   	
    	
    	// 엘리먼트에 이벤트 핸들러를 등록하는 함수입니다
    	function addEventHandle(target, type, callback) {
@@ -490,3 +530,17 @@ function viewStop(){
     marker.setPosition(mapCenter);
     toggleRoadview(mapCenter);
 }
+
+//인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
+}   

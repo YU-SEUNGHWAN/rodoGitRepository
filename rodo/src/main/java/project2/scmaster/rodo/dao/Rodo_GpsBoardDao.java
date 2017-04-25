@@ -71,6 +71,12 @@ public class Rodo_GpsBoardDao
 		return board;
 	}
 	
-	
+	public void updateGps(Rodo_GpsBoard board){
+		
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		mapper.updateGps(board);
+		
+	}
 	
 }

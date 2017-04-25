@@ -13,7 +13,7 @@
     margin-top: 0px;
     color:black;
     margin-bottom: 0px;}
-#category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
+#category li {float:left;list-style: none;width:51px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
 #category li.on {background: rgba(168, 228, 255, 0.6);}
 #category li:hover {background: rgba(168, 228, 255, 0.6);border-left:1px solid #acacac;margin-left: -1px;}
 #category li:last-child{margin-right:0;border-right:0;}

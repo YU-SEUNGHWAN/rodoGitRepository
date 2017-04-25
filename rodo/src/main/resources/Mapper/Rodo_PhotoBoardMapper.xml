@@ -53,8 +53,15 @@
 	<!-- 게시글 읽기 -->
 	<select id="readPhoto" parameterType="int" resultType="Rodo_PhotoBoard">
 		select 
-			photo_id, photo_boardnum, photo_title, photo_content, photo_share,
-			photo_input_dt, photo_update_dt, photo_hit, photofile_tn
+			photo_id
+			, photo_boardnum
+			, photo_title
+			, photo_content
+			, photo_share
+			, photo_input_dt
+			, photo_update_dt
+			, photo_hit
+			, photofile_tn
 		from 
 			rodo_photoboard
 		where 

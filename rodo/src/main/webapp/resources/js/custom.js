@@ -2,7 +2,7 @@ jQuery(document).ready(function( $ ) {
 
   // Hero rotating texts
   $("#hero .rotating").Morphext({
-    animation: "flipInX",
+	animation: "flipInX",
     separator: ",",
     speed: 3000
   });
@@ -12,8 +12,8 @@ jQuery(document).ready(function( $ ) {
   
   // Initiate superfish on nav menu
   $('.nav-menu').superfish({
-    animation: {opacity:'show'},
-    speed: 400
+	 animation: {opacity:'show'},
+	 speed: 400
   });
   
   // Mobile Navigation

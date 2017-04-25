@@ -1,5 +1,7 @@
 package project2.scmaster.rodo.vo;
 
+import java.util.ArrayList;
+
 public class Rodo_GpsBoard 
 {
 	private int gps_boardnum;

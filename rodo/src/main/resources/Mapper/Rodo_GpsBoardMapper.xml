@@ -73,6 +73,7 @@
 					, gps_content
 					, gps_gpxinfo
 					, gps_location
+					, gps_marker
 					, gpsfile_original
 					, gpsfile_saved
 				)
@@ -85,6 +86,7 @@
 					, #{gps_content}
 					, #{gps_gpxinfo}
 					, #{gps_location}
+					, #{gps_marker}
 					, #{gpsfile_original}
 					, #{gpsfile_saved}
 				)
@@ -92,32 +94,49 @@
 	</insert>
 		
 	
-	<select id = "selectOne" parameterType = "int" resultType = "Rodo_GpsBoard">
+	<select id="selectOne" parameterType ="int" resultType ="Rodo_GpsBoard">
 	
 		select
-			b.gps_boardnum
-			, b.gps_id
-			, b.gps_title
-			, b.gps_content
-			, b.gps_gpxinfo
-			, b.gps_location
-			, b.gps_input_dt
-			, b.gps_update_dt
-			, b.gps_marker
-			, b.gps_hit
-			, f.gpsfile_original
-			, f.gpsfile_saved
+			gps_boardnum
+			, gps_id
+			, gps_title
+			, gps_content
+			, gps_gpxinfo
+			, gps_location
+			, gps_input_dt
+			, gps_update_dt
+			, gps_marker
+			, gps_hit
+			, gpsfile_original
+			, gpsfile_saved
 		
 		from
 			rodo_gpsboard
 			
 		where
-			b.gps_boardnum = #{gps_boardnum}
+			gps_boardnum = #{gps_boardnum}
 			
 		and
-			b.gps_boardnum = f.gps_boardnum
+			gps_boardnum = gps_boardnum
 		
 	</select>
 	
+	<update id="updateGps" parameterType="Rodo_GpsBoard">
+		update 
+			rodo_gpsboard
+		set
+			gps_title = #{gps_title}
+			, gps_content = #{gps_content}
+			, gps_update_dt = sysdate
+		<if test="gpsfile_original != null">
+			, gpsfile_original = #{gpsfile_original}
+			, gpsfile_saved = #{gpsfile_saved}
+		</if>
+		where
+			gps_boardnum = #{gps_boardnum}
+		and
+			gps_id = #{gps_id}
+	
+	</update>
 	
 </mapper>

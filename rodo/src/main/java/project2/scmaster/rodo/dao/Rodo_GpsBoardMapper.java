@@ -19,4 +19,6 @@ public interface Rodo_GpsBoardMapper
 	public int writegpsfile(Rodo_GpsBoard board);
 	
 	public Rodo_GpsBoard selectOne(int gps_boardnum);
+
+	public void updateGps(Rodo_GpsBoard board);
 }
