@@ -45,17 +45,14 @@ public class PhotoBoardController {
 	Rodo_PhotoBoardDAO dao;
 	
 	@RequestMapping(value = "readPhoto", method = RequestMethod.GET)
-	public String readPhoto(HttpSession session, Model model, int photo_boardnum)
-	{
-		System.out.println(photo_boardnum);
+	public String readPhoto(HttpSession session, Model model, int photo_boardnum){
 		Rodo_PhotoBoard pt_board = dao.readPhoto(photo_boardnum);
 		ArrayList<HashMap> fileList = dao.PhotoFileList(photo_boardnum);
 
 		ArrayList<String> oglist = new ArrayList<>();
 		ArrayList<String> svlist = new ArrayList<>();
 		
-		for(HashMap file : fileList)
-		{
+		for(HashMap file : fileList){
 			System.out.println((String)file.get("PHOTOFILE_SAVED"));
 			oglist.add((String)file.get("PHOTOFILE_ORIGINAL"));
 			svlist.add((String)file.get("PHOTOFILE_SAVED"));
@@ -127,9 +124,9 @@ public class PhotoBoardController {
 				boardNum = dao.PhotoSelelctBoardnum();
 				board.setPhoto_boardnum(boardNum);
 				int a = dao.PhotofileInsertBoard(board);
-				 if(a != 0){
-					 return "success";
-				 }
+				if(a != 0){
+					return "success";
+				}
 			}
 		return "fail";
 	}

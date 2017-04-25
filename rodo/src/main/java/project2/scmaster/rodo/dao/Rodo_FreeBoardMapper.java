@@ -1,5 +1,7 @@
 package project2.scmaster.rodo.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -13,19 +15,23 @@ public interface Rodo_FreeBoardMapper
 	
 	public int write(Rodo_FreeBoard board);
 	
-	public int writefile(Rodo_FreeBoard board);
+	public int writefile(HashMap<String, Object> fileTable);
 	
-//	public int writefile(HashMap<String, Object> map);
-
+	public ArrayList<HashMap> FreeFileList(int free_boardnum);
+	
 	public Rodo_FreeBoard selectnofile(int free_boardnum);
 	
 	public Rodo_FreeBoard selectOne(int free_boardnum);
 	
 	public int getsequence();
 	
-	public int delete(Rodo_FreeBoard board);
+	public void delete(int free_boardnum);
 	
-	public int update(Rodo_FreeBoard board);
+	public void hitup(Rodo_FreeBoard board);
+	
+	public void deleteFreeFile(int free_boardnum);
+	
+	public int updateFree(Rodo_FreeBoard board);
 	
 	public int updatefile(Rodo_FreeBoard board);
 	

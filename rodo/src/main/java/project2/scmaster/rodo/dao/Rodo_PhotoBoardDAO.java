@@ -74,14 +74,10 @@ public class Rodo_PhotoBoardDAO {
 		return board;
 	}
 
-	public ArrayList<Rodo_PhotoBoard> Photolist(int startRecode, int countPerPage, String searchText) 
-	{
+	public ArrayList<Rodo_PhotoBoard> Photolist(int startRecode, int countPerPage, String searchText){
 		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
-		
 		RowBounds rb = new RowBounds(startRecode, countPerPage);
-		
 		ArrayList<Rodo_PhotoBoard> board = mapper.Photolist(rb, searchText);
-		
 		return board;
 	}
 	

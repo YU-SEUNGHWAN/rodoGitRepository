@@ -7,95 +7,58 @@
 <mapper namespace="project2.scmaster.rodo.dao.Rodo_FreeBoardMapper">
 
 <insert id = "write" parameterType = "Rodo_FreeBoard">
-
-	insert
-		into
-			rodo_freeboard
-			(
-				free_boardnum
-				, free_id
-				, free_title
-				, free_content
-			)
-			
-			values
-			(
-				rodo_freeboard_seq.nextval
-				, #{free_id}
-				, #{free_title}
-				, #{free_content}
-			)
-
+	insert into
+		rodo_freeboard(
+			free_boardnum
+			, free_id
+			, free_title
+			, free_content
+		)
+		values(
+			rodo_freeboard_seq.nextval
+			, #{free_id}
+			, #{free_title}
+			, #{free_content}
+		)
 </insert>
 
 
-<insert id = "writefile" parameterType = "Rodo_FreeBoard">
-
-	insert
-		into
-			rodo_freefile
-			(
-				free_boardnum
-				
-				<if test = "freefile_original != null and freefile_saved != null">
-		
-					, freefile_original
-					, freefile_saved
-			
-				</if>
-				
-				
+<insert id = "writefile" parameterType = "HashMap">
+	insert into
+		rodo_freefile(
+			free_boardnum
+			<!-- <if test = "freefile_original != null and freefile_saved != null"> -->
+				, freefile_original
+				, freefile_saved
+			<!-- </if> -->
 			)
-			
-			values
-			(
-				#{free_board}
-			
-				<if test = "freefile_original != null and freefile_saved != null">
-				
-					, #{freefile_original}
-					, #{freefile_saved}
-				
-				</if>	
-			)
-
+		values(
+			#{free_boardnum}
+			<!-- <if test = "freefile_original != null and freefile_saved != null"> -->
+				, #{freefile_original}
+				, #{freefile_saved}
+			<!-- </if>	 -->
+		)
 </insert>
+
+<update id = "hitup" parameterType = "Rodo_FreeBoard">
+	update
+		rodo_freeboard
+	set
+		free_hit = #{free_hit} + 1
+	where 
+		free_boardnum = #{free_boardnum}
+</update>
 
 
 <select id="getsequence" resultType="int">
-	
 	select
 		MAX(free_boardnum)
-			
 	from
 		rodo_freeboard
-	
 </select>
 
-
-<!-- <insert id = "writefile" parameterType = "Rodo_FreeFile">
-
-	insert
-		into
-			rodo_freefile
-			(
-				free_boardnum
-				, freefile_original
-				, freefile_saved
-			)
-			
-			values
-			(
-				, #{free_boardnum}
-				, #{freefile_original}
-				, #{freefile_saved}
-			)
-
-</insert> -->
-
-
 <select id = "list" resultType = "Rodo_FreeBoard">
-
 	select
 		free_boardnum
 		, free_id
@@ -115,37 +78,10 @@
 		
 	order by
 		free_boardnum desc
-	
 </select>
 
 
 <select id = "selectOne" parameterType = "int" resultType = "Rodo_FreeBoard">
-
-		select
-			b.free_boardnum
-			, b.free_id
-			, b.free_title
-			, b.free_content
-			, b.free_input_dt
-			, b.free_update_dt
-			, b.free_hit
-			, f.freefile_original
-			, f.freefile_saved
-			
-		from
-			rodo_freeboard b, rodo_freefile f
-	
-		where
-			b.free_boardnum = #{free_boardnum}
-	
-		and
-			b.free_boardnum = f.free_boardnum
-
-</select>
-
-
-<select id = "selectnofile" parameterType = "int" resultType ="Rodo_FreeBoard">
-
 		select
 			free_boardnum
 			, free_id
@@ -154,50 +90,53 @@
 			, free_input_dt
 			, free_update_dt
 			, free_hit
-			
 		from
 			rodo_freeboard
-			
-		where 
+		where
 			free_boardnum = #{free_boardnum}
-
+		order by 
+			free_boardnum asc
 </select>
 
+<!-- 보드파일리스트 가져오기 -->
+	<select id = "FreeFileList" parameterType="int"  resultType = "HashMap">
+		select 
+			freefile_original freefile_original
+			, freefile_saved freefile_saved
+		from 
+			rodo_freefile
+		where 
+			free_boardnum = #{free_boardnum} 
+		order by 
+			free_boardnum asc
+	</select>
 
-<delete id = "delete" parameterType = "Rodo_FreeBoard">
-
-	delete 
-		from
+	<delete id = "delete" parameterType = "int">
+		delete 
 			rodo_freeboard
-			
+		where 
+				free_boardnum = #{free_boardnum}
+	</delete>
+
+	<delete id="deleteFreeFile" parameterType="int">
+		delete
+			rodo_freefile
 		where 
 			free_boardnum = #{free_boardnum}
-			
-		and
-			free_id = #{free_id}
-
-</delete>
+	</delete>
 
 
-<update id = "update" parameterType = "Rodo_FreeBoard">
 
+
+<update id = "updateFree" parameterType = "Rodo_FreeBoard">
 	update
 		rodo_freeboard
-		
-	set 
-		free_title = #{free_title}
-		, free_content = #{free_content}
-		
-		<if test = "freefile_original != null and freefile_saved != null">
-		
-			, freefile_original = #{freefile_original}
-			, freefile_saved = #{freefile_saved}
-			
-		</if>
-	
+	set
+		free_title = #{free_title},
+		free_content = #{free_content},
+		free_update_dt = sysdate
 	where 
 		free_boardnum = #{free_boardnum}
-	
 </update>
 
 
