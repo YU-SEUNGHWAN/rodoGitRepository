@@ -78,8 +78,20 @@ var checknumflag = false;
 var idflag = false;
 
 
-$(function()
-{
+$(function() {
+	
+	if($("#loginId").val() != ""){
+		
+		$('html, body').css({'overflow': 'hidden', 'height': '100%'});
+
+		$('#element').on('scroll touchmove mousewheel', function(e) {
+		   e.preventDefault();
+		   e.stopPropagation(); 
+		   return false;
+		});
+
+	}
+	
 	$("#submmit").on("click", function()
 	{
 		

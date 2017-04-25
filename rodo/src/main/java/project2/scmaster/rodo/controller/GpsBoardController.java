@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -22,6 +24,7 @@ import com.google.gson.Gson;
 
 import project2.scmaster.rodo.dao.Rodo_GpsBoardDao;
 import project2.scmaster.rodo.util.FileService;
+import project2.scmaster.rodo.util.PageNavigator;
 import project2.scmaster.rodo.util.Parsing;
 import project2.scmaster.rodo.vo.GPX;
 import project2.scmaster.rodo.vo.Marks;
@@ -34,12 +37,33 @@ public class GpsBoardController
 	private Rodo_GpsBoardDao dao;
 	
 	final String uploadPath = "/boardfile";
+	final int countPerPage = 8;		// 페이지 당 글 수
+	final int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
 	
 	
 	@RequestMapping(value = "writeGps", method = RequestMethod.GET)
 	public String writeGps()
 	{
 		return "gps/writeGps";
+	}
+	
+	@RequestMapping(value="logBoard", method=RequestMethod.GET)
+	public String logBoard(Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
+			){
+		
+		int total = dao.listsize(searchText);
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_GpsBoard> gpslist = dao.list(navi.getStartRecord(), navi.getCountPerPage(), searchText);
+		
+		model.addAttribute("searchText", searchText);
+		model.addAttribute("gpslist", gpslist);
+		model.addAttribute("navi", navi);
+		
+		return "logBoard";
 	}
 	
 	

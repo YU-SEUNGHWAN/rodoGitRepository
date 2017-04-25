@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Iterator;
@@ -25,12 +26,14 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import project2.scmaster.rodo.dao.VideoBoardDao;
 import project2.scmaster.rodo.util.FileService;
+import project2.scmaster.rodo.util.PageNavigator;
 import project2.scmaster.rodo.vo.Rodo_VideoReply;
 import project2.scmaster.rodo.vo.videoBoard;
 
@@ -39,9 +42,30 @@ public class VideoBoardController {
 	final String videouploadPath = "/videoboardfile"; // 파일 업로드 경로
 	final String videotnUploadPath = "/videothumbnail";// 섬네일 업로드 경로
 	final String videoviUploadPath = "/videovi";// 섬네일 업로드 경로
-
+	final int countPerPage = 6;		// 페이지 당 글 수
+	final int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
+	
 	@Autowired
 	VideoBoardDao dao;
+	
+	@RequestMapping(value="videoBoard", method=RequestMethod.GET)
+	public String videoBoard(Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
+			)
+	{
+		ArrayList<videoBoard> video_board = new ArrayList<>();
+		
+		int total = dao.listsize(searchText); 
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		video_board = dao.Videolist(navi.getStartRecord(), navi.getCountPerPage(), searchText);
+		model.addAttribute("searchText", searchText);
+		model.addAttribute("videoList", video_board);
+		model.addAttribute("navi", navi);
+		return "videoBoard";
+	}
 
 	@RequestMapping(value = "writeVideoForm", method = RequestMethod.GET)
 	public String writeVideoForm() {

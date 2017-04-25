@@ -87,7 +87,7 @@
         </div>
       </div>
       
-      <div class="row">
+	<div class="row" style="height: 600px;">
       <c:forEach items="${photoList}" var="photo">
       	<div class="col-md-3">
       	
@@ -102,7 +102,7 @@
           </a>
         </div>
       </c:forEach>
-        
+     </div>
         
 	<table style="width:100%" class="board-navi">
 		<tr>
@@ -141,7 +141,6 @@
          </div>
         
       </div>
-    </div>        
   </section>
 
 <!--==========================

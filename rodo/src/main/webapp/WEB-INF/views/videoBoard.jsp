@@ -93,7 +93,7 @@ function pagingFormSubmit(currentPage)
         </div>
       </div>
       
-      <div class="row">
+	<div class="row" style="height: 600px;">
       <c:forEach items="${videoList}" var="video">
         <div class="col-md-4">
           <a class="portfolio-item" style="background-image: url('${video.video_thumbnail }');"
@@ -106,7 +106,7 @@ function pagingFormSubmit(currentPage)
           </a>
         </div>
         </c:forEach>
-                
+      </div>          
 
         <table style="width:100%" class="board-navi">
 		  	<tr><td style="width:20%"></td>
@@ -141,8 +141,6 @@ function pagingFormSubmit(currentPage)
       </form>
       </div>	
       </div>
-      
-    </div>
   </section>
 
 <!--==========================

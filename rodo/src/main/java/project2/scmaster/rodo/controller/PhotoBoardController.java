@@ -25,12 +25,14 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import project2.scmaster.rodo.dao.Rodo_PhotoBoardDAO;
 import project2.scmaster.rodo.util.FileService;
+import project2.scmaster.rodo.util.PageNavigator;
 import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
 import project2.scmaster.rodo.vo.Rodo_PhotoReply;
 
@@ -40,9 +42,30 @@ public class PhotoBoardController {
 	private static final Logger logger = LoggerFactory.getLogger(PhotoBoardController.class);
 	final String uploadPath = "/boardfile"; // 파일 업로드 경로
 	final String tnUploadPath = "/thumbnail";// 섬네일 업로드 경로
+	final int countPerPage = 8;		// 페이지 당 글 수
+	final int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
 	
 	@Autowired
 	Rodo_PhotoBoardDAO dao;
+	
+	@RequestMapping(value="photoBoard", method=RequestMethod.GET)
+	public String photoBoard(Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
+			)
+	{
+		int total = dao.listsize(searchText);
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		ArrayList<Rodo_PhotoBoard> pt_board = dao.Photolist(navi.getStartRecord(), navi.getCountPerPage(), searchText);
+		
+		model.addAttribute("searchText", searchText);
+		model.addAttribute("photoList", pt_board);
+		model.addAttribute("navi", navi);
+		
+		return "photoBoard";
+	}
 	
 	@RequestMapping(value = "readPhoto", method = RequestMethod.GET)
 	public String readPhoto(HttpSession session, Model model, int photo_boardnum){

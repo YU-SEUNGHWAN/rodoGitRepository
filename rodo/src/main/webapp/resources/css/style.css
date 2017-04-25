@@ -290,7 +290,7 @@ h1, h2, h3, h4, h5, h6 {
 	color: #fff;
 	font-family: 'Raleway', sans-serif;
 	font-weight: 300;
-	font-size: 16px;
+	font-size: 19px;
 	outline: none;
 }
 
@@ -477,7 +477,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 		center;
 	background-size: cover;
 	padding: 80px 0 60px 0;
-	height : 83vh;
+	height:80%;
 }
 
 #services .service-item {
