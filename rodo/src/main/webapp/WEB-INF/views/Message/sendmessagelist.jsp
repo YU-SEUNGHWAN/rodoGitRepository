@@ -11,7 +11,6 @@
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="resources/js/jquery-3.1.1.js"></script>
 
-
 <style>
 h3
 {
@@ -21,7 +20,7 @@ h3
 }
 .slice{
 background: black;
-width: 450px;
+width: 505px;
 height: 3px;
 margin-bottom: 15px;
 margin-left: 5px;
@@ -46,18 +45,42 @@ margin-left: 5px;
    border-bottom : 1px solid black;
    padding:3px;
 }
+.input-append{
+	width: 500px;
+	margin-top: 10px;
+	text-align: center;
+}
+.board-navi{
+	margin-top: 5px;
+}
+.board-navi a{
+	padding: 2px;
+	color:black;
+	font-weight: bolder;
+}
+.board-navi a:hover{
+	color: red;
+	text-decoration: none;
+}
 </style>
 
+  <!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
+  <link href="favicon.ico" rel="shortcut icon">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet"> 
+  
+  <!-- Bootstrap CSS File -->
+  <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Libraries CSS Files -->
+  <link href="resources/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="resources/lib/animate-css/animate.min.css" rel="stylesheet">
 
 <script>
 
 function pagingFormSubmit(currentPage)
 {
-	/* var form2 = $("#pagingForm");
-	
-	form2.action = "aaaa";
-	form2.submit(); */
-	
 	var form = document.getElementById("pagingForm");
 	var page = document.getElementById("page");
 	page.value = currentPage;
@@ -87,19 +110,14 @@ function alldeleteSend()
 </head>
 <body>
 
-
 <header>
 	<h3>쪽지함</h3>
 	
 	<div class="slice"></div>
 	<div class="message-menu">
-	
-	<!-- <a href="#none" onclick="receivedMsg()">받은 쪽지함</a>
-	<a href="#none" onclick="sentMsg()">보낸 쪽지함</a>
-	<a href='writeMessage'>쪽지 보내기</a> -->
-	
+		
 	<a href="messageList">받은 쪽지함</a>
-	<a href="sendlist">보낸 쪽지함</a>
+	<a href="sendlist" style="color:red;">보낸 쪽지함</a>
 	<a href='writeMessage'>쪽지 보내기</a>
 	<a id = "alldeleteSend" href="#none" onclick="alldeleteSend()" style="margin-left : 125px;">쪽지함 비우기</a>
 	
@@ -116,10 +134,13 @@ function alldeleteSend()
 			<td style='width:130px;'>보낸날짜</td>
 			<td></td>
 		</tr>
+			
 		<c:forEach var="message" items="${sent}">
 			<tr>
 				<td>${message.receiver}</td>
-				<td><a href="#none" onclick="readMessage('${message.messagenum}')">${message.title}</a></td>
+				<td>
+					<a href="#none" onclick="readMessage('${message.messagenum}')">${message.title}</a>
+				</td>
 				<td>${message.senddate}</td>
 				<td><a href="#none" onclick="deletesendMessage('${message.messagenum}', '${message.sender}')">삭제</a>
 			</tr>
@@ -149,7 +170,7 @@ function alldeleteSend()
 				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
 				</span>
 			</td>
-			</tr>
+		</tr>
 	</table>
 </div>
 
@@ -159,8 +180,8 @@ function alldeleteSend()
 	<div class="input-append">
 	
 		<input type = "hidden" name = "page" id = "page">
-		<%-- <input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text" value = "${searchText}"> --%>
-		<!-- <button class="btn sr-btn" type="button" onclick = "pagingFormSubmit(1)"><i class="fa fa-search"></i></button> -->
+		<input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text" value = "${searchText}">
+		<button class="btn sr-btn" type="button" onclick = "pagingFormSubmit(1)"><i class="fa fa-search"></i></button>
 	
 	</div>
 	

@@ -18,6 +18,13 @@ drop sequence rodo_sendmessage_seq;
 drop sequence rodo_receivemessage_seq;
 drop sequence rodo_gpsboard_seq;
 drop table rodo_gpsboard;
+drop table rodo_gpsreply_seq;
+drop table rodo_gpsreply;
+drop table rodo_qafile;
+drop sequence rodo_qareply_seq;
+drop table rodo_qareply;
+drop table rodo_qaboard;
+drop sequence rodo_qaboard_seq;
 drop table rodo_member;
 
 
@@ -28,6 +35,8 @@ create table rodo_member
 	, email varchar2(50) unique
 );
 
+insert into rodo_member(id, password, email)
+values ('test', 'test', 'test@test.com');
 
 create table rodo_photoboard
 (
@@ -160,7 +169,22 @@ create table rodo_gpsboard
 create sequence rodo_gpsboard_seq start with 1 increment by 1;
 alter table rodo_gpsboard add foreign key(gps_id) references rodo_member (id);
 
-delete rodo_gpsboard
+delete rodo_gpsboard;
+
+create table rodo_gpsreply
+(
+	gpsreply_replynum number primary key
+	, gps_boardnum number not null
+	, gpsreply_id varchar2(20) not null
+	, gpsreply_text varchar2(300) not null
+	, gpsreply_input_dt date default sysdate
+	, gpsreply_update_dt date default sysdate
+);
+
+create sequence rodo_gpsreply_seq start with 1 increment by 1;
+alter table rodo_gpsreply add foreign key(gps_boardnum) references rodo_gpsboard (gps_boardnum);
+
+
 
 create table rodo_sendmessage
 (
@@ -188,3 +212,43 @@ create table rodo_receivemessage
 );
 
 create sequence rodo_receivemessage_seq start with 1 increment by 1;
+
+
+
+create table rodo_qaboard
+(
+	qa_boardnum number primary key
+	, qa_id varchar2(20) not null
+	, qa_title varchar2(100) not null
+	, qa_content varchar2(100) not null
+	, qa_input_dt date default sysdate
+	, qa_update_dt date default sysdate
+	, qa_hit number default 0
+);
+
+alter table rodo_qaboard add foreign key(qa_id) references rodo_member (id);
+
+create sequence rodo_qaboard_seq start with 1 increment by 1;
+
+create table rodo_qafile
+(
+	qa_boardnum number not null
+	, qafile_original varchar2(200)
+	, qafile_saved varchar2(200)
+);
+
+alter table rodo_qafile add foreign key(qa_boardnum) references rodo_qaboard (qa_boardnum);
+
+
+create table rodo_qareply
+(
+	qareply_replynum number primary key
+	, qa_boardnum number not null
+	, qareply_id varchar2(20) not null
+	, qareply_text varchar2(300) not null
+	, qareply_input_dt date default sysdate
+	, qareply_update_dt date default sysdate
+);
+
+alter table rodo_qareply add foreign key(qa_boardnum) references rodo_qaboard (qa_boardnum);
+create sequence rodo_qareply_seq start with 1 increment by 1;

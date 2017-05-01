@@ -39,4 +39,12 @@ public interface VideoBoardMapper{
 	public List<Rodo_VideoReply> findreply(int video_boardnum);
 	
 	public int deletevideoreply(Rodo_VideoReply reply);
+
+	public int videoreplylistsize(int video_boardnum);
+	
+	public List<Rodo_VideoReply> getlist(RowBounds rb, int video_boardnum);
+
+	public int writevideoboardcount(String id);
+	
+	public List<videoBoard> myvideolist(RowBounds rb, String id);
 }

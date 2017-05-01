@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -34,7 +35,13 @@ import project2.scmaster.rodo.vo.Rodo_FreeReply;
 
 
 @Controller
-public class FreeBoardController {
+public class FreeBoardController
+{
+	List<Integer> reList;
+	List<Integer> fList;
+
+	// 서버 리부팅 이전 삭제 카운트 설정
+	int num = 12;
 	
 	private static final Logger logger = LoggerFactory.getLogger(FreeBoardController.class);
 	final int countPerPage = 15;		// 페이지 당 글 수
@@ -53,15 +60,71 @@ public class FreeBoardController {
 	{
 		int total = dao.listsize(searchText);
 		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
 		System.out.println(total);
 		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
 		List<Rodo_FreeBoard> list = dao.list(navi.getStartRecord(), navi.getCountPerPage(), searchText);
 		
+		// 리플 카운트 List 선언 (초기화)
+		reList = new ArrayList<> ();
+		
+		// 게시판 사이즈 + 글 삭제 했을 시 사이즈에 추가 할 변수
+		int rSize = list.size() + num;	
+		
+		// 게시판 사이즈 + 삭제한 카운트 만큼 반복
+		for (int i = 0; i < rSize; i++)
+		{
+			// 해당 글 번호 리플 수를 Get!
+			int temp = dao.getReplyCount(i);
+		
+			// 해당 글에 리플이 없는 경우 (해당 리스트 인덱스에 null 대입)
+			if (temp == 0 || temp == -1)
+			{
+				reList.add(i, null);
+			}
+			
+			// 해당 글에 리플이 있는 경우 (해당 리스트 인덱스에 가져 온 리플 카운트 대입)
+			else if (temp > 0)
+			{
+				reList.add(i, temp);
+			}
+		}
+		
+		// 첨부 파일 카운트 List 선언 (초기화)
+		fList = new ArrayList<> ();
+		
+		// 파일 리스트 사이즈 + 글 삭제 했을 시 사이즈에 추가 할 변수
+		// (이하 위와 동일)
+		for (int j = 0; j < rSize; j++)
+		{
+			int temp2 = dao.getFileCount(j);
+			
+			if (temp2 == 0 || temp2 == -1)
+			{
+				fList.add(j, null);
+			}
+			
+			else if (temp2 > 0)
+			{
+				fList.add(j, temp2);
+			}
+		}
+		
 		model.addAttribute("searchText", searchText);
 		model.addAttribute("list", list);
 		model.addAttribute("navi", navi);
+		
+		// 리플 카운트 (모델)
+		model.addAttribute("reList", reList);
+		
+		// 파일 카운트 (모델)
+		model.addAttribute("fList", fList);
 		
 		return "freeboard/freeboardlist";
 	}
@@ -118,7 +181,19 @@ public class FreeBoardController {
 	}
 	
 	@RequestMapping(value = "read", method = RequestMethod.GET)
-	public String read(int free_boardnum, Model model, HttpSession session)	{
+	public String read(int free_boardnum, Model model, HttpSession session,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)	
+	{
+		int total = dao.freereplylistsize(free_boardnum);
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
 		Rodo_FreeBoard board = dao.selectOne(free_boardnum);
 		dao.hitup(board);
 		ArrayList<HashMap> fileList = dao.FreeFileList(free_boardnum);
@@ -138,12 +213,12 @@ public class FreeBoardController {
 		board.setFreefile_original(oglist);
 		board.setFreefile_saved(svlist);
 		
-		List<Rodo_FreeReply> replylist = dao.findreply(free_boardnum);
+		List<Rodo_FreeReply> replylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), free_boardnum);
 		
 		model.addAttribute("board", board);
-		model.addAttribute("id", (String)session.getAttribute("loginId"));
 		model.addAttribute("replylist", replylist);
-			
+		model.addAttribute("navi", navi);
+		
 		return "freeboard/freeboardread";
 	}
 	
@@ -255,43 +330,86 @@ public class FreeBoardController {
 	
 	@ResponseBody
 	@RequestMapping(value = "replywrite", method = RequestMethod.POST)
-	public List<Rodo_FreeReply> replywrite(Rodo_FreeReply reply, HttpSession session, Model model)	{	
+	public HashMap<?, ?> replywrite(Rodo_FreeReply reply, HttpSession session, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{			
 		String id = (String)session.getAttribute("loginId");
 		reply.setFreereply_id(id);
-		dao.writereply(reply);
-		List<Rodo_FreeReply> list = dao.findreply(reply.getFree_boardnum());
 		
-		/*if (result == 1)
+		dao.writereply(reply);
+		
+		int total = dao.freereplylistsize(reply.getFree_boardnum());
+		
+		if (total == 0)
 		{
-			return "redirect:read?free_boardnum="+reply.getFree_boardnum();
+			total = 1;
 		}
 		
-		return "freeboard/freeboardread";*/
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		return list;
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_FreeReply> freereplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getFree_boardnum());
+		
+		map.put("navi", navi);
+		map.put("freereplylist", freereplylist);
+		
+		return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "deletereply", method = RequestMethod.GET)
-	public List<Rodo_FreeReply> deletereply(Rodo_FreeReply reply, HttpSession session, Model model)	{	
-	//	Rodo_FreeReply reply = dao.selectreply(freereply_replynum);
-		
+	public HashMap<?, ?> deletereply(Rodo_FreeReply reply, HttpSession session, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{	
 		String id = (String)session.getAttribute("loginId");
 		reply.setFreereply_id(id);
 		
 		dao.deletereply(reply);
 		
-		List<Rodo_FreeReply> list = dao.findreply(reply.getFree_boardnum());
+		int total = dao.freereplylistsize(reply.getFree_boardnum());
 		
-	//	return "redirect:/read?free_boardnum="+reply.getFree_boardnum();
+		if (total == 0)
+		{
+			total = 1;
+		}
 		
-		return list;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_FreeReply> freereplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getFree_boardnum());
+		
+		map.put("navi", navi);
+		map.put("freereplylist", freereplylist);
+			
+		return map;		
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "replypage", method = RequestMethod.POST)
-	public List<Rodo_FreeReply> replypage(Rodo_FreeReply reply, Model model,
-			@RequestParam(value = "page", defaultValue = "1") int page	)	{
-		return null;
+	public HashMap<?, ?> replypage(Rodo_FreeReply reply, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
+		int total = dao.freereplylistsize(reply.getFree_boardnum());
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_FreeReply> freereplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getFree_boardnum());
+		
+		map.put("navi", navi);
+		map.put("freereplylist", freereplylist);
+				
+		return map;	
 	}
 }

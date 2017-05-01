@@ -80,77 +80,134 @@ function henjiMessage()
 		location.href='henjiMessage?sender='+sender;
 	}	
 }
-
-/* $(function()
-{
-	$("#henji").on("click", function()
-	{
-		var sender = $("#sender").val();
-		var title = $("#title").val();
-		var text = $("#text").val();
-
-		$.ajax({
-			
-			type : "post",
-			url : "writeMessage",
-			data : {
-				receiver : receiver,
-				title : title,
-				text : text
-			},
-			
-			success : function(data)
-			{
-				doSend(receiver);
-				location.href="messageList";
-			},
-			
-			error : function(e)
-			{
-				console.log(e);
-			}
-		
-		}) 
-	})
-}) */
-
 </script>
-
-
+<style>
+h3
+{
+   font-weight: bolder;
+   margin-left: 10px;
+   font-family: "Open Sans",sans-serif;
+}
+.slice{
+background: black;
+width: 450px;
+height: 3px;
+margin-bottom: 15px;
+margin-left: 5px;
+}
+.message-menu{
+   margin-bottom: 15px;
+}
+.message-menu a{
+   color : black;
+   text-decoration: none;
+   font-weight: bolder;
+   margin-left: 10px;
+   margin-right: 10px;
+}
+.message-menu a:hover{
+   color : red;
+}
+#msgwrite{
+	margin-left: 10px;
+}
+#receiver{
+	width: 200px;
+	margin-bottom: 15px;
+	border:none;
+	border-bottom: 2px solid black;
+}
+#title{
+	width: 430px;
+	margin-bottom: 20px;
+	border:none;
+	border-bottom: 2px solid black;
+}
+#text{
+	width: 480px;
+	height: 300px;
+	margin-bottom: 15px;
+	resize: none;
+	border: 1.5px solid black;
+}
+#messagelist{
+	border: 2px solid #363838;
+	background: #363838;
+	color: white;
+}
+#messagelist:hover{
+	border: 2px solid #363838;
+	background: white;
+	color: #363838;
+	font-weight: bolder;
+}
+#sendlist{
+	border: 2px solid #363838;
+	background: #363838;
+	color: white;
+}
+#sendlist:hover{
+	border: 2px solid #363838;
+	background: white;
+	color: #363838;
+	font-weight: bolder;
+}
+#henji{
+	border: 2px solid #363838;
+	background: #363838;
+	color: white;
+}
+#hengi:hover{
+	margin-left:5px;
+	border: 2px solid #363838;
+	background: white;
+	color: #363838;
+	font-weight: bolder;
+}
+</style>
 </head>
+
 <body>
+<header>
+	<c:choose>
+		<c:when test="${sendmessage!=null}">
+			<h3>보낸 메세지</h3>
+		</c:when>
+		<c:otherwise>
+			<h3>받은 메세지</h3>
+		</c:otherwise>
+	</c:choose>
+	<div class="slice"></div>
+	<div class="message-menu">
+   
+	<a href="messageList">받은 쪽지함</a>
+	<a href="sendlist">보낸 쪽지함</a>
+	<a href='writeMessage'>쪽지 보내기</a>
+	
+	</div>
+	
+</header>
 
-<!-- 왜 안되 개같은노무거 -->
-
-<c:choose>
-
-	<c:when test="${sendmessage!=null}">
-	
-		보낸이 <input type="text" id="sender" value="${sendmessage.sender}"><br>
-		제목 <input type="text" id="title" value="${sendmessage.title}"><br>
-		보낸 날짜 <input type="text" value="${sendmessage.senddate}"><br>
-		<textarea id="text">${sendmessage.text}</textarea><br>
-
-		<input type="button" id = "sendlist" value="목록으로">
-	
-	</c:when>
-	
-	<c:otherwise>
-	
-		보낸이 <input type="text" id="sender" value="${receivemessage.sender}"><br>
-		제목 <input type="text" id="title" value="${receivemessage.title}"><br>
-		보낸 날짜 <input type="text" value="${receivemessage.senddate}"><br>
-		<textarea id="text">${receivemessage.text}</textarea><br>
-		<input type="button" id = "messagelist" value="목록으로">
-		<input type="button" id = "henji" value="답장하기" onclick="henjiMessage()">
-	
-	</c:otherwise>
-	
-</c:choose>	
+<div id='msgwrite'>
+	<c:choose>
+		<c:when test="${sendmessage!=null}">
+			<b>To.</b> <input type="text" id="receiver" value="${sendmessage.sender}" readonly="readonly"><br>
+			<b>TITLE</b> <input type="text" id = "title" value="${sendmessage.title}" readonly="readonly"><br>
+			<textarea id ="text" readonly="readonly">${sendmessage.senddate}</textarea><br>
+			<input type="button" id = "sendlist" value="목록으로">
+		</c:when>
+		<c:otherwise>
+			<b>From.</b> <input type="text" id="receiver" value="${receivemessage.sender}" readonly="readonly"><br>
+			<b>TITLE</b> <input type="text" id = "title" value="${receivemessage.title}" readonly="readonly"><br>
+			<textarea id ="text" readonly="readonly">${receivemessage.text}</textarea><br>
+			<input type="button" id = "messagelist" value="목록으로">
+			<input type="button" id = "henji" value="답장하기" onclick="henjiMessage()">
+		</c:otherwise>
+	</c:choose>
+</div>
 
 	<input type = "hidden" id = "receivemessagesender" value = "${receivemessage.sender}">
 	<input type = "hidden" id = "sendmessagesender" value = "${sendmessage.sender}">
 
-	
 </body>
 </html>

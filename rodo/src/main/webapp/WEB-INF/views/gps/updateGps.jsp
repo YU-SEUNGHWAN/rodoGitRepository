@@ -119,13 +119,85 @@ $(function(){
 <body>
 
 <style>
-
-#gps_content
-{
-	height:400px;
-	width:700px;
+#services {
+	font-size:16px;
+}
+#filetable{
+	margin-bottom: 15px;
 }
 
+.filetitle{
+	font-weight: bolder;
+}
+
+#upload{
+	margin-left: 20px;
+}
+
+#gps_content{
+	height:400px;
+	width:86%;
+	margin-top: 5px;
+	resize: none;
+	border: 3px solid;
+}
+
+#hideMarkers{
+	font-weight:bolder;
+	margin-top: 10px;
+	padding: 5px;
+	border: 3px solid #4f5051;
+	background: white;
+	color: #4f5051;
+	font-weight: bolder;
+	width: 120px;
+	height: 40px;
+}
+
+#hideMarkers:hover{
+	border: 3px solid #4f5051;
+	background: #4f5051;
+	color: white;
+}
+
+#gps_title{
+	border : 0px;
+	border-bottom: 3px solid;
+	margin-left: 15px;
+	margin-bottom: 30px;
+	width: 80%;
+}
+
+.gpsbutton{
+	margin-top: 15px;
+	margin-bottom: 30px;
+	margin-left: 15px;
+	margin-right: 15px;
+	border: 3px solid #4f5051;
+	background: #4f5051;
+	font-size:20px;
+	color: white;
+	width: 80px;
+	height: 40px;
+	font-family: "Raleway", sans-serif";
+	text-transform: uppercase;
+}
+.gpsbutton:hover{
+	border: 3px solid #4f5051;
+	background: white;	
+	color: #4f5051;
+	font-weight: bolder;
+}
+
+b{
+	font-size: 20px;
+}
+#buttontable{
+	width: 86%
+}
+#gpswrite{
+	text-align: right;
+}
 </style>
 
 </head>
@@ -133,23 +205,23 @@ $(function(){
 
 	<%@ include file="../header.jsp" %>
 	
-	<section id="portfolio" style="background-color: #f6f6f6; height:100%;">
+		<section id="services" style="background-color: #f6f6f6;">
 	    <div class="container wow fadeInUp board-main">  
 	      <div class="row">
 	        <div class="col-md-12" style="padding-bottom:35px; padding-top: 40px;">
-	          <span class="board-title">Update</span>
+	          <span class="board-title">GPS Write</span>
 	          <div class="board-title-divider"></div>
 	        </div>
 	      </div> 
 
 			<div>
-				<div>TITLE <input type="text" name = "gps_title" id = "gps_title" value="${gpsboard.gps_title}"></div>
+				<div><b>TITLE</b><input type="text" name = "gps_title" id = "gps_title" value="${gpsboard.gps_title}"></div>
 
 				<div id="contents">
 					
-					<table><tr>
-						<td>GPX 파일 첨부</td>
-						<td><input type="file" id="upload" name="upload" size="30"></td>
+					<table id="filetable"><tr>
+						<td class="filetitle">GPX FILE</td>
+						<td><input type="file" id="upload" name="upload" size="30" accept=".gpx" multiple = "multiple"></td>
 					</tr></table>
 					
 					<div id = "mapDiv"></div>					
@@ -164,7 +236,11 @@ $(function(){
 			</div>
 
 			<div>
-				<input type="button" id="videoWrite" value="write" onclick="gpsUpdate()">
+				<table id="buttontable"><tr>
+					<td><input type="button" class="gpsbutton" value="back" onclick="javascript:history.back()"></td>
+					<td id="gpswrite"><input type="button" class="gpsbutton" id="videoWrite" value="write" onclick="gpsUpdate()"></td>
+					
+				</tr></table>
 			</div>			
 		</div>
 	</section>

@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -42,7 +44,7 @@ public class VideoBoardController {
 	final String videouploadPath = "/videoboardfile"; // 파일 업로드 경로
 	final String videotnUploadPath = "/videothumbnail";// 섬네일 업로드 경로
 	final String videoviUploadPath = "/videovi";// 섬네일 업로드 경로
-	final int countPerPage = 6;		// 페이지 당 글 수
+	final int countPerPage = 8;		// 페이지 당 글 수
 	final int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
 	
 	@Autowired
@@ -58,13 +60,18 @@ public class VideoBoardController {
 		
 		int total = dao.listsize(searchText); 
 		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
 		video_board = dao.Videolist(navi.getStartRecord(), navi.getCountPerPage(), searchText);
 		model.addAttribute("searchText", searchText);
 		model.addAttribute("videoList", video_board);
 		model.addAttribute("navi", navi);
-		return "videoBoard";
+		return "videoboard/videoBoard";
 	}
 
 	@RequestMapping(value = "writeVideoForm", method = RequestMethod.GET)
@@ -188,29 +195,52 @@ public class VideoBoardController {
 	}
 
 	@RequestMapping(value = "readVideo", method = RequestMethod.GET)
-	public String readVideo(Model model, int video_boardnum){
+	public String readVideo(Model model, int video_boardnum, HttpSession session,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
+		int total = dao.videoreplylistsize(video_boardnum);
 		
-		System.out.println(video_boardnum);
+		String id = (String)session.getAttribute("loginId");
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_VideoReply> replylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), video_boardnum);
 		
 		videoBoard videoBoard = dao.readVideo(video_boardnum);
-		List<Rodo_VideoReply> list = dao.findreply(video_boardnum);
 		
 		model.addAttribute("videoBoard", videoBoard);
-		model.addAttribute("replylist", list);
-		
+		model.addAttribute("replylist", replylist);
+		model.addAttribute("navi", navi);
+
 		return "videoboard/readVideo";
-		
 	}
 
 	@RequestMapping(value = "deleteVideo", method = RequestMethod.GET)
 	public String deleteVideo(int video_boardnum) {
 
 		videoBoard videoBoard = dao.readVideo(video_boardnum);
+		
+		List<Rodo_VideoReply> videoreplylist = dao.findreply(video_boardnum);
+		
+		if (videoreplylist != null)
+		{
+			for (int i=0; i<videoreplylist.size(); i++)
+			{
+				dao.deletevideoreply(videoreplylist.get(i));
+			}
+		}
+		
 		FileService.deleteFile(videoBoard.getVideo_originalfile());
 
 		dao.deleteVideo(videoBoard.getVideo_boardnum());
-		return "redirect:videoBoard";
 		
+		return "redirect:videoBoard";
 	}
 
 	@RequestMapping(value = "updateVideo", method = RequestMethod.GET)
@@ -219,7 +249,6 @@ public class VideoBoardController {
 		videoBoard videoBoard = dao.readVideo(video_boardnum);
 		model.addAttribute("videoBoard", videoBoard);
 		return "videoboard/updateVideo";
-		
 	}
 
 	@ResponseBody
@@ -307,37 +336,86 @@ public class VideoBoardController {
 	
 	@ResponseBody
 	@RequestMapping(value = "writevideoreply", method = RequestMethod.POST)
-	public List<Rodo_VideoReply> writevideoreply(Rodo_VideoReply reply, Model model, HttpSession session)
+	public HashMap<?, ?> writevideoreply(Rodo_VideoReply reply, Model model, HttpSession session,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
 	{	
 		String id = (String)session.getAttribute("loginId");
 		reply.setVideoreply_id(id);
 		
-		System.out.println("==================================");
-		System.out.println(reply.toString());
-		
 		dao.writevideoreply(reply);
 		
-		List<Rodo_VideoReply> list = dao.findreply(reply.getVideo_boardnum());
+		int total = dao.videoreplylistsize(reply.getVideo_boardnum());
 		
-		return list;
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_VideoReply> videoreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getVideo_boardnum());
+		
+		map.put("navi", navi);
+		map.put("videoreplylist", videoreplylist);
+		
+		return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "deletevideoreply", method = RequestMethod.POST)
-	public List<Rodo_VideoReply> deletevideoreply(Rodo_VideoReply reply, Model model, HttpSession session)
+	public HashMap<?, ?> deletevideoreply(Rodo_VideoReply reply, Model model, HttpSession session,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
 	{
-		System.out.println("여기 와 안와");
-		
 		String id = (String)session.getAttribute("loginId");
 		reply.setVideoreply_id(id);
 		
-		System.out.println("==================================");
-		System.out.println(reply.toString());
-		
 		dao.deletevideoreply(reply);
 		
-		List<Rodo_VideoReply> list = dao.findreply(reply.getVideo_boardnum());
+		int total = dao.videoreplylistsize(reply.getVideo_boardnum());
 		
-		return list;
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_VideoReply> videoreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getVideo_boardnum());
+		
+		map.put("navi", navi);
+		map.put("videoreplylist", videoreplylist);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "replyvideopage", method = RequestMethod.POST)
+	public HashMap<?, ?> replypage(Rodo_VideoReply reply, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
+		int total = dao.videoreplylistsize(reply.getVideo_boardnum());
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_VideoReply> videoreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getVideo_boardnum());
+		
+		map.put("navi", navi);
+		map.put("videoreplylist", videoreplylist);
+				
+		return map;	
 	}
 }

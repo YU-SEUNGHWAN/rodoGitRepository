@@ -152,4 +152,44 @@ public class Rodo_PhotoBoardDAO {
 		
 		return result;
 	}
+	
+	public int photoreplylistsize(int photo_boardnum)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		int result = mapper.photoreplylistsize(photo_boardnum);
+		
+		return result;
+	}
+	
+	public List<Rodo_PhotoReply> getlist(int startRecode, int countPerPage, int photo_boardnum)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<Rodo_PhotoReply> list = mapper.getlist(rb, photo_boardnum);
+		
+		return list;
+	}
+	
+	public int writephotoboardcount(String id)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		int result = mapper.writephotoboardcount(id);
+		
+		return result;
+	}
+	
+	public List<Rodo_PhotoBoard> myphotolist(int startRecode, int countPerPage, String id)
+	{
+		Rodo_PhotoBoardMapper mapper = sqlSession.getMapper(Rodo_PhotoBoardMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<Rodo_PhotoBoard> list = mapper.myphotolist(rb, id);
+		
+		return list;
+	}
 }

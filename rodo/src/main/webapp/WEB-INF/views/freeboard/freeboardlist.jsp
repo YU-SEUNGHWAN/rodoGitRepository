@@ -46,7 +46,9 @@
 <!-- Main Stylesheet File -->
 <link href="resources/css/style.css" rel="stylesheet">
 <link href="resources/css/login.css" rel="stylesheet">
-
+  
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  
 <script>
 	function pagingFormSubmit(currentPage) {
 		var form = document.getElementById("pagingForm");
@@ -55,29 +57,84 @@
 
 		form.submit();
 	}
+	
+
+	$(function(){
+		$(".pagingset").css("color", "white");
+		
+		$(".btn-page").mouseover(function(){
+			$(this).find(".pagingset").css("color", "black");
+		});
+			
+		$(".btn-page").mouseout(function(){
+			$(this).find(".pagingset").css("color", "white");			
+		});	
+	});	
 </script>
 
 <style type="text/css">
-th {
+.reverse
+{
+	color: #E31414;
+	font-size: 11pt;
+	font-weight: 900;
+}
+
+.reverse a
+{
+	color: #E31414;
+	font-size: 11pt;
+	font-weight: 900;
+}
+
+th
+{
 	border-top: 3px solid #6B6B6B;
 	background-color: #E0E0E0;
-	height: 35px;
+	height: 38px;
 	text-align: center;
 	color: #000000;
 }
 
-td {
+td
+{
 	height: 30px;
 }
 
-.title {
-	color: black;
+.title{
+	color:black;
 }
-
-.title:hover {
-	color: red;
+.title:hover{
+	color:red;
 }
 </style>
+
+<script>
+function pagingFormSubmit(currentPage)
+{
+	var form = document.getElementById("pagingForm");
+	var page = document.getElementById("page");
+	page.value = currentPage;
+	
+	form.submit();
+}
+
+$(function()
+{
+	$(".tcolor").on
+	({
+		mouseenter : function()
+		{
+			$(this).addClass("reverse");
+		},
+		
+		mouseleave : function()
+		{
+			$(this).removeClass("reverse");
+		}
+	})
+});
+</script>
 
 </head>
 
@@ -100,58 +157,75 @@ td {
 				</div>
 			</div>
 
-			<div class="row" style="height: 600px;">
-				<div class="col-md-12" style="padding-bottom: 35px">
-					<table class="table-striped"
-						style="width: 100%; border-bottom: 2px solid gray;">
-						<tr>
-							<th>번호</th>
-							<th>제목</th>
-							<th>글쓴이</th>
-							<th>날짜</th>
-							<th>조회</th>
-						</tr>
+   <div class="row" style="height: 600px;">
+       <div class="col-md-12" style="padding-bottom:35px">
+       	<table class = "table-striped" style="width : 100%; border-bottom: 2px solid gray;">
+        		<tr>
+        			<th style="text-align:center; width:8%;">		번호		</th>
+        			<th style="text-align:center; width:3%;">		    	</th>
+        			<th style="text-align:center; width:57%;">		제목		</th>
+        			<th style="text-align:center; width:12%;">		글쓴이	</th>
+        			<th style="text-align:center; width:10%;">		날짜		</th>
+        			<th style="text-align:center; width:10%;">		조회		</th>
+        		</tr>
+        		
+       	 <c:forEach var="board" items="${list}">
+        		<tr class = "tcolor">
+        			<td style="text-align:center; width:8%;"> ${board.free_boardnum}
+        			</td>
 
-						<c:forEach var="board" items="${list}">
-							<tr>
-								<td>${board.free_boardnum}</td>
-								<td><a href="read?free_boardnum=${board.free_boardnum}"
-									class="title">${board.free_title}</a></td>
-								<td>${board.free_id}</td>
-								<td>${board.free_input_dt}</td>
-								<td>${board.free_hit}</td>
-							</tr>
+       				<td style="text-align:center; width:3%;">
+						 <c:forEach var ="fc" items= "${fList}" begin="${board.free_boardnum}" end="${board.free_boardnum}">
+							<c:if test="${fc == null}">		<img src = "./resources/img/front.png">		</c:if>
+							<c:if test="${fc != null}">		<img src = "./resources/img/picon.png">		</c:if>
 						</c:forEach>
-					</table>
-				</div>
-			</div>
+        			</td>
 
-				<table style="width: 100%;" class="board-navi">
-					<tr>
-						<td style="width: 20%"></td>
-						<td style="width: 60%; text-align: center;"><span
-							class="page-navi"> <span class="btn-page"><a
-									class="pagingset"
-									href="javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})">&lt;&lt;</a></span>
-								<span class="btn-page"><a class="pagingset"
-									href="javascript:pagingFormSubmit(${navi.currentPage - 1})">&lt;</a></span>
+        			<td style="text-align:left; width:57%;">
+        				<a href="read?free_boardnum=${board.free_boardnum}" class="title">
+        				${board.free_title}	</a>	&nbsp; &nbsp;
 
-								<c:forEach var="count" begin="${navi.startPageGroup}"
-									end="${navi.endPageGroup}">
+ 						<c:forEach var ="a"  items= "${reList}" 
+ 						begin="${board.free_boardnum}" end="${board.free_boardnum}">
+							<c:if test="${a != null}">		[	${a}	]		</c:if>
+							<c:if test="${a == null}">			　				</c:if>
+						</c:forEach>
+        			</td>
+        			
+        			<td style="text-align:center; width:12%;">${board.free_id}			</td>
+        			<td style="text-align:center; width:10%;">${board.free_input_dt}	</td>
+        			<td style="text-align:center; width:10%;">${board.free_hit}			</td>
+        		</tr>
+      	  </c:forEach>
+        </table>
+       </div> 
+	</div>
 
-									<span class="btn-page"> <a class="pagingset"
-										href="javascript:pagingFormSubmit(${count})">${count}</a>
-									</span>
-
-								</c:forEach> <span class="btn-page"><a class="pagingset"
-									href="javascript:pagingFormSubmit(${navi.currentPage + 1})">&gt;</a></span>
-								<span class="btn-page"><a class="pagingset"
-									href="javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
-						</span></td>
-						<td style="width: 20%"><a href="freeboardwrite"
-							class="btn-write">Write</a></td>
-					</tr>
-				</table>
+		<table style="width: 100%" class="board-navi">
+			<tr>
+				<td style="width: 20%"></td>
+				<td style="width: 60%; text-align: center;"><span
+					class="page-navi"> <span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><a
+							class="pagingset"
+							href="#none">&lt;&lt;</a></span>
+						<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage - 1})"><a class="pagingset"
+							href="#none">&lt;</a></span>
+		
+						<c:forEach var="count" begin="${navi.startPageGroup}"
+							end="${navi.endPageGroup}">
+		
+							<span class="btn-page" onclick="pagingFormSubmit(${count})"> <a class="pagingset"
+								href="#none">${count}</a>
+							</span>
+		
+						</c:forEach> <span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage + 1})"><a class="pagingset"
+							href="#none">&gt;</a></span>
+						<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><a class="pagingset"
+							href="#none">&gt;&gt;</a></span>
+				</span></td>
+				<td style="width: 20%"><a href="freeboardwrite" class="btn-write">Write</a></td>
+			</tr>
+		</table>
 
 				<form action="freeboardlist" class="pull-right position"
 					method="get" id="pagingForm">

@@ -62,7 +62,7 @@ function writeMessage()
 		},
 		success : function(data){
 			doSend(receiver);
-			location.href="messageList";
+			location.href="sendlist";
 		},
 		error : function(e){
 			console.log(e);
@@ -72,12 +72,98 @@ function writeMessage()
 }
 
 </script>
+<style>
+h3
+{
+   font-weight: bolder;
+   margin-left: 10px;
+   font-family: "Open Sans",sans-serif;
+}
+.slice{
+background: black;
+width: 450px;
+height: 3px;
+margin-bottom: 15px;
+margin-left: 5px;
+}
+.message-menu{
+   margin-bottom: 15px;
+}
+.message-menu a{
+   color : black;
+   text-decoration: none;
+   font-weight: bolder;
+   margin-left: 10px;
+   margin-right: 10px;
+}
+.message-menu a:hover{
+   color : red;
+}
+#msgwrite{
+	margin-left: 10px;
+}
+#receiver{
+	width: 200px;
+	margin-bottom: 15px;
+	border:none;
+	border-bottom: 2px solid black;
+}
+#title{
+	width: 430px;
+	margin-bottom: 20px;
+	border:none;
+	border-bottom: 2px solid black;
+}
+#text{
+	width: 480px;
+	height: 300px;
+	margin-bottom: 15px;
+	resize: none;
+	border: 1.5px solid black;
+}
+#cancel{
+	margin-left : 5px;
+	border: 2px solid #363838;
+	background: #363838;
+	color: white;
+}
+#cancel:hover{
+	border: 2px solid #363838;
+	background: white;
+	color: #363838;
+	font-weight: bolder;
+}
+#send{
+	border: 2px solid #363838;
+	background: #363838;
+	color: white;
+}
+#send:hover{
+	border: 2px solid #363838;
+	background: white;
+	color: #363838;
+	font-weight: bolder;
+}
+</style>
 </head>
 <body>
-받는이 <input type="text" id="receiver" value="${sender}"><br>
-제목 <input type="text" id = "title"><br>
-<textarea id ="text"></textarea><br>
-<input type="button" id="cancel" value="취소">
-<input type="button" value="보내기" onclick="writeMessage()">
+	<header>
+		<h3>쪽지 보내기</h3>
+		<div class="slice"></div>
+		<div class="message-menu">
+			<a href="messageList">받은 쪽지함</a>
+			<a href="sendlist">보낸 쪽지함</a>
+			<a href='writeMessage' style="color:red">쪽지 보내기</a>
+		</div>
+	</header>
+	
+	<div id='msgwrite'>
+		<b>To. </b> <input type="text" id="receiver" value="${sender}" readonly="readonly"><br>
+		<b>TITLE </b> <input type="text" id = "title"><br>
+		<textarea id ="text"></textarea><br>
+		<input type="button" id="send" value="보내기" onclick="writeMessage()">
+		<input type="button" id = "cancel" value="취소">
+	</div>
+
 </body>
 </html>

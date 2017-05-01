@@ -2,6 +2,7 @@ package project2.scmaster.rodo.dao;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
@@ -49,13 +50,6 @@ public class MessageDao
 		
 		return list;
 	}
-	
-	public ArrayList<Message> newMessage(String id) 
-	{
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
 
 	public Message sendreadMessage(int messagenum) 
 	{
@@ -84,6 +78,15 @@ public class MessageDao
 		
 		return result;
 	}
+	
+	public int findreceivelistsize(String id, String searchText)
+	{
+		MessageMapper mapper = session.getMapper(MessageMapper.class);
+		
+		int result = mapper.findreceivelistsize(id, searchText);
+		
+		return result;
+	}
 
 	public int sendlistsize(String id)
 	{
@@ -91,6 +94,15 @@ public class MessageDao
 		MessageMapper mapper = session.getMapper(MessageMapper.class);
 		
 		int result = mapper.sendlistsize(id);
+		
+		return result;
+	}
+	
+	public int findsendlistsize(String id, String searchText)
+	{
+		MessageMapper mapper = session.getMapper(MessageMapper.class);
+		
+		int result = mapper.findsendlistsize(id, searchText);
 		
 		return result;
 	}
@@ -151,5 +163,39 @@ public class MessageDao
 		int result = mapper.alldeleteSend(sender);
 		
 		return result;
+	}
+	
+	public List<Message> findreceivedMessage(int startRecode, int CountPerPage, String searchText)
+	{
+		MessageMapper mapper = session.getMapper(MessageMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, CountPerPage);
+		
+		List<Message> list = mapper.findreceivedMessage(rb, searchText);
+		
+		return list;
+	}
+	
+	public List<Message> findsentMessage(int startRecode, int CountPerPage, String searchText)
+	{
+		MessageMapper mapper = session.getMapper(MessageMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, CountPerPage);
+		
+		List<Message> list = mapper.findsentMessage(rb, searchText);
+		
+		return list;
+	}
+	
+	public void readCheck(int msgnum){
+		MessageMapper mapper = session.getMapper(MessageMapper.class);
+		
+		mapper.readCheck(msgnum);
+	}
+	
+	public List<Message> newMessage(String id){
+		MessageMapper mapper = session.getMapper(MessageMapper.class);
+		
+		return mapper.newMessage(id);
 	}
 }

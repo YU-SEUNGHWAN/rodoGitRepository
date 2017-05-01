@@ -64,7 +64,7 @@
 		, free_id
 		, free_title
 		, free_content
-		, free_input_dt
+		, to_char(free_input_dt, 'YYYY/MM/DD') free_input_dt
 		, free_update_dt
 		, free_hit
 
@@ -241,4 +241,89 @@
 	</select>
 
 
-</mapper>
+<select id = "freereplylistsize" parameterType = "int" resultType = "int">
+	
+		select 
+			count(*)
+			
+		from
+			rodo_freereply
+		
+		where
+			free_boardnum = #{free_boardnum}
+	
+	</select>
+	
+	
+	<select id = "getlist" resultType = "Rodo_FreeReply" parameterType = "int">
+	
+		select
+			freereply_replynum
+			, free_boardnum
+			, freereply_id
+			, freereply_text
+			, freereply_input_dt
+		
+		from
+			rodo_freereply
+			
+		where
+			free_boardnum = #{free_boardnum}
+
+		order by
+			freereply_replynum desc
+	
+	</select>
+	
+	
+<select id = "writefreeboardcount" parameterType = "String" resultType = "int">
+
+	select
+		count(*)
+		
+	from
+		rodo_freeboard
+		
+	where
+		free_id = #{id}
+
+
+</select>
+
+
+<select id = "myfreelist" parameterType = "String" resultType = "Rodo_FreeBoard">
+
+	select
+		free_boardnum
+		, free_id
+		, free_title
+		, free_content
+		, free_input_dt
+		, free_update_dt
+		, free_hit
+		
+	from
+		rodo_freeboard
+		
+	where
+		free_id = #{id}
+		
+	order by
+		free_boardnum desc
+
+</select>
+
+	<!--	  				리플 카운트 					 	-->
+	<select id = "getReplyCount" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM   rodo_freereply
+		WHERE  free_boardnum = #{free_boardnum}
+	</select>	
+						
+	<!--	  			  첨부 파일 카운트				 	-->
+	<select id = "getFileCount" parameterType="int" resultType="int">
+		SELECT count(freefile_saved)
+		FROM   rodo_freefile
+		WHERE  free_boardnum = #{free_boardnum}
+	</select>
+	</mapper>

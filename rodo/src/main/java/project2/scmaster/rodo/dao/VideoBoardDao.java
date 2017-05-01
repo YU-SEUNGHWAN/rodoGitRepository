@@ -113,6 +113,43 @@ public class VideoBoardDao
 		return result;
 	}
 	
+	public int videoreplylistsize(int video_boardnum)
+	{
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		
+		int result = mapper.videoreplylistsize(video_boardnum);
+		
+		return result;
+	}
 	
+	public List<Rodo_VideoReply> getlist(int startRecode, int countPerPage, int video_boardnum)
+	{
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+				
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<Rodo_VideoReply> list = mapper.getlist(rb, video_boardnum);
+		
+		return list;
+	}
 	
+	public int writevideoboardcount(String id)
+	{
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		
+		int result = mapper.writevideoboardcount(id);
+		
+		return result;
+	}
+	
+	public List<videoBoard> myvideolist(int startRecode, int countPerPage, String id)
+	{
+		VideoBoardMapper mapper = sqlSession.getMapper(VideoBoardMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<videoBoard> list = mapper.myvideolist(rb, id);
+		
+		return list;
+	}
 }

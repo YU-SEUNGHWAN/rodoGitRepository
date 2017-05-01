@@ -78,6 +78,27 @@ var checknumflag = false;
 var idflag = false;
 
 
+var joincomplete = '${joincomplete}';
+
+var loginerror = '${loginErr}';
+
+if (joincomplete == "complete")
+{	
+	$(function()
+	{
+		alert("가입이 완료되었습니다.");
+	})
+}
+
+if(loginerror == "error")
+{
+	$(function()
+	{
+		alert("로그인 정보를 확인하세요.");
+	})
+}
+
+
 $(function() {
 	
 	if($("#loginId").val() != ""){
@@ -89,7 +110,6 @@ $(function() {
 		   e.stopPropagation(); 
 		   return false;
 		});
-
 	}
 	
 	$("#submmit").on("click", function()
@@ -136,11 +156,7 @@ $(function() {
 			return false;
 		}
 	})
-})
-
-
-$(function()
-{
+	
 	var checkAjaxSetTimeout;
 	
 	$("#id").keyup(function()
@@ -199,11 +215,7 @@ $(function()
 			}
         }, 500)
 	})
-})
 
-
-$(function()
-{
 	var checkAjaxSetTimeout;
 	
 	$("#email").keyup(function()
@@ -275,11 +287,7 @@ $(function()
 			}
         }, 500)
 	})
-})
 
-
-$(function()
-{
 	$("#mailcheck").on("click", function()
 	{
 		var email = $("#email").val();
@@ -320,10 +328,7 @@ $(function()
 		}
 		
 	})
-})
 
-$(function()
-{
 	$("#btnsubmit").on("click", function()
 	{
 		var checknum = $("#checknumber").val();
@@ -357,6 +362,26 @@ $(function()
 			}
 		})
 	})
+	
+	$.ajax({
+		type:"GET",
+		url: "newMessage",
+		success : function(data){
+			if(data.length!=0){
+	        	var message = "<img style='width:20px;' src='resources/img/message.png'> ";
+				var inner = $(".messagestatus").html();
+				if(!inner.includes("message")){
+					$(".messagestatus").html(message+inner);
+				}
+			}
+		},
+		erroe: function(e){
+			console.log(e);
+		}
+	})
+	$(".messagestatus").on("click", function(){
+		$(".messagestatus").html("");		
+	})
 })
 
 </script>
@@ -384,19 +409,19 @@ $(function()
           <li class="menu-has-children"><a href="#none">community</a>
             <ul>
               <li><a href="freeboardlist">free board</a></li>
-              <li><a href="#">Q&A</a></li>
+              <li><a href="qaboardlist">Q&A</a></li>
               
             </ul>
           </li>
 		  <c:choose>
           	<c:when test="${loginId==null}">
-	          	<li style="padding-left:100px;"><a href="index#login">login</a></li>
+	          	<li style="padding-left:100px;"><a href="#about">login</a></li>
 	       	</c:when>
 	        <c:otherwise>
 			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
 		             <li><a href="checkupdate">my info</a></li>
-		             <li><a href="#">my List</a></li>
+		             <li><a href="mypage">my List</a></li>
 		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>
 			    </ul>  

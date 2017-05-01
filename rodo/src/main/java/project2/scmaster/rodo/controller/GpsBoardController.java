@@ -12,23 +12,21 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.google.gson.Gson;
 
 import project2.scmaster.rodo.dao.Rodo_GpsBoardDao;
 import project2.scmaster.rodo.util.FileService;
 import project2.scmaster.rodo.util.PageNavigator;
 import project2.scmaster.rodo.util.Parsing;
 import project2.scmaster.rodo.vo.GPX;
-import project2.scmaster.rodo.vo.Marks;
 import project2.scmaster.rodo.vo.Rodo_GpsBoard;
+import project2.scmaster.rodo.vo.Rodo_GpsReply;
 
 @Controller
 public class GpsBoardController 
@@ -55,6 +53,11 @@ public class GpsBoardController
 		
 		int total = dao.listsize(searchText);
 		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
 		List<Rodo_GpsBoard> gpslist = dao.list(navi.getStartRecord(), navi.getCountPerPage(), searchText);
@@ -63,7 +66,7 @@ public class GpsBoardController
 		model.addAttribute("gpslist", gpslist);
 		model.addAttribute("navi", navi);
 		
-		return "logBoard";
+		return "gps/logBoard";
 	}
 	
 	
@@ -79,7 +82,9 @@ public class GpsBoardController
 		board.setGps_id(id);
 		
 		board.setGps_gpxinfo("info");
-		board.setGps_location("tokyo");
+	//	board.setGps_location("tokyo");
+		
+		System.out.println(board.toString());
 		
 		Iterator<String> itr = request.getFileNames();
 
@@ -107,17 +112,36 @@ public class GpsBoardController
 	
 	
 	@RequestMapping(value = "gpsread", method = RequestMethod.GET)
-	public String gpsread(int gps_boardnum, Model model)
-	{
+	public String gpsread(int gps_boardnum, Model model, HttpSession session,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{	
+		int total = dao.gpsreplylistsize(gps_boardnum);
+		
+	//	String id = (String)session.getAttribute("loginId");
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_GpsReply> gpsreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), gps_boardnum);
+		
 		Rodo_GpsBoard board = dao.selectOne(gps_boardnum);
-		if (board == null){
+		
+		if (board == null)
+		{
 			return "redirect:/logBoard";
 		}
-
+		
 		model.addAttribute("gps_board", board);
 		model.addAttribute("myMarks", board.getGps_marker());
-		
-		return "readGps";
+		model.addAttribute("gpsreplylist", gpsreplylist);
+		model.addAttribute("navi", navi);
+
+		return "gps/readGps";
 	}
 	
 	
@@ -184,7 +208,7 @@ public class GpsBoardController
 		board.setGps_id(id);
 		
 		board.setGps_gpxinfo("info");
-		board.setGps_location("tokyo");
+	//	board.setGps_location("tokyo");
 		
 		System.out.println(board.getGps_marker());
 		
@@ -208,6 +232,112 @@ public class GpsBoardController
 		board.setGpsfile_original(originalFile);
 		board.setGpsfile_saved(savedFile);
 		dao.updateGps(board);
-		System.out.println("지나감");
+	}
+	
+	@RequestMapping(value = "deletegps", method = RequestMethod.GET)
+	public String deletegps(int gps_boardnum)
+	{
+		Rodo_GpsBoard board = dao.selectOne(gps_boardnum);
+		
+		List<Rodo_GpsReply> gpsreplylist = dao.findreply(gps_boardnum);
+		
+		if (gpsreplylist != null)
+		{
+			for (int i=0; i<gpsreplylist.size(); i++)
+			{
+				dao.deletegpsreply(gpsreplylist.get(i));
+			}
+		}
+		
+		FileService.deleteFile(board.getGpsfile_original());
+		
+		dao.deletegps(gps_boardnum);
+		
+		return "redirect:logBoard";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "writegpsreply", method = RequestMethod.POST)
+	public HashMap<?, ?> writegpsreply(Rodo_GpsReply reply, Model model, HttpSession session,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{	
+		String id = (String)session.getAttribute("loginId");
+		reply.setGpsreply_id(id);
+		
+		dao.writegpsreply(reply);
+		
+		int total = dao.gpsreplylistsize(reply.getGps_boardnum());
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_GpsReply> gpsreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getGps_boardnum());
+		
+		map.put("navi", navi);
+		map.put("gpsreplylist", gpsreplylist);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "deletegpsreply", method = RequestMethod.POST)
+	public HashMap<?, ?> deletegpsreply(Rodo_GpsReply reply, Model model, HttpSession session,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
+		String id = (String)session.getAttribute("loginId");
+		reply.setGpsreply_id(id);
+		
+		dao.deletegpsreply(reply);
+		
+		int total = dao.gpsreplylistsize(reply.getGps_boardnum());
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_GpsReply> gpsreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getGps_boardnum());
+		
+		map.put("navi", navi);
+		map.put("gpsreplylist", gpsreplylist);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "replygpspage", method = RequestMethod.POST)
+	public HashMap<?, ?> gpspage(Rodo_GpsReply reply, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
+		int total = dao.gpsreplylistsize(reply.getGps_boardnum());
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_GpsReply> gpsreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getGps_boardnum());
+		
+		map.put("navi", navi);
+		map.put("gpsreplylist", gpsreplylist);
+				
+		return map;	
 	}
 }

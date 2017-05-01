@@ -99,10 +99,10 @@
 	 						       +"<input type='button' onclick='cap1()' value='썸네일 선택'>"
 		 						   +"<input type='button' onclick='del1()' value='삭제'>"
 	 						       +"</td></tr></table>"
-	 						       +"</div></div>"
+	 						       +"</div></div>";
 		  						   
-							$("#videoDiv").empty();
-							$("#videoDiv").html(html);	
+						$("#videoDiv").empty();
+						$("#videoDiv").html(html);	
 					},
 					
 					error : function(e)
@@ -113,8 +113,7 @@
 				});
 			}
 			
-			else
-			{
+			else {
 			  $("#videoDiv").empty();
 			  $("#output1").html("<img src='resources/img/sample.png'>");
 			}

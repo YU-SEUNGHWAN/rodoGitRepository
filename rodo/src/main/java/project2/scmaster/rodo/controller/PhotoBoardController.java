@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -56,6 +57,11 @@ public class PhotoBoardController {
 	{
 		int total = dao.listsize(searchText);
 		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
 		ArrayList<Rodo_PhotoBoard> pt_board = dao.Photolist(navi.getStartRecord(), navi.getCountPerPage(), searchText);
@@ -64,11 +70,14 @@ public class PhotoBoardController {
 		model.addAttribute("photoList", pt_board);
 		model.addAttribute("navi", navi);
 		
-		return "photoBoard";
+		return "photo/photoBoard";
 	}
 	
 	@RequestMapping(value = "readPhoto", method = RequestMethod.GET)
-	public String readPhoto(HttpSession session, Model model, int photo_boardnum){
+	public String readPhoto(HttpSession session, Model model, int photo_boardnum,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
 		Rodo_PhotoBoard pt_board = dao.readPhoto(photo_boardnum);
 		ArrayList<HashMap> fileList = dao.PhotoFileList(photo_boardnum);
 
@@ -87,13 +96,23 @@ public class PhotoBoardController {
 		pt_board.setPhotofile_original(oglist);
 		pt_board.setPhotofile_saved(svlist);
 		
-		List<Rodo_PhotoReply> replylist = dao.findreply(photo_boardnum);
+		
+		int total = dao.photoreplylistsize(photo_boardnum);
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_PhotoReply> replylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), photo_boardnum);
 		
 		model.addAttribute("pt_board", pt_board);
-		model.addAttribute("id", (String)session.getAttribute("loginId"));
 		model.addAttribute("replylist", replylist);
+		model.addAttribute("navi", navi);
 		
-		return "readPhoto";
+		return "photo/readPhoto";
 	}
 
 	@RequestMapping(value = "writePhoto", method = RequestMethod.GET)
@@ -279,6 +298,16 @@ public class PhotoBoardController {
 		ArrayList<String> oglist = new ArrayList<>();
 		ArrayList<String> svlist = new ArrayList<>();
 		
+		List<Rodo_PhotoReply> photoreplylist = dao.findreply(photo_boardnum);
+		
+		if (photoreplylist != null)
+		{
+			for (int i=0; i<photoreplylist.size(); i++)
+			{
+				dao.deletereply(photoreplylist.get(i));
+			}
+		}
+		
 		for(HashMap file : fileList){
 			oglist.add((String)file.get("PHOTOFILE_ORIGINAL"));
 			svlist.add((String)file.get("PHOTOFILE_SAVED"));
@@ -289,6 +318,7 @@ public class PhotoBoardController {
 		}
 		
 		dao.deletePhoto(photo_boardnum);
+		
 		return "redirect:photoBoard";
 	}
 	
@@ -348,37 +378,86 @@ public class PhotoBoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="writephotoreply", method=RequestMethod.POST)
-	public List<Rodo_PhotoReply> writephotoreply(Rodo_PhotoReply reply, HttpSession session, Model model)
+	public HashMap<?, ?> writephotoreply(Rodo_PhotoReply reply, HttpSession session, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
 	{
-		System.out.println("==============================");
-		System.out.println(reply.toString());
-		
 		String id = (String)session.getAttribute("loginId");
 		reply.setPhotoreply_id(id);
 		
 		dao.writephotoreply(reply);
 		
-		List<Rodo_PhotoReply> list = dao.findreply(reply.getPhoto_boardnum());
+		int total = dao.photoreplylistsize(reply.getPhoto_boardnum());
 		
-		return list;
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_PhotoReply> photoreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getPhoto_boardnum());
+		
+		map.put("navi", navi);
+		map.put("photoreplylist", photoreplylist);
+		
+		return map;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "deletephotoreply", method = RequestMethod.GET)
-	public List<Rodo_PhotoReply> deletephotoreply(Rodo_PhotoReply reply, HttpSession session, Model model)
+	public HashMap<?, ?> deletephotoreply(Rodo_PhotoReply reply, HttpSession session, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
 	{		
 		String id = (String)session.getAttribute("loginId");
 		reply.setPhotoreply_id(id);
 		
-		System.out.println(reply.toString());
-		
 		dao.deletereply(reply);
 		
-		List<Rodo_PhotoReply> list = dao.findreply(reply.getPhoto_boardnum());
+		int total = dao.photoreplylistsize(reply.getPhoto_boardnum());
 		
-		System.out.println("==============================");
-		System.out.println(list);
+		if (total == 0)
+		{
+			total = 1;
+		}
 		
-		return list;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_PhotoReply> photoreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getPhoto_boardnum());
+		
+		map.put("navi", navi);
+		map.put("photoreplylist", photoreplylist);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "replyphotopage", method = RequestMethod.POST)
+	public HashMap<?, ?> replypage(Rodo_PhotoReply reply, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page
+			)
+	{
+		int total = dao.photoreplylistsize(reply.getPhoto_boardnum());
+		
+		if (total == 0)
+		{
+			total = 1;
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Rodo_PhotoReply> photoreplylist = dao.getlist(navi.getStartRecord(), navi.getCountPerPage(), reply.getPhoto_boardnum());
+		
+		map.put("navi", navi);
+		map.put("photoreplylist", photoreplylist);
+				
+		return map;	
 	}
 }

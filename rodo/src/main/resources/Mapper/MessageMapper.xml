@@ -176,10 +176,25 @@
 	from
 		rodo_receivemessage
 		
-	<if test = "_parameter != null">
-		where
-			receivemessage_receiver = #{id}
-	</if>
+	where
+		receivemessage_receiver = #{id}
+	
+</select>
+
+
+<select id = "findreceivelistsize" resultType = "int">
+
+	select
+		count(*)
+		
+	from
+		rodo_receivemessage
+		
+	where
+		receivemessage_receiver = #{0}
+		
+	and
+		receivemessage_title = #{1}
 
 </select>
 
@@ -192,10 +207,25 @@
 	from
 		rodo_sendmessage
 		
-	<if test = "_parameter != null">
-		where
-			sendmessage_sender = #{id}
-	</if>
+	where
+		sendmessage_sender = #{id}
+	
+</select>
+
+
+<select id = "findsendlistsize" resultType = "int">
+
+	select
+		count(*)
+		
+	from
+		rodo_sendmessage
+		
+	where
+		sendmessage_sender = #{0}
+		
+	and
+		sendmessage_title = #{1}
 
 </select>
 
@@ -304,5 +334,65 @@
 
 </delete>
 
+
+<select id = "findreceivedMessage" parameterType = "String" resultType = "Message">
+
+	select
+		receivemessage_num messagenum
+		, receivemessage_sender sender
+		, receivemessage_receiver receiver
+		, receivemessage_title title
+		, receivemessage_text text
+		, to_char(receivemessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, receivemessage_read_fl flag
+
+	from 
+		rodo_receivemessage
+	
+	<if test = "_parameter != null">		
+		where
+			receivemessage_title = #{searchText}
+	</if>
+	
+	order by
+		receivemessage_num desc
+
+</select>
+
+
+<select id = "findsentMessage" parameterType = "String" resultType = "Message">
+
+	select
+		sendmessage_num messagenum
+		, sendmessage_sender sender
+		, sendmessage_receiver receiver
+		, sendmessage_title title
+		, sendmessage_text text
+		, to_char(sendmessage_send_dt, 'yyyy.MM.dd HH:MI') senddate
+		, sendmessage_read_fl flag
+
+	from 
+		rodo_sendmessage
+	
+	<if test = "_parameter != null">	
+		where
+			sendmessage_title = #{searchText}
+	</if>
+	
+	order by
+		sendmessage_num desc
+
+</select>
+
+<update id="readCheck" parameterType="int">
+
+update
+	rodo_receivemessage
+set
+	receivemessage_read_fl = 1
+where
+	receivemessage_num = #{msgnum}
+
+</update>
 
 </mapper>

@@ -130,23 +130,11 @@
 		set
 			photo_title = #{photo_title},
 			photo_content = #{photo_content},
-			photo_share = #{photo_share},
 			photofile_tn = #{photofile_tn},
 			photo_update_dt = sysdate
 		where 
 			photo_boardnum = #{photo_boardnum}
 	</update>
-	
-	<!-- 보드파일리스트 업데이트 하기 
-	<update id="updatePhotoFile" parameterType="HashMap">
-		update  
-			rodo_photofile 
-		set
-			photofile_original = #{og},
-			photofile_saved = #{sv}
-		where 
-			photo_boardnum = #{photo_boardnum}
-	</update>  -->
 	
 	
 	<select id = "listsize" parameterType = "String" resultType = "int">
@@ -224,6 +212,78 @@
 				photo_boardnum = #{photo_boardnum}
 	
 	</delete>
+	
+	
+	<select id = "photoreplylistsize" parameterType = "int" resultType = "int">
+
+	select 
+		count(*)
+		
+	from
+		rodo_photoreply
+	
+	where
+		photo_boardnum = #{photo_boardnum}
+
+</select>
+
+
+<select id = "getlist" resultType = "Rodo_PhotoReply" parameterType = "int">
+
+	select
+		photoreply_replynum
+		, photo_boardnum
+		, photoreply_id
+		, photoreply_text
+		, photoreply_input_dt
+	
+	from
+		rodo_photoreply
+		
+	where
+		photo_boardnum = #{photo_boardnum}
+
+	order by
+		photoreply_replynum desc
+
+</select>
+
+
+<select id = "writephotoboardcount" parameterType = "String" resultType = "int">
+	
+	select
+		count(*)
+		
+	from
+		rodo_photoboard
+		
+	where
+		photo_id = #{id}
+	
+</select>
+
+
+<select id = "myphotolist" parameterType = "String" resultType = "Rodo_PhotoBoard">
+
+	select
+		photo_boardnum
+		, photo_id
+		, photo_title
+		, photo_content
+		, photo_input_dt
+		, photo_update_dt
+		, photo_hit
+		
+	from
+		rodo_photoboard
+		
+	where
+		photo_id = #{id}
+		
+	order by
+		photo_boardnum desc
+
+</select>
 	
 
 </mapper>

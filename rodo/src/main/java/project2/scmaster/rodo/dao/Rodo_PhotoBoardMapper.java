@@ -41,4 +41,12 @@ public interface Rodo_PhotoBoardMapper
 	public List<Rodo_PhotoReply> findreply(int photo_boardnum);
 	
 	public int deletereply(Rodo_PhotoReply reply);
+
+	public int photoreplylistsize(int photo_boardnum);
+	
+	public List<Rodo_PhotoReply> getlist(RowBounds rb, int photo_boardnum);
+	
+	public int writephotoboardcount(String id);
+	
+	public List<Rodo_PhotoBoard> myphotolist(RowBounds rb, String id);
 }

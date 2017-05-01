@@ -29,25 +29,95 @@ public class MessageController
 	
 	@RequestMapping(value="messageList", method=RequestMethod.GET)
 	public String messageList(Model model, HttpSession session,
-			@RequestParam(value = "page", defaultValue = "1") int page
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
 			)
 	{
+		String id = (String)session.getAttribute("loginId");
+
+		if (searchText.equals(""))
+		{
+			int total = dao.receivelistsize(id);
+			
+			if (total == 0)
+			{
+				total = 1;
+			}
+			
+			PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+			
+			ArrayList<Message> list = dao.receivedMessage(navi.getStartRecord(), navi.getCountPerPage(), id);
+			
+			model.addAttribute("received", list);
+			model.addAttribute("navi", navi);
+			
+			return "Message/messageList";
+		}
 		
+		else
+		{
+			int total = dao.findreceivelistsize(id, searchText);
+			
+			if (total == 0)
+			{
+				total = 1;
+			}
+			
+			PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+			
+			List<Message> list = dao.findreceivedMessage(navi.getStartRecord(), navi.getCountPerPage(), searchText);
+			
+			model.addAttribute("received", list);
+			model.addAttribute("navi", navi);
+			model.addAttribute("searchText", searchText);
+			
+			return "Message/messageList";
+		}
+	}
+	
+	/*@RequestMapping(value = "findreceivedMessage", method = RequestMethod.GET)
+	public String findreceivedMessage(Model model, HttpSession session, 
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
+			)
+	{
 		String id = (String)session.getAttribute("loginId");
 		
 		int total = dao.receivelistsize(id);
+		String findreceived = "ok";
 		
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
-		ArrayList<Message> received = dao.receivedMessage(navi.getStartRecord(), navi.getCountPerPage(), id);
+		List<Message> findreceivedlist = dao.findreceivedMessage(navi.getStartRecord(), navi.getCountPerPage(), id, searchText);
 		
-		
-		model.addAttribute("received", received);
-		model.addAttribute("navi", navi);
-		
+		model.addAttribute("findreceivedlist", findreceivedlist);
+		model.addAttribute("searchText", searchText);
+		model.addAttribute("findreceived", findreceived);
 		
 		return "Message/messageList";
-	}
+	}*/
+	
+	/*@RequestMapping(value = "findsentmessage", method = RequestMethod.GET)
+	public String findsentmessage(Model model, HttpSession session, 
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
+			)
+	{
+		String id = (String)session.getAttribute("loginId");
+		
+		int total = dao.sendlistsize(id);
+		String findsent = "ok";
+		
+		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+		
+		List<Message> findsentlist = dao.findsentMessage(navi.getStartRecord(), navi.getCountPerPage(), id, searchText);
+		
+		model.addAttribute("findsentlist", findsentlist);
+		model.addAttribute("searchText", searchText);
+		model.addAttribute("findsent", findsent);
+		
+		return "Message/sendmessagelist";
+	}*/
 	
 	/*@ResponseBody
 	@RequestMapping(value = "sendmessagelist", method = RequestMethod.GET)
@@ -95,22 +165,50 @@ public class MessageController
 	
 	@RequestMapping(value = "sendlist", method=RequestMethod.GET)
 	public String sendlist(Model model, HttpSession session,
-			@RequestParam(value = "page", defaultValue = "1") int page
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "searchText", defaultValue = "") String searchText
 			)
-	{
-		
+	{	
 		String id = (String)session.getAttribute("loginId");
 		
-		int total = dao.sendlistsize(id);
+		if (searchText.equals(""))
+		{	
+			int total = dao.sendlistsize(id);
+			
+			if (total == 0)
+			{
+				total = 1;
+			}
+			
+			PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+			
+			ArrayList<Message> list = dao.sendlist(navi.getStartRecord(), navi.getCountPerPage(), id);
+			
+			model.addAttribute("sent", list);
+			model.addAttribute("navi", navi);
+			
+			return "Message/sendmessagelist";
+		}
 		
-		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
-		
-		ArrayList<Message> list = dao.sendlist(navi.getStartRecord(), navi.getCountPerPage(), id);
-		
-		model.addAttribute("sent", list);
-		model.addAttribute("navi", navi);
-		
-		return "Message/sendmessagelist";
+		else
+		{				
+			int total = dao.findsendlistsize(id, searchText);
+			
+			if (total == 0)
+			{
+				total = 1;
+			}
+			
+			PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
+			
+			List<Message> list = dao.findsentMessage(navi.getStartRecord(), navi.getCountPerPage(), searchText);
+			
+			model.addAttribute("sent", list);
+			model.addAttribute("navi", navi);
+			model.addAttribute("searchText", searchText);
+			
+			return "Message/sendmessagelist";
+		}
 	}
 	
 	@ResponseBody
@@ -174,11 +272,12 @@ public class MessageController
 	@RequestMapping(value="readreceivedMessage", method=RequestMethod.GET)
 	public String readreceivedMessage(Model model, int messagenum)
 	{
-		System.out.println(messagenum);
 		
 		Message receivemessage = dao.receivedreadMessage(messagenum);
-
+		dao.readCheck(messagenum);
+		
 		model.addAttribute("receivemessage", receivemessage);
+		
 		System.out.println(receivemessage.toString());
 		
 		return "Message/readMessage";
@@ -235,5 +334,15 @@ public class MessageController
 		dao.alldeleteSend(sender);
 
 		return "redirect:/sendlist";
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="newMessage", method=RequestMethod.GET)
+	public List<Message> newMessage(HttpSession session){
+		
+		String sender = (String)session.getAttribute("loginId");
+		
+		return dao.newMessage(sender);
 	}
 }

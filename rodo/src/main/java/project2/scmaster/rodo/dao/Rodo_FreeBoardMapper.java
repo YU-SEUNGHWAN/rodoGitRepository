@@ -44,4 +44,16 @@ public interface Rodo_FreeBoardMapper
 	public int deletereply(Rodo_FreeReply reply);
 	
 	public int listsize(String searchText);
+	
+	public int freereplylistsize(int free_boardnum);
+	
+	public List<Rodo_FreeReply> getlist(RowBounds rb, int free_boardnum);
+	
+	public int writefreeboardcount(String id);
+	
+	public List<Rodo_FreeBoard> myfreelist(RowBounds rb, String id);
+	
+	public int getReplyCount(int free_boardnum);
+
+	public int getFileCount(int free_boardnum);
 }

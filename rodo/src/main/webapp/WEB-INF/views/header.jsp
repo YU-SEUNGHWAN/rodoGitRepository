@@ -20,7 +20,30 @@
   <link href="resources/css/login.css" rel="stylesheet">
       
   <script src="resources/js/message.js"></script>
-        
+  
+  <script>
+	$(function(){
+	  $.ajax({
+			type:"GET",
+			url: "newMessage",
+			success : function(data){
+				if(data.length!=0){
+		        	var message = "<img style='width:20px;' src='resources/img/message.png'> ";
+					var inner = $(".messagestatus").html();
+					if(!inner.includes("message")){
+						$(".messagestatus").html(message+inner);
+					}
+				}
+			},
+			erroe: function(e){
+				console.log(e);
+			}
+		})
+	})
+	$(".messagestatus").on("click", function(){
+		$(".messagestatus").html("");		
+	})
+  </script>
 </head>
 <body>
 
@@ -42,7 +65,7 @@
           <li class="menu-has-children"><a href="#none">community</a>
             <ul>
               <li><a href="freeboardlist">free board</a></li>
-              <li><a href="#">Q&A</a></li>
+              <li><a href="qaboardlist">Q&A</a></li>
               
             </ul>
           </li>
@@ -54,7 +77,7 @@
 			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
 		             <li><a href="checkupdate">my info</a></li>
-		             <li><a href="#">my List</a></li>
+		             <li><a href="mypage">my List</a></li>
 		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>
 			    </ul>  

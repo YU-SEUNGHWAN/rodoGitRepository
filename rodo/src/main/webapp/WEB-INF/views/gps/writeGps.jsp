@@ -35,6 +35,7 @@ function gpsWrite()
 	formData.append("gps_title", $("#gps_title").val());
 	formData.append("gps_content", $("#gps_content").val());
 	formData.append("gps_marker", jarr);
+	formData.append("gps_location", $("#gps_location").val());
 	
 	$.ajax({
 		
@@ -224,6 +225,28 @@ b{
 					</tr></table>
 					
 					<div id = "mapDiv"></div>					
+						
+						<div id = "designlocation">
+						<select id = "gps_location" name = "location">
+							<option name = "서울" selected="selected">서울</option>
+							<option name = "경기">경기</option>
+							<option name = "인천">인천</option>
+							<option name = "강원">강원</option>
+							<option name = "대전">대전</option>
+							<option name = "세종">세종</option>
+							<option name = "충북">충북</option>
+							<option name = "충남">충남</option>
+							<option name = "광주">광주</option>
+							<option name = "전북">전북</option>
+							<option name = "전남">전남</option>
+							<option name = "대구">대구</option>
+							<option name = "부산">부산</option>
+							<option name = "울산">울산</option>
+							<option name = "경북">경북</option>
+							<option name = "경남">경남</option>
+							<option name = "제주">제주</option>
+						</select>
+					</div>
 						
 					<div class="contentDiv">
 						<b>CONTENTS</b><br><textarea id = "gps_content" name = "gps_content"></textarea>

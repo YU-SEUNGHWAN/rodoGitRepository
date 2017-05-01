@@ -1,31 +1,53 @@
 package project2.scmaster.rodo.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import project2.scmaster.rodo.dao.MemberDao;
-import project2.scmaster.rodo.util.Parsing;
-import project2.scmaster.rodo.vo.GPX;
+import project2.scmaster.rodo.dao.Rodo_FreeBoardDao;
+import project2.scmaster.rodo.dao.Rodo_GpsBoardDao;
+import project2.scmaster.rodo.dao.Rodo_PhotoBoardDAO;
+import project2.scmaster.rodo.dao.VideoBoardDao;
+import project2.scmaster.rodo.util.PageNavigator;
 import project2.scmaster.rodo.vo.Member;
+import project2.scmaster.rodo.vo.Rodo_FreeBoard;
+import project2.scmaster.rodo.vo.Rodo_GpsBoard;
+import project2.scmaster.rodo.vo.Rodo_PhotoBoard;
+import project2.scmaster.rodo.vo.videoBoard;
 
 @Controller
-@SessionAttributes({"member"})
+@SessionAttributes({"member", "joincomplete", "loginErr"})
 public class MemberController 
 {	
 	@Autowired
 	MemberDao dao;
+	
+	@Autowired
+	Rodo_FreeBoardDao free_dao;
+	
+	@Autowired
+	Rodo_PhotoBoardDAO photo_dao;
+	
+	@Autowired
+	VideoBoardDao video_dao;
+	
+	@Autowired
+	Rodo_GpsBoardDao gps_dao;
+	
+	int countPerPage = 5;		// 페이지 당 글 수
+	int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
 	
 	@RequestMapping(value = "insert", method = RequestMethod.GET)
 	public String insert()
@@ -51,9 +73,10 @@ public class MemberController
 	@RequestMapping(value = "join", method = RequestMethod.POST)
 	public String join(Member member, Model model)
 	{
-		model.addAttribute("member", member);
+		System.out.println(member.toString());
 		
 		int result = dao.insert(member);
+		String joincomplete = null;
 		
 		if (result != 1)
 		{
@@ -61,10 +84,15 @@ public class MemberController
 			return "member/insert";
 		}
 		
-		return "redirect:/joincomplete";
+		else
+		{
+			joincomplete = "complete";
+			model.addAttribute("joincomplete", joincomplete);
+			return "redirect:/";
+		}
 	}
 	
-	@RequestMapping(value = "joincomplete", method = RequestMethod.GET)
+	/*@RequestMapping(value = "joincomplete", method = RequestMethod.GET)
 	public String joincomplete(Model model, @ModelAttribute("member") Member member,
 			SessionStatus sessionStatus)
 	{
@@ -72,20 +100,25 @@ public class MemberController
 		sessionStatus.setComplete();
 		
 		return "member/joincomplete";
-	}
+	}*/
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login2(String loginid, String loginpassword, Model model, HttpSession session)
+	public String login2(String loginid, String loginpassword, Model model, HttpSession session, SessionStatus sessionStatus)
 	{
 		/*String id = loginid;
 		String password = loginpassword;*/
 		
+		sessionStatus.setComplete();
+		
 		Member member = dao.selectOne(loginid);
+		
+		String error = null;
 		
 		if (member == null)
 		{
-			model.addAttribute("loginErr", "로그인 정보가 틀렸습니다.");
-			return "member/login";
+			error = "error";
+			model.addAttribute("loginErr", error);
+			return "index";
 		}
 		
 		else
@@ -93,14 +126,16 @@ public class MemberController
 			if (member.getPassword().equals(loginpassword))
 			{
 				session.setAttribute("loginId", member.getId());
+				model.addAttribute("member", member);
 				
 				return "redirect:index";
 			}
 			
 			else
 			{
-				model.addAttribute("loginErr", "로그인 정보가 틀렸습니다.");
-				return "member/login";
+				error = "error";
+				model.addAttribute("loginErr", error);
+				return "index";
 			}
 		}
 	}
@@ -213,5 +248,65 @@ public class MemberController
 		}
 		
 		return "well done.";
+	}
+	
+	@RequestMapping(value = "mypage", method = RequestMethod.GET)
+	public String mypage(HttpSession session, Model model)
+	{
+		String id = (String)session.getAttribute("loginId");
+		
+		Member member = dao.selectOne(id);
+		model.addAttribute("member", member);
+		
+		return "member/mypage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "loadmylist", method = RequestMethod.POST)
+	public HashMap<?, ?> loadmylist(HttpSession session, Model model,
+			@RequestParam(value = "page", defaultValue = "1") int page)
+	{
+		String id = (String)session.getAttribute("loginId");
+		Member member = dao.selectOne(id);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("뜨는거 맞냐?");
+		
+		int freecount = free_dao.writefreeboardcount(id);
+		PageNavigator freenavi = new PageNavigator(countPerPage, pagePerGroup, page, freecount);
+		List<Rodo_FreeBoard> freelist = free_dao.myfreelist(freenavi.getStartRecord(), freenavi.getCountPerPage(), id);
+		
+		int photocount = photo_dao.writephotoboardcount(id);
+		PageNavigator photonavi = new PageNavigator(countPerPage, pagePerGroup, page, photocount);
+		List<Rodo_PhotoBoard> photolist = photo_dao.myphotolist(photonavi.getStartRecord(), photonavi.getCountPerPage(), id);
+		
+		int videocount = video_dao.writevideoboardcount(id);
+		PageNavigator videonavi = new PageNavigator(countPerPage, pagePerGroup, page, videocount);
+		List<videoBoard> videolist = video_dao.myvideolist(videonavi.getStartRecord(), videonavi.getCountPerPage(), id);
+		
+		int gpscount = gps_dao.writegpsboardcount(id);
+		PageNavigator gpsnavi = new PageNavigator(countPerPage, pagePerGroup, page, gpscount);
+		List<Rodo_GpsBoard> gpslist = gps_dao.mygpslist(gpsnavi.getStartRecord(), gpsnavi.getCountPerPage(), id);
+				
+		map.put("member", member);
+		
+		map.put("freecount", freecount);
+		map.put("freenavi", freenavi);
+		map.put("freelist", freelist);
+		
+		map.put("photocount", photocount);
+		map.put("photonavi", photonavi);
+		map.put("photolist", photolist);
+		
+		map.put("videocount", videocount);
+		map.put("videonavi", videonavi);
+		map.put("videolist", videolist);
+		
+		map.put("gpscount", gpscount);
+		map.put("gpsnavi", gpsnavi);
+		map.put("gpslist", gpslist);
+		
+		return map;
 	}
 }

@@ -143,4 +143,60 @@ public class Rodo_FreeBoardDao{
 		int result = mapper.listsize(searchText);
 		return result;
 	}
+	
+	public int freereplylistsize(int free_boardnum)
+	{
+		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
+		
+		int result = mapper.freereplylistsize(free_boardnum);
+		
+		return result;
+	}
+	
+	public List<Rodo_FreeReply> getlist(int startRecode, int countPerPage, int free_boardnum)
+	{
+		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<Rodo_FreeReply> list = mapper.getlist(rb, free_boardnum);
+		
+		return list;
+	}
+	
+	public int writefreeboardcount(String id)
+	{
+		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
+		
+		int result = mapper.writefreeboardcount(id);
+		
+		return result;
+	}
+	
+	public List<Rodo_FreeBoard> myfreelist(int startRecode, int countPerPage, String id)
+	{
+		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<Rodo_FreeBoard> list = mapper.myfreelist(rb, id);
+		
+		return list;
+	}
+	
+	public int getReplyCount(int free_boardnum)
+	{
+		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
+		int result = mapper.getReplyCount(free_boardnum);
+		
+		return result;
+	}
+	
+	public int getFileCount (int free_boardnum)
+	{
+		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
+		int result = mapper.getFileCount(free_boardnum);
+		
+		return result;
+	}
 }

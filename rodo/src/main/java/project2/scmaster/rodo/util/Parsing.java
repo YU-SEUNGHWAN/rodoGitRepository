@@ -20,8 +20,6 @@ public class Parsing {
 	
 	public ArrayList<GPX> GpxParse(String gpx_file_path){
 		
-		System.out.println(gpx_file_path);
-		
 		ArrayList<GPX> gpxList= new ArrayList();
 
 		File xmlFile = new File(gpx_file_path);

@@ -165,5 +165,77 @@
 	
 	</delete>
 	
+	
+	<select id = "videoreplylistsize" parameterType = "int" resultType = "int">
+	
+		select 
+			count(*)
+			
+		from
+			rodo_videoreply
+		
+		where
+			video_boardnum = #{video_boardnum}
+	
+	</select>
+	
+	
+	<select id = "getlist" resultType = "Rodo_VideoReply" parameterType = "int">
+	
+		select
+			videoreply_replynum
+			, video_boardnum
+			, videoreply_id
+			, videoreply_text
+			, videoreply_input_dt
+		
+		from
+			rodo_videoreply
+			
+		where
+			video_boardnum = #{video_boardnum}
+
+		order by
+			videoreply_replynum desc
+	
+	</select>
+	
+
+<select id = "writevideoboardcount" parameterType = "String" resultType = "int">
+
+	select
+		count(*)
+		
+	from
+		rodo_videoboard
+		
+	where
+		video_id = #{id}
+
+</select>
+
+
+<select id = "myvideolist" parameterType = "String" resultType = "Video">
+
+	select 
+		video_boardnum
+		, video_id
+		, video_title
+		, video_content
+		, video_input_dt
+		, video_update_dt
+		, video_hits
+	
+	from
+		rodo_videoboard
+		
+	where 
+		video_id = #{id}
+	
+	order by
+		video_boardnum desc
+	
+</select>
+	
 
 </mapper>

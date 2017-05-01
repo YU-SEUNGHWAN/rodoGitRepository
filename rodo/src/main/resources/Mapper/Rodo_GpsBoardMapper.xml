@@ -131,6 +131,7 @@
 		<if test="gpsfile_original != null">
 			, gpsfile_original = #{gpsfile_original}
 			, gpsfile_saved = #{gpsfile_saved}
+			, gps_marker = #{gps_marker}
 		</if>
 		where
 			gps_boardnum = #{gps_boardnum}
@@ -138,5 +139,149 @@
 			gps_id = #{gps_id}
 	
 	</update>
+	
+	
+	<delete id = "deletegps" parameterType = "int">
+	
+		delete 
+			rodo_gpsboard
+		where
+			gps_boardnum = #{gps_boardnum}
+
+	</delete>
+	
+	
+	<!-- ========================= GPS게시판 댓글 ========================= -->
+	
+	<insert id = "writegpsreply" parameterType = "Rodo_GpsReply">
+	
+		insert
+			into
+				rodo_gpsreply
+				(
+					gpsreply_replynum
+					, gps_boardnum
+					, gpsreply_id
+					, gpsreply_text
+				)
+				
+				values
+				(
+					rodo_gpsreply_seq.nextval
+					, #{gps_boardnum}
+					, #{gpsreply_id}
+					, #{gpsreply_text}
+				)
+	
+	</insert>
+	
+	
+	<select id = "findreply" parameterType = "int" resultType = "Rodo_GpsReply">
+	
+		select
+			gpsreply_replynum
+			, gps_boardnum
+			, gpsreply_id
+			, gpsreply_text
+			, gpsreply_input_dt
+			
+		from
+			rodo_gpsreply
+			
+		where
+			gps_boardnum = #{gps_boardnum}
+		
+		order by
+			gpsreply_replynum
+	
+	</select>
+	
+	
+	<delete id = "deletegpsreply" parameterType = "Rodo_GpsBoard">
+	
+		delete
+			from
+				rodo_gpsreply
+				
+			where
+				gpsreply_replynum = #{gpsreply_replynum}
+				
+			and
+				gps_boardnum = #{gps_boardnum}
+	
+	</delete>
+	
+	
+	<select id = "gpsreplylistsize" parameterType = "int" resultType = "int">
+	
+		select 
+			count(*)
+			
+		from
+			rodo_gpsreply
+		
+		where
+			gps_boardnum = #{gps_boardnum}
+	
+	</select>
+	
+	
+	<select id = "getlist" resultType = "Rodo_GpsReply" parameterType = "int">
+	
+		select
+			gpsreply_replynum
+			, gps_boardnum
+			, gpsreply_id
+			, gpsreply_text
+			, gpsreply_input_dt
+		
+		from
+			rodo_gpsreply
+			
+		where
+			gps_boardnum = #{gps_boardnum}
+
+		order by
+			gpsreply_replynum desc
+	
+	</select>
+	
+	
+	<select id = "writegpsboardcount" parameterType = "String" resultType = "int">
+
+	select
+		count(*)
+		
+	from
+		rodo_gpsboard
+		
+	where
+		gps_id = #{id}
+
+</select>
+
+
+<select id = "mygpslist" parameterType = "String" resultType = "Rodo_GpsBoard">
+
+	select 
+		gps_boardnum
+		, gps_id
+		, gps_title
+		, gps_content
+		, gps_input_dt
+		, gps_update_dt
+		, gps_hit
+	
+	from
+		rodo_gpsboard
+		
+	where 
+		gps_id = #{id}
+	
+	order by
+		gps_boardnum desc
+	
+</select>
+	
 	
 </mapper>

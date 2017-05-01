@@ -53,12 +53,20 @@
 
 $(function(){
 	$(".portfolio-item").mouseover(function(){
-		$(this).find("h4").css('opacity', 0.8);
-		$(this).find("span").css('opacity', 0.8);
+		$(this).find("h4").css('opacity', 1);
+		$(this).find("span").css('opacity', 1);
 	});	
 	$(".portfolio-item").mouseout(function(){
 		$(this).find("h4").css('opacity', 0);
 		$(this).find("span").css('opacity', 0);
+	});	
+	
+	$(".btn-page").mouseover(function(){
+		$(this).find(".pagingset").css("color", "black");
+	});
+		
+	$(".btn-page").mouseout(function(){
+		$(this).find(".pagingset").css("color", "white");			
 	});	
 })
 
@@ -79,7 +87,7 @@ function pagingFormSubmit(currentPage)
 <!--==========================
   Header Section
 ============================-->
-<%@ include file="header.jsp" %>
+<%@ include file="../header.jsp" %>
     
 <!--==========================
   Porfolio Section
@@ -108,27 +116,31 @@ function pagingFormSubmit(currentPage)
         </c:forEach>
       </div>          
 
-        <table style="width:100%" class="board-navi">
-		  	<tr><td style="width:20%"></td>
-			<td style="width:60%; text-align:center;">
-			<span class="page-navi">
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})">&lt;&lt;</a></span>
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - 1})">&lt;</a></span>
-				
-				<c:forEach var = "count" begin = "${navi.startPageGroup}" end = "${navi.endPageGroup}">
-				
-				<span class="btn-page">
-						<a class = "pagingset" href = "javascript:pagingFormSubmit(${count})">${count}</a>
-				</span>
-				
-				</c:forEach>
-				
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + 1})">&gt;</a></span>
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
-				</span>
-			</td>
-	      	<td style="width:20%"><a href="writeVideoForm" class="btn-write">Write</a></td></tr>
-      	</table>
+		<table style="width: 100%" class="board-navi">
+			<tr>
+				<td style="width: 20%"></td>
+				<td style="width: 60%; text-align: center;"><span
+					class="page-navi"> <span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><a
+							class="pagingset"
+							href="#none">&lt;&lt;</a></span>
+						<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage - 1})"><a class="pagingset"
+							href="#none">&lt;</a></span>
+
+						<c:forEach var="count" begin="${navi.startPageGroup}"
+							end="${navi.endPageGroup}">
+
+							<span class="btn-page" onclick="pagingFormSubmit(${count})"> <a class="pagingset"
+								href="#none">${count}</a>
+							</span>
+
+						</c:forEach> <span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage + 1})"><a class="pagingset"
+							href="#none">&gt;</a></span>
+						<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><a class="pagingset"
+							href="#none">&gt;&gt;</a></span>
+				</span></td>
+				<td style="width: 20%"><a href="writeVideoForm" class="btn-write">Write</a></td>
+			</tr>
+		</table>
       	
      <div class="inbox-head">
      

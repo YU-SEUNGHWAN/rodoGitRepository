@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project2.scmaster.rodo.vo.Rodo_GpsBoard;
+import project2.scmaster.rodo.vo.Rodo_GpsReply;
 
 @Repository
 public class Rodo_GpsBoardDao 
@@ -79,4 +80,79 @@ public class Rodo_GpsBoardDao
 		
 	}
 	
+	public int deletegps(int gps_boardnum)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.deletegps(gps_boardnum);
+		
+		return result;
+	}
+	
+	public int writegpsreply(Rodo_GpsReply reply)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.writegpsreply(reply);
+		
+		return result;
+	}
+	
+	public List<Rodo_GpsReply> findreply(int gps_boardnum)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		List<Rodo_GpsReply> list = mapper.findreply(gps_boardnum);
+		
+		return list;
+	}
+	
+	public int deletegpsreply(Rodo_GpsReply reply)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.deletegpsreply(reply);
+		
+		return result;
+	}
+	
+	public int gpsreplylistsize(int gps_boardnum)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.gpsreplylistsize(gps_boardnum);
+		
+		return result;
+	}
+	
+	public List<Rodo_GpsReply> getlist(int startRecode, int countPerPage, int gps_boardnum)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<Rodo_GpsReply> list = mapper.getlist(rb, gps_boardnum);
+		
+		return list;
+	}	
+	
+	public int writegpsboardcount(String id)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		int result = mapper.writegpsboardcount(id);
+		
+		return result;
+	}
+	
+	public List<Rodo_GpsBoard> mygpslist(int startRecode, int countPerPage, String id)
+	{
+		Rodo_GpsBoardMapper mapper = sqlsession.getMapper(Rodo_GpsBoardMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecode, countPerPage);
+		
+		List<Rodo_GpsBoard> list = mapper.mygpslist(rb, id);
+		
+		return list;
+	}
 }

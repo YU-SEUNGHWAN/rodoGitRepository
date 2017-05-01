@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 회원정보 처리 SQL -->
+<mapper namespace="project2.scmaster.rodo.dao.Rodo_QaBoardMapper">
+
+<insert id = "write" parameterType = "Rodo_QaBoard">
+	insert into
+		rodo_qaboard
+		(
+			qa_boardnum
+			, qa_id
+			, qa_title
+			, qa_content
+		)
+		values
+		(
+			rodo_qaboard_seq.nextval
+			, #{qa_id}
+			, #{qa_title}
+			, #{qa_content}
+		)
+</insert>
+
+<insert id = "writefile" parameterType="HashMap">
+	insert into
+		rodo_qafile
+		(
+			qa_boardnum,
+			qafile_original,
+			qafile_saved
+		)
+		values
+		(
+			#{qa_boardnum},
+			#{qafile_original},
+			#{qafile_saved}
+		)
+</insert>
+
+<select id="getsequence" resultType="int">
+	select
+		MAX(qa_boardnum)
+			
+	from
+		rodo_qaboard
+</select>
+
+<select id = "list" resultType = "Rodo_QaBoard">
+
+	select
+		qa_boardnum
+		, qa_id
+		, qa_title
+		, qa_content
+		, to_char(qa_input_dt, 'YYYY/MM/DD') qa_input_dt
+		, qa_update_dt
+		, qa_hit
+
+	from 
+		rodo_qaboard
+		
+		<if test = "_parameter != null">
+			where
+				qa_title like '%' || #{searchText} || '%'
+		</if>
+		
+	order by
+		qa_boardnum desc
+	
+</select>
+
+<select id = "selectOne" parameterType = "int" resultType = "Rodo_QaBoard">
+		select
+			qa_boardnum
+			, qa_id
+			, qa_title
+			, qa_content
+			, qa_input_dt
+			, qa_update_dt
+			, qa_hit
+		from
+			rodo_qaboard
+		where
+			qa_boardnum = #{qa_boardnum}
+		order by 
+			qa_boardnum asc
+</select>
+
+<!-- 파일 리스트 Get -->
+	<select id = "QaFileList" parameterType="int"  resultType = "HashMap">
+		select 
+			qafile_original
+			, qafile_saved
+		from 
+			rodo_qafile
+		where 
+			qa_boardnum = #{qa_boardnum} 
+		order by 
+			qa_boardnum asc
+	</select>
+
+	<delete id = "delete" parameterType = "int">
+		delete 
+			rodo_qaboard
+		where 
+			qa_boardnum = #{qa_boardnum}
+	</delete>
+	
+	<delete id="deleteQaFile" parameterType="int">
+		delete
+			rodo_qafile
+		where 
+			qa_boardnum = #{qa_boardnum}
+	</delete>
+
+
+<update id = "updateqa"  parameterType = "Rodo_QaBoard">
+	update
+		rodo_qaboard
+	set
+		qa_title = #{qa_title},
+		qa_content = #{qa_content},
+		qa_update_dt = sysdate
+	where 
+		qa_boardnum = #{qa_boardnum}
+</update>
+	
+<!-- ********************************** 리플 ********************************** -->
+
+
+<insert id = "writereply" parameterType = "Rodo_QaReply">
+
+	insert
+		into
+			rodo_qareply
+			(
+				qareply_replynum
+				, qa_boardnum
+				, qareply_id
+				, qareply_text
+			)
+			
+		values
+			(
+				rodo_qareply_seq.nextval
+				, #{qa_boardnum}
+				, #{qareply_id}
+				, #{qareply_text}
+			)
+		
+</insert>
+
+
+<select id = "findreply" parameterType = "int" resultType = "Rodo_QaReply">
+
+	select
+		qareply_replynum
+		, qa_boardnum
+		, qareply_id
+		, qareply_text
+		, qareply_input_dt
+		
+	from
+		rodo_qareply
+		
+	where
+		qa_boardnum = #{qa_boardnum}
+	
+	order by
+		qareply_replynum
+	
+</select>
+
+
+<select id = "selectreply" parameterType = "int" resultType = "Rodo_QaReply">
+
+	select 
+		qareply_replynum
+		, qa_boardnum
+		, qareply_id
+		, qareply_text
+		, qareply_input_dt
+		, qareply_update_dt
+		
+	from
+		rodo_qareply
+		
+	where
+		qareply_replynum = #{qareply_replynum}
+
+</select>
+
+
+<delete id = "deletereply" parameterType = "Rodo_QaReply">
+
+	delete
+		from
+			rodo_qareply
+			
+		where
+			qareply_replynum = #{qareply_replynum}
+			
+		and
+			qa_boardnum = #{qa_boardnum}
+
+</delete>
+
+
+<!-- ********************************** 페이징 ********************************** -->
+
+	<select id = "listsize" parameterType = "String" resultType = "int">
+	
+		select 
+			count(*)
+			
+		from
+			rodo_qaboard
+		
+		<if test = "_parameter != null">
+			where
+				qa_title like '%' || #{searchText} || '%'
+		</if>
+		
+	</select>
+	
+	<!--	  				리플 카운트 					 	-->
+	
+	<select id = "getReplyCount" parameterType="int" resultType="int">
+		SELECT count(*)
+		FROM	   rodo_qareply
+		WHERE  qa_boardnum = #{qa_boardnum}
+	</select>	
+	
+	<!--	  				보드 최저 값 					-->
+	<select id = "getMinReply" resultType="int">
+		SELECT min(qa_boardnum)
+		FROM   rodo_qaboard
+	</select>
+					
+	<!--	  			  첨부 파일 카운트				 	-->
+	<select id = "getFileCount" parameterType="int" resultType="int">
+		SELECT count(qafile_saved)
+		FROM rodo_qafile
+		WHERE qa_boardnum = #{qa_boardnum}
+	</select>
+
+	<!--	  			  조회수 증가 					 	-->
+	<update id = "hitsPlus" parameterType="int">
+		UPDATE  rodo_qaboard
+		SET 		qa_hit = qa_hit +1
+		WHERE 	qa_boardnum = #{qa_boardnum}
+	</update>
+</mapper>

@@ -20,7 +20,7 @@
 						arriveLng = parseFloat(item.lng);
 					}
 					latlngList.push(latlng);
-					if(index%5==0){
+					if(index%3==0){
 						var ele = [new Date(item.time), parseFloat(item.ele), parseFloat(item.dist)];			
 						eleChart.push(ele);
 					}
@@ -40,7 +40,7 @@
   	    var mapContainer = document.getElementById('map'); // 지도를 표시할 div 
   	    mapOption = { 
   	        center: new daum.maps.LatLng(startLat, startLng), // 지도의 중심좌표
-  	        level: 7 // 지도의 확대 레벨
+  	        level: 5 // 지도의 확대 레벨
   	    };  
 
   		map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
@@ -63,8 +63,8 @@
   		// 지도에 표시할 선을 생성합니다
   		var polyline = new daum.maps.Polyline({
   		    path: linePath, // 선을 구성하는 좌표배열 입니다
-  		    strokeWeight: 3, // 선의 두께 입니다
-  		    strokeColor: '#9d00ff', // 선의 색깔입니다
+  		    strokeWeight: 5, // 선의 두께 입니다
+  		    strokeColor: '#ff2a00', // 선의 색깔입니다
   		    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
   		    strokeStyle: 'solid' // 선의 스타일입니다
   		});
@@ -507,13 +507,18 @@ function viewStart(){
 	var length = latlngList.length;
 	var control = document.getElementById('roadviewControl');
 	
-	if (control.className.indexOf('active') === -1) {
+	if (control.className.indexOf('active') == -1) {
 		control.className = 'active';
         toggleOverlay(true);
 	}
+	clearInterval(interval);
 	interval = setInterval(function(){
 		if(viewIndex<length){
 			moveRoadview(latlngList[viewIndex++]);
+		}
+		if(viewIndex==length-1){
+			clearInterval(interval);
+			viewIndex=0;
 		}
 	}, 500);
 }

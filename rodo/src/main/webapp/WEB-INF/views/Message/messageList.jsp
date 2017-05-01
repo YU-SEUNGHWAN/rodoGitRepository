@@ -20,7 +20,7 @@ h3
 }
 .slice{
 background: black;
-width: 450px;
+width: 505px;
 height: 3px;
 margin-bottom: 15px;
 margin-left: 5px;
@@ -45,22 +45,53 @@ margin-left: 5px;
    border-bottom : 1px solid black;
    padding:3px;
 }
+.input-append{
+	width: 500px;
+	margin-top: 10px;
+	text-align: center;
+}
+.board-navi{
+	margin-top: 5px;
+}
+.board-navi a{
+	padding: 2px;
+	color:black;
+	font-weight: bolder;
+}
+.board-navi a:hover{
+	color: red;
+	text-decoration: none;
+}
 </style>
 
 
 <script src="resources/js/jquery-3.1.1.js"></script>
 <script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
 
+
+  <!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
+  <link href="favicon.ico" rel="shortcut icon">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet"> 
+  
+  <!-- Bootstrap CSS File -->
+  <link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Libraries CSS Files -->
+  <link href="resources/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="resources/lib/animate-css/animate.min.css" rel="stylesheet">
+  
+  <!-- Main Stylesheet File -->
+<!--   <link href="resources/css/style.css" rel="stylesheet">
+  <link href="resources/css/login.css" rel="stylesheet"> -->
+
+
 <script>
 
 
 function pagingFormSubmit(currentPage)
-{
-	/* var form2 = $("#pagingForm");
-	
-	form2.action = "aaaa";
-	form2.submit(); */
-	
+{	
 	var form = document.getElementById("pagingForm");
 	var page = document.getElementById("page");
 	page.value = currentPage;
@@ -85,89 +116,6 @@ function alldeleteReceive()
 }
 
 
-
-/* function receivedMsg()
-{
-	$.ajax
-	({
-		type : "get",
-		url : "ajaxReceived",
-		success : function(data)
-		{
-			var html = "<table class='table-striped' style='width:300px;'>"	
-				+"<tr>"
-				+"<td>보낸사람</td>"
-				+"<td>제목</td>"
-				+"<td>보낸날짜</td>"
-				+"</tr>";
-	
-			$.each(data, function(index,item)
-			{
-			html += "<tr>"
-						+"<td>"+item.sender+"</td>"
-						+"<td><a href='#none' onclick='readMessage("+item.messagenum+")'>"
-						+item.title+"</a></td>"
-						+"<td>"+item.senddate+"</td>"
-					+"</tr>";
-			});
-
-			html +=  "</table>";
-			
-			$("#messageTable").html(html);
-			
-			
-		},
-		
-		error : function(e)
-		{
-			console.log(e);
-		}
-		
-	});
-} */
-
-/* function sentMsg()
-{
-	$.ajax
-	({
-		type : "get",
-		url : "ajaxSent",
-		success : function(data)
-		{
-				var html = "<table class='table-striped' style='width:300px;'>"	
-				+ "<tr>"
-				+"<td>받는사람</td>"
-				+"<td>제목</td>"
-				+"<td>보낸날짜</td>"
-				+"</tr>"; 
-	
-			$.each(data, function(index,item)
-			{
-			html += "<tr>"
-						+"<td>"+item.receiver+"</td>"
-						+"<td><a href='#none' onclick='readMessage("+item.messagenum+")'>"
-						+item.title+"</a></td>"
-						+"<td>"+item.senddate+"</td>"
-					+"</tr>";
-			});
-
-			html +=  "</table>";
-			
-			$("#messageTable").html(html);
-			
-			
-		},
-		
-		error : function(e)
-		{
-			console.log(e);
-		}
-	});
-} */
-
-
-
-
 </script>
 </head>
 <body>
@@ -178,12 +126,7 @@ function alldeleteReceive()
 	<div class="slice"></div>
 	<div class="message-menu">
    
-	<!-- <a href="#none" onclick="receivedMsg()">받은 쪽지함</a>
-	<a href="#none" onclick="sentMsg()">보낸 쪽지함</a>
-	<a href='writeMessage'>쪽지 보내기</a> -->
-	
-	
-	<a href="messageList">받은 쪽지함</a>
+	<a href="messageList" style="color:red;">받은 쪽지함</a>
 	<a href="sendlist">보낸 쪽지함</a>
 	<a href='writeMessage'>쪽지 보내기</a>
 	<a id = "alldeletereceive" href="#none" onclick="alldeleteReceive()" style="margin-left : 125px;">쪽지함 비우기</a>
@@ -200,15 +143,25 @@ function alldeleteReceive()
 			<td style='width:130px;'>보낸날짜</td>
 			<td></td>
 		</tr>
+		
 		<c:forEach var="message" items="${received}">
 			<tr>
 				<td>${message.sender}</td>
-				<td><a href="#none" onclick="readMessage('${message.messagenum}')">${message.title}</a></td>
+				<td>
+					<c:choose>	
+						<c:when test="${message.flag == 1}">
+							<a href="#none" onclick="readMessage('${message.messagenum}')">${message.title}</a>
+						</c:when>
+						<c:otherwise>
+							<a href="#none" onclick="readMessage('${message.messagenum}')"><b>${message.title}</b></a>
+						</c:otherwise>
+					</c:choose>
+				</td>
 				<td>${message.senddate}</td>
 				<td><a href="#none" onclick="deletereceiveMessage('${message.messagenum}', '${message.receiver}')">삭제</a></td>
 			</tr>
 		</c:forEach>
-		
+
 	</table>
 </div>
 
@@ -239,13 +192,13 @@ function alldeleteReceive()
 </div>
 
 
-<form action = "receivelist" class="pull-right position" method = "get" id = "pagingForm">
+<form action = "messageList" class="pull-right position" method = "get" id = "pagingForm">
 
 	<div class="input-append">
 	
 		<input type = "hidden" name = "page" id = "page">
-		<%-- <input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text" value = "${searchText}"> --%>
-		<!-- <button class="btn sr-btn" type="button" onclick = "pagingFormSubmit(1)"><i class="fa fa-search"></i></button> -->
+		<input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text" value = "${searchText}">
+		<button class="btn sr-btn" type="button" onclick = "pagingFormSubmit(1)"><i class="fa fa-search"></i></button>
 	
 	</div>
 	

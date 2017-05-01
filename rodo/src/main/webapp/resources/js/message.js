@@ -28,7 +28,6 @@
          }
          
          function onMessage(evt) {
-        	console.log(evt.data);
         	var message = "<img style='width:20px;' src='resources/img/message.png'> ";
 			var inner = $(".messagestatus").html();
 			if(!inner.includes("message")){
@@ -50,6 +49,7 @@
          
          function messageWindow(){
         	 
-        	 window.open("messageList", "", "width=540, height=350, left=400, top=100");
+        	 window.open("messageList", "", "width=540, height=550, left=400, top=100");
+        	 $(".messagestatus").html("");
         	 
          }
