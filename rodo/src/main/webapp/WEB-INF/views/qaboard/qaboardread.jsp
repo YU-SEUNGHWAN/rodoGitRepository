@@ -18,6 +18,7 @@ $(function()
 	{
 		var reply = $("#qareply_text").val();
 		var boardnum = $("#qa_boardnum").val();
+		var id = '${sessionScope.loginId}';
 		
 		$.ajax
 		({
@@ -33,28 +34,26 @@ $(function()
 			success : function(data)
 			{
 		         console.log(data);
-		         var html =    "<tr class='replymenu'>"
-		                  +"<td>아이디</td>"
-		                  +"<td>댓글</td>"
-		                  +"<td>날짜</td>"
-		                  +"<td></td>"
-		                  +"</tr>"; 
+		         var html =    "<table class='table-striped replyTable' id='replytable'>";
 		         
 		            $.each(data, function(index,item)
 		            {
 			            html += "<tr>"
-			                     +"<td class='rename'>"+item.qareply_id+"</td>"
-			                     +"<td id='"+item.qareply_replynum+"' class='retext'>"+item.qareply_text+"</td>"
-			                     +"<td class='redate'>"+item.qareply_input_dt+"</td>"
-			                     +"<td class='reetc'>"
-			                           +"<td><a href='javascript:replyUpdateForm("+item.qareply_replynum+","+item.qa_boardnum+")'>[수정]</a></td>"
-			                           +"<td><a href='#none' onclick='deletereplywarp("+item.qareply_replynum+", "+item.qa_boardnum+")'>[삭제]</a></td>"
-			                     +"</td>"
-			                  +"</tr>";
+			                     +"<td class='id'>"+item.qareply_id+"</td>"
+			                     +"<td id='"+item.qareply_replynum+"' class='reply'>"+item.qareply_text+"</td>"
+			                     +"<td class='repdate'>"+item.qareply_input_dt+"</td>"
+			                     +"<td class='repdate'>";
+						          if (id == item.qareply_id)
+				                    {
+				                    	html += "<a href='#none' onclick='deletereplywarp("+item.qareply_replynum+", "+item.qa_boardnum+")'>[삭제]</a>";
+				                    }			                  
+			           	html += "</td>"
+			                    +"</tr>";
 		         });
 				
-		         $("#qareply_text").val("");
-		         $("#replytable").html(html);
+			         html += "</table>";
+			         $("#qareply_text").val("");
+			         $("#replytable").html(html);
 		      },
 		      
 		      error : function(e)
@@ -67,8 +66,8 @@ $(function()
 
 function deletereplywarp(replynum, boardnum)
 {
-	console.log(replynum);
-	console.log(boardnum);
+
+	var id = '${sessionScope.loginId}';
 	
 	$.ajax
 	({
@@ -85,28 +84,26 @@ function deletereplywarp(replynum, boardnum)
 		{	
 			console.log(data);
 			
-	         var html =    "<tr class='replymenu'>"
-	                  +"<td>아이디</td>"
-	                  +"<td>댓글</td>"
-	                  +"<td>날짜</td>"
-	                  +"<td></td>"
-	                  +"</tr>"; 
+			  var html =    "<table class='table-striped replyTable' id='replytable'>";
 	         
 	            $.each(data, function(index,item)
-	            {
-		            html += "<tr>"
-		                     +"<td class='rename'>"+item.qareply_id+"</td>"
-		                     +"<td id='"+item.qareply_replynum+"' class='retext'>"+item.qareply_text+"</td>"
-		                     +"<td class='redate'>"+item.qareply_input_dt+"</td>"
-		                     +"<td class='reetc'>"
-		                           +"<a href='javascript:replyUpdateForm("+item.qareply_replynum+","+item.qa_boardnum+")'>[수정]</a>"
-		                     	   +"<a href='#none' onclick='deletereplywarp("+item.qareply_replynum+", "+item.qa_boardnum+")'>[삭제]</a>"
-		                     +"</td>"
-		                  +"</tr>";
-	         });
+			            {
+				            html += "<tr>"
+				                     +"<td class='id'>"+item.qareply_id+"</td>"
+				                     +"<td id='"+item.qareply_replynum+"' class='reply'>"+item.qareply_text+"</td>"
+				                     +"<td class='repdate'>"+item.qareply_input_dt+"</td>"
+				                     +"<td class='repdate'>";
+							          if (id == item.qareply_id)
+					                    {
+					                    	html += "<a href='#none' onclick='deletereplywarp("+item.qareply_replynum+", "+item.qa_boardnum+")'>[삭제]</a>";
+					                    }			                  
+				           	html += "</td>"
+				                    +"</tr>";
+			         });
 			
-	         $("#qareply_text").val("");
-	         $("#replytable").html(html);
+		         html += "</table>";
+		         $("#qareply_text").val("");
+		         $("#replytable").html(html);
 		},
 		
 		error : function(e)
@@ -130,106 +127,115 @@ function deleteqaboard (qa_boardnum)
 </head>
 <body>
 
-<h1> 게시판 글 읽기 </h1>
+<!--==========================
+  Header Section
+============================-->
+	<%@ include file="../header.jsp"%>
 
-<table>
-	<tr>
-		<td>작성자</td>
-		<td>${board.qa_id}</td>
-	</tr>
-	<tr>
-		<td>작성일</td>
-		<td> ${board.qa_input_dt}</td>
-	</tr>
-	<tr>
-		<td>제목</td>
-		<td>${board.qa_title}</td>
-	</tr>
-	<tr>
-		<td>내용</td>
-		<td>${board.qa_content}</td>
-	</tr>
-				<c:if test = "${board.qafile_saved.size() > 0}">
-	<tr>
-		<td>파일 첨부</td>
-		<td>
-			<c:forEach items="${board.qafile_saved}" var ="qa">
-				<img src='qaLoad?origin=${qa}' />
+	<section id="services" style="background-color: #f6f6f6;">
+	
+	<div class="container wow fadeInUp board-main">
+
+	<div class="row">
+		<div class="col-md-6 board-title">&nbsp;&nbsp;${board.qa_title}</div>
+		<div class="col-md-6 board-idDate">작성자:
+			${board.qa_id}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성일:
+			${board.qa_input_dt}&nbsp;&nbsp;</div>
+	</div>
+	<div class="board-title-divider"></div>
+
+
+	<div style="margin-bottom: 100px;">
+			<c:forEach items="${board.qafile_saved}" var="qa">
+				<img style="width: 600px;" src='qaLoad?origin=${qa}'/>
 				<br>
 			</c:forEach>
-		</td>
-	</tr>
-				</c:if>
-	<tr>
-		<td>
-			<c:if test = "${sessionScope.loginId!=null}">
-				<c:if test = "${sessionScope.loginId == board.qa_id}">
-					<a href = "updateqaboard?qa_boardnum=${board.qa_boardnum}">[수정]</a>
-					<a href ='#none' onclick="deleteqaboard('${board.qa_boardnum}')">[삭제]</a>
-				</c:if>
-			</c:if>
-				<a href = "qaboardlist">목록보기</a>
-		</td>
-	</tr>
-	
-	
-</table>
+	</div>
 
-<p>
+	<div id="content" class="board-content">
+		<pre> ${board.qa_content} </pre>
+	</div>
 
+	<div class="board-content-divider"></div>
 
-리플내용
-
-	<input type = "hidden" name = "qa_boardnum" id = "qa_boardnum" value = "${board.qa_boardnum}">
-
-	<input type = "text" name = "qareply_text" id = "qareply_text">
-	<input type = "hidden" id = "replynum" value = "${reply.qareply_replynum}">
-	<input type = "hidden" id = "boardnum" value = "${reply.qa_boardnum}">
+	<div class='boardbtn'>
+		<c:if test = "${sessionScope.loginId == board.qa_id}">
+			<input type="button" value="update" onclick="javascript:location.href='updateqaboard?qa_boardnum=${board.qa_boardnum}'">
+			<input type="button" value="delete" onclick="deleteqaboard('${board.qa_boardnum}')">
+		</c:if>
+	</div>
 	
-	<input type = "submit" id = "replybtn" value = "확인">
+	<div class="board-reply">
 	
+		<c:if test = "${sessionScope.loginId != null}">
 	
-<table id = "replytable">
-	
-	<tr class = "replymenu">
-		<td>아이디</td>
-		<td>댓글</td>
-		<td>날짜</td>
-		<td></td>
-	</tr>
-	
-	<c:forEach var = "reply" items = "${replylist}">	
-	<tr>
-
-		<td>
-			${reply.qareply_id}
-		</td>
+			<input type="hidden" id="qa_boardnum" value="${board.qa_boardnum}">
 		
-		<td>
-			${reply.qareply_text}
-		</td>
-		
-		<td>
-			${reply.qareply_input_dt}
-		</td>
-		
-		<td>
-			<c:if test = "${sessionScope.loginId == reply.qareply_id}">
-				<a href = "">[수정]</a>
-				<a id = "deletereplywarp" href="#none" onclick = "deletereplywarp('${reply.qareply_replynum}', '${reply.qa_boardnum}')">[삭제]</a>
-			</c:if>
-		</td>
-		
-		<%-- <td>
-			<c:if test = "${sessionScope.loginId == reply.qareply_id}">
-								
-			</c:if>
-		</td> --%>
-		
-	</tr>
-	</c:forEach>
+				<b>reply</b> 
+				<input type = "hidden" id = "replynum" value = "${reply.qareply_replynum}">
+				<input type = "hidden" id = "boardnum" value = "${reply.qa_boardnum}">
+				<input class="inputReply" id="qareply_text" type="text"> <input
+					style="margin-left: 10px; background: #353637; color: white;"
+					type="button" id="replybtn" value="등록" />
+
+		</c:if>
+
+<div class="reviewDiv">
+
+	<table class="table-striped replyTable" id="replytable">
+
+		<c:forEach var="reply" items="${replylist}">
+			<tr class="repwtr">
+				<td class="id">${reply.qareply_id}</td>
+
+				<td class="reply">${reply.qareply_text}</td>
+
+				<td class="repdate">${reply.qareply_input_dt}</td>
+
+				<td class="repdate"><c:if
+						test="${sessionScope.loginId == reply.qareply_id}">
+						<a href='#none'
+							onclick="deletereplywarp('${reply.qareply_replynum}', '${reply.qa_boardnum}')">[삭제]</a>
+					</c:if></td>
+			</tr>
+
+		</c:forEach>
+
+	</table>
 	
-</table>
+		</div>
+	</div>
+</div>
+</section>
+
+	<footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="copyright">
+              &copy; Copyright <strong>Imperial Theme</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+              Bootstrap Themes by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+          </div>
+        </div>
+      </div>
+	</footer>
+	
+	<!--  Required JavaScript Libraries -->
+	<script src="resources/lib/jquery/jquery.min.js"></script>
+	<script src="resources/lib/jquery/jquery-migrate.min.js"></script>
+	<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/lib/superfish/hoverIntent.js"></script>
+	<script src="resources/lib/superfish/superfish.min.js"></script>
+	<script src="resources/lib/morphext/morphext.min.js"></script>
+	<script src="resources/lib/wow/wow.min.js"></script>
+	<script src="resources/lib/stickyjs/sticky.js"></script>
+	<script src="resources/lib/easing/easing.js"></script>
+	<!-- Template Specisifc Custom Javascript File -->
+	<script src="resources/js/custom.js"></script>
+
 
 </body>
 </html>

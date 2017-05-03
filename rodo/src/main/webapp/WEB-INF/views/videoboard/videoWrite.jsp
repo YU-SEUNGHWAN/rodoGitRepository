@@ -30,7 +30,7 @@
 	};
 
 	function del1() {
-		$("#output1").html("<img src='resources/img/sample.png'>");
+		$("#output1").html("<img class='sample' src='resources/img/sample.png'>");
 	}
 	
 	function videoWrite()
@@ -91,13 +91,13 @@
 						   		   +"<video height='380' id='videoForm' controls='controls'>"
 	 						   	   +"<source src='"+data+"' />"
 	 						   	   +"</video></div>"
-	 						       +"<div class='col-md-4' height='160'>"
+	 						       +"<div class='col-md-4' height='160' style='margin-left:130px;'>"
 	 						   	   +"<table><tr><td>"
 	 						       +"<div id='output1'>"
 	 						       +"<img src='resources/img/sample.png'></div></td></tr>"
 		 						   +"<tr><td class='tnbtn'>"
-	 						       +"<input type='button' onclick='cap1()' value='썸네일 선택'>"
-		 						   +"<input type='button' onclick='del1()' value='삭제'>"
+	 						       +"<input type='button' class='tnbtns' onclick='cap1()' value='썸네일 선택'>"
+		 						   +"<input type='button' class='tnbtns' onclick='del1()' value='삭제'>"
 	 						       +"</td></tr></table>"
 	 						       +"</div></div>";
 		  						   
@@ -207,12 +207,23 @@ b{
 #output1{
 	margin-top : 80px;
 }
-img{
+#output1 img{
 	height:180px;
 }
 .tnbtn{
 	padding-top: 15px;
-	padding-left: 35px;
+	text-align: center;
+}
+.tnbtns{
+	margin-right: 5px;
+	border: 2px solid #676768;	
+	background: #676768;
+	color: white;
+}
+.tnbtns:hover{
+	background: white;
+	color: #676768;
+	font-weight: bolder;
 }
 </style>	
 

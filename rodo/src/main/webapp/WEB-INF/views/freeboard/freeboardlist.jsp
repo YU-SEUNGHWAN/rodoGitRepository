@@ -58,7 +58,6 @@
 		form.submit();
 	}
 	
-
 	$(function(){
 		$(".pagingset").css("color", "white");
 		
@@ -162,23 +161,15 @@ $(function()
        	<table class = "table-striped" style="width : 100%; border-bottom: 2px solid gray;">
         		<tr>
         			<th style="text-align:center; width:8%;">		번호		</th>
-        			<th style="text-align:center; width:3%;">		    	</th>
         			<th style="text-align:center; width:57%;">		제목		</th>
-        			<th style="text-align:center; width:12%;">		글쓴이	</th>
+        			<th style="text-align:center; width:15%;">		글쓴이	</th>
         			<th style="text-align:center; width:10%;">		날짜		</th>
         			<th style="text-align:center; width:10%;">		조회		</th>
         		</tr>
         		
-       	 <c:forEach var="board" items="${list}">
+       	 <c:forEach var="board" items="${list}" varStatus="status">
         		<tr class = "tcolor">
         			<td style="text-align:center; width:8%;"> ${board.free_boardnum}
-        			</td>
-
-       				<td style="text-align:center; width:3%;">
-						 <c:forEach var ="fc" items= "${fList}" begin="${board.free_boardnum}" end="${board.free_boardnum}">
-							<c:if test="${fc == null}">		<img src = "./resources/img/front.png">		</c:if>
-							<c:if test="${fc != null}">		<img src = "./resources/img/picon.png">		</c:if>
-						</c:forEach>
         			</td>
 
         			<td style="text-align:left; width:57%;">
@@ -186,13 +177,13 @@ $(function()
         				${board.free_title}	</a>	&nbsp; &nbsp;
 
  						<c:forEach var ="a"  items= "${reList}" 
- 						begin="${board.free_boardnum}" end="${board.free_boardnum}">
+ 						begin="${status.count}" end="${status.count}">
 							<c:if test="${a != null}">		[	${a}	]		</c:if>
 							<c:if test="${a == null}">			　				</c:if>
 						</c:forEach>
         			</td>
         			
-        			<td style="text-align:center; width:12%;">${board.free_id}			</td>
+        			<td style="text-align:center; width:15%;">${board.free_id}			</td>
         			<td style="text-align:center; width:10%;">${board.free_input_dt}	</td>
         			<td style="text-align:center; width:10%;">${board.free_hit}			</td>
         		</tr>

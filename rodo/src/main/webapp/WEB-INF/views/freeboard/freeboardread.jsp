@@ -83,16 +83,16 @@ $(function()
 			                     
 			            if (id == item.freereply_id)
 	                    {
-	                    	html += "<td><a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a></td>";
+	                    	html += "</td><td><a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a>";
 	                    }
 	                       
-	                   html += "</td>";
-	                    + "</tr>"
+	                   html += "</td>"
+	                    + "</tr>";
 		        	 });
 		            
 		         html += "</table>";
 		         $("#freereply_text").val("");
-		         $("#replytable").html(html);
+		         $(".reviewDiv").html(html);
 		         
 
 		         html2+= '<tr>';
@@ -175,16 +175,16 @@ function deletereplywarp(replynum, boardnum)
 	                          
 	                     if (id == item.freereply_id)
 		                    {
-		                    	html += "<td><a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a></td>";
+		                    	html += "<a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a>";
 		                    }
 		                       
-			            html += "</td>";
-	                    + "</tr>"
+			            html += "</td>"
+	                    + "</tr>";
         	 });
      		
      		 html += "</table>";
 	         $("#freereply_text").val("");
-	         $("#replytable").html(html);
+	         $(".reviewDiv").html(html);
 	         
 	         
 	      	   html2+= '<tr>';
@@ -278,16 +278,16 @@ function pagingFormSubmit(currentPage)
                     
                     if (id == item.freereply_id)
                     {
-                    	html += "<td><a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a></td>";
+                    	html += "<a href='#none' onclick='deletereplywarp("+item.freereply_replynum+", "+item.free_boardnum+")'>[삭제]</a>";
                     }
                        
-			            html += "</td>";
-	                    + "</tr>"
+			            html += "</td>"
+	                    + "</tr>";
 		                 		 
         	 });
            			 html += "</table>";
 				     $("#freereply_text").val("");
-				     $("#replytable").html(html);
+				     $(".reviewDiv").html(html);
 			 
 
 				   html2+= '<tr>';
@@ -330,89 +330,22 @@ function pagingFormSubmit(currentPage)
 	})
 }
 
+$(function(){
+	$(".pagingset").css("color", "white");
+	
+	$(".btn-page").mouseover(function(){
+		$(this).find(".pagingset").css("color", "black");
+	});
+		
+	$(".btn-page").mouseout(function(){
+		$(this).find(".pagingset").css("color", "white");			
+	});	
+});
 
 </script>
 
 </head>
 <body>
-
-
-<%-- <table>
-	<tr>
-		<td>
-			작성자
-		</td>
-		
-		<td>
-			${board.free_id}
-		</td>
-	</tr>
-	
-	<tr>
-		<td>작성일 </td>
-		
-		<td> ${board.free_input_dt} </td>
-	</tr>
-	
-	<tr>
-		<td>
-			내용
-		</td>
-		
-		<td>
-			${board.free_content}
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			파일 첨부
-		</td>
-		
-		<td>
-		
-			<c:if test = "${board.freefile_original != null}">
-			
-				<img alt = "" src = "freedownload?free_boardnum=${board.free_boardnum}"><br>
-				<a href = "download?free_boardnum=${board.free_boardnum}">
-					${board.freefile_original}
-				</a>
-				
-			</c:if>
-			
-			
-		</td>
-	</tr>
-	
-	<tr>
-		<td>
-			<c:if test = "${sessionScope.loginId!=null}">
-				<c:if test = "${sessionScope.loginId == board.free_id}">
-					<a href = "updateboard?free_boardnum=${board.free_boardnum}">[수정]</a>
-					<a href ='#none' onclick="deletefreeboard('${board.free_boardnum}')">[삭제]</a>
-				</c:if>
-			</c:if>
-				<a href = "freeboardlist">목록보기</a>
-		</td>
-	</tr>
-	
-	
-</table>
-
- <p>
-
-
-리플내용
-
-	<input type = "hidden" name = "free_boardnum" id = "free_boardnum" value = "${board.free_boardnum}">
-	<input type = "text" name = "freereply_text" id = "freereply_text">
-		
-	<input type = "hidden" id = "replynum" value = "${reply.freereply_replynum}">
-	<input type = "hidden" id = "boardnum" value = "${reply.free_boardnum}">
-	
-	<input type = "submit" id = "replybtn" value = "확인">  --%>
-	
-
 
 	<!--==========================
   Header Section
@@ -433,11 +366,10 @@ function pagingFormSubmit(currentPage)
 
 
 	<div style="margin-bottom: 100px;">
-		<ul class="bxslider">
 			<c:forEach items="${board.freefile_saved}" var="free">
-				<li><img src='freeLoad?origin=${free}' /></li>
+				<img style="width: 600px;" src='freeLoad?origin=${free}'/>
+				<br>
 			</c:forEach>
-		</ul>
 	</div>
 
 	<div id="content" class="board-content">
@@ -491,44 +423,64 @@ function pagingFormSubmit(currentPage)
 
 	</table>
 	
+	</div>
 </div>
 
 
-
-	<table style="width:100%" class="board-navi" id = "pagetable">
+	<table style="width:100%; margin-bottom: 30px;" class="board-navi" id = "pagetable">
 		<tr>
 			<td style="text-align:center;">
 				<span class="page-navi">
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})">&lt;&lt;</a></span>
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage - 1})">&lt;</a></span>
+				<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><a class = "pagingset" href="#none">&lt;&lt;</a></span>
+				<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage - navi.pagePerGroup})"><a class = "pagingset" href="#none">&lt;</a></span>
 				
 				<c:forEach var = "count" begin = "${navi.startPageGroup}" end = "${navi.endPageGroup}">
 				
-				<span class="btn-page">
-						<a class = "pagingset" href = "javascript:pagingFormSubmit(${count})">${count}</a>
+				<span class="btn-page" onclick="pagingFormSubmit(${count})">
+						<a class = "pagingset" href="#none">${count}</a>
 				</span>
 				
 				</c:forEach>
 				
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + 1})">&gt;</a></span>
-				<span class="btn-page"><a class = "pagingset" href = "javascript:pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})">&gt;&gt;</a></span>
+				<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage + 1})"><a class = "pagingset" href="#none">&gt;</a></span>
+				<span class="btn-page" onclick="pagingFormSubmit(${navi.currentPage + navi.pagePerGroup})"><a class = "pagingset" href="#none">&gt;&gt;</a></span>
 				</span>
 			</td>
 		</tr>
 	</table>
 
-	</div>
 </div>
-
-<!-- <form action="freeboardlist" class="pull-right position" method = "get" id = "pagingForm">
-    <div class="input-append">
-    	
-        <input type="text" class="sr-input" name = "searchText" id = "searchText" placeholder="Search Text">
-        <button class="btn sr-btn" type="button" onclick = "pagingFormSubmit(1)"><i class="fa fa-search"></i></button>
-    </div>
-</form> -->
+</section>
 
 <input type = "hidden" name = "page" id = "page">
+
+	<footer id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="copyright">
+              &copy; Copyright <strong>Imperial Theme</strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+              Bootstrap Themes by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+          </div>
+        </div>
+      </div>
+	</footer>
+	
+	<!--  Required JavaScript Libraries -->
+	<script src="resources/lib/jquery/jquery.min.js"></script>
+	<script src="resources/lib/jquery/jquery-migrate.min.js"></script>
+	<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/lib/superfish/hoverIntent.js"></script>
+	<script src="resources/lib/superfish/superfish.min.js"></script>
+	<script src="resources/lib/morphext/morphext.min.js"></script>
+	<script src="resources/lib/wow/wow.min.js"></script>
+	<script src="resources/lib/stickyjs/sticky.js"></script>
+	<script src="resources/lib/easing/easing.js"></script>
+	<!-- Template Specisifc Custom Javascript File -->
+	<script src="resources/js/custom.js"></script>
 
 
 </body>

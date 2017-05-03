@@ -22,7 +22,12 @@
   <script src="resources/js/message.js"></script>
   
   <script>
-	$(function(){
+  
+  function checkupdate(){
+  	window.open("checkupdate", "", "width=330, height=200, left=400, top=100");
+  }
+  
+  	$(function(){
 	  $.ajax({
 			type:"GET",
 			url: "newMessage",
@@ -76,7 +81,7 @@
 	        <c:otherwise>
 			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
-		             <li><a href="checkupdate">my info</a></li>
+		             <li><a href="#none" onclick="checkupdate()">my info</a></li>
 		             <li><a href="mypage">my List</a></li>
 		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>

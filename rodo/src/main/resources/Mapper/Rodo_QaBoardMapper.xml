@@ -170,7 +170,7 @@
 		qa_boardnum = #{qa_boardnum}
 	
 	order by
-		qareply_replynum
+		qareply_replynum desc
 	
 </select>
 
@@ -226,27 +226,6 @@
 		
 	</select>
 	
-	<!--	  				리플 카운트 					 	-->
-	
-	<select id = "getReplyCount" parameterType="int" resultType="int">
-		SELECT count(*)
-		FROM	   rodo_qareply
-		WHERE  qa_boardnum = #{qa_boardnum}
-	</select>	
-	
-	<!--	  				보드 최저 값 					-->
-	<select id = "getMinReply" resultType="int">
-		SELECT min(qa_boardnum)
-		FROM   rodo_qaboard
-	</select>
-					
-	<!--	  			  첨부 파일 카운트				 	-->
-	<select id = "getFileCount" parameterType="int" resultType="int">
-		SELECT count(qafile_saved)
-		FROM rodo_qafile
-		WHERE qa_boardnum = #{qa_boardnum}
-	</select>
-
 	<!--	  			  조회수 증가 					 	-->
 	<update id = "hitsPlus" parameterType="int">
 		UPDATE  rodo_qaboard

@@ -383,10 +383,11 @@ function pagingFormSubmit(currentPage)
 
 			</div>
 		</div>
-		<div id="chart_div"></div>
-
+		<div id="chart_div" style="float:left"></div><div id="chart_div2" style="margin-top:45px; margin-left:60px;float:left;font-size:18px; color:#06275b;"></div>
 		<div id="content" class="board-content">
-			<pre> ${gps_board.gps_content} </pre>
+			<pre>
+
+ ${gps_board.gps_content} </pre>
 			<input type='hidden' id='savedfile'
 				value='${gps_board.gpsfile_saved}'>
 		</div>

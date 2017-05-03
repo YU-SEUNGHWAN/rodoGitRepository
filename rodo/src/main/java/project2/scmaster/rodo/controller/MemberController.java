@@ -192,7 +192,7 @@ public class MemberController
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public String update(Member member)
+	public String update(Model model, Member member)
 	{
 		int result = dao.update(member);
 		
@@ -201,7 +201,9 @@ public class MemberController
 			return "member/update";
 		}
 		
-		return "redirect:/";
+		model.addAttribute("rada","rada");
+		
+		return "member/update";
 	}
 	
 	@ResponseBody
@@ -274,18 +276,45 @@ public class MemberController
 		System.out.println("뜨는거 맞냐?");
 		
 		int freecount = free_dao.writefreeboardcount(id);
+		
+		if (freecount == 0)
+		{
+			freecount = 1;
+		}
+		
 		PageNavigator freenavi = new PageNavigator(countPerPage, pagePerGroup, page, freecount);
 		List<Rodo_FreeBoard> freelist = free_dao.myfreelist(freenavi.getStartRecord(), freenavi.getCountPerPage(), id);
 		
+		
 		int photocount = photo_dao.writephotoboardcount(id);
+		
+		if (photocount == 0)
+		{
+			photocount = 1;
+		}
+		
 		PageNavigator photonavi = new PageNavigator(countPerPage, pagePerGroup, page, photocount);
 		List<Rodo_PhotoBoard> photolist = photo_dao.myphotolist(photonavi.getStartRecord(), photonavi.getCountPerPage(), id);
 		
+		
 		int videocount = video_dao.writevideoboardcount(id);
+		
+		if (videocount == 0)
+		{
+			videocount = 1;
+		}
+		
 		PageNavigator videonavi = new PageNavigator(countPerPage, pagePerGroup, page, videocount);
 		List<videoBoard> videolist = video_dao.myvideolist(videonavi.getStartRecord(), videonavi.getCountPerPage(), id);
 		
+		
 		int gpscount = gps_dao.writegpsboardcount(id);
+		
+		if (gpscount == 0)
+		{
+			gpscount = 1;
+		}
+		
 		PageNavigator gpsnavi = new PageNavigator(countPerPage, pagePerGroup, page, gpscount);
 		List<Rodo_GpsBoard> gpslist = gps_dao.mygpslist(gpsnavi.getStartRecord(), gpsnavi.getCountPerPage(), id);
 				

@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
 
+function checkupdate(){
+  	window.open("checkupdate", "", "width=330, height=200, left=400, top=100");
+  }
+
+</script>
 
 </head>
 
@@ -420,7 +426,7 @@ $(function() {
 	        <c:otherwise>
 			 <li class="menu-has-children" style="padding-left:100px;"><a class="loginstatus" href="#none">${loginId} 님</a>
 		        <ul>
-		             <li><a href="checkupdate">my info</a></li>
+		             <li><a href="#none" onclick="checkupdate()">my info</a></li>
 		             <li><a href="mypage">my List</a></li>
 		             <li><a href="#none" onclick="messageWindow()">message</a></li>
 		             <li><a href="logout">log out</a></li>

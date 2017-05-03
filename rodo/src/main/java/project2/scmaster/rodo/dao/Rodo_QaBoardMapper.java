@@ -41,11 +41,5 @@ public interface Rodo_QaBoardMapper
 	
 	public int listsize(String searchText);
 	
-	public int getReplyCount(int qa_boardnum);
-	
-	public int getMinReply();
-	
-	public int getFileCount(int qa_boardnum);
-	
 	public void hitsPlus(int qa_boardnum);
 }

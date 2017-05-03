@@ -7,6 +7,8 @@
 <title>회원정보 수정</title>
 
 <script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
+<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <script>
 
@@ -15,6 +17,11 @@ var numcheckflag = false;
 
 $(function()
 {
+	if($("#rada").val()=="rada"){
+		alert("수정 완료");
+		window.close();
+	}
+	
 	$("#emailcheck").on("click", function()
 	{
 		var email = $("#email").val();
@@ -186,60 +193,99 @@ $(function()
 })
 
 </script>
-
+<style>
+	h3{
+	   font-weight: bolder;
+	   margin-left: 10px;
+	   font-family: "Open Sans",sans-serif;
+	}
+	.slice{
+	background: black;
+	width: 460px;
+	height: 3px;
+	margin-bottom: 15px;
+	margin-left: 5px;
+	}
+	.title{
+		width: 120px;
+		text-align: center;
+		padding:7px;
+	}
+	.btn{
+		border: 2px solid #313233;
+		background: #313233;
+		color:white;
+		margin-left: 8px;
+		margin-top: 8px;
+	}
+	.btn:hover{
+		border: 2px solid #313233;
+		background: white;
+		color:#313233;
+	}
+	.submit{
+		margin-left: 300px;
+	}
+	.dv{
+		background: black;
+		width: 460px;
+		height: 1px;
+		margin-top: 15px;
+		margin-bottom: 10px;
+		margin-left: 5px;
+	}
+</style>
 </head>
 <body>
-
-	<h1> 회원정보 수정 </h1>
-
+<header>
+	<h3>개인정보 수정</h3>
+	<div class="slice"></div>
+</header>
 <form name = "update" id = "update" action = "update" method = "post">
 	<table>
 		<tr>
+			<td class="title">ID</td>
 			<td>
-				ID <input type = "text" name = "id" id = "id" readonly = "readonly" value = "${member.id}">
-					<div id = "id_message" style = "display:none;"></div>
+				<input type = "text" name = "id" id = "id" readonly = "readonly" value = "${member.id}">
 			</td>
 		</tr>
 		
 		<tr>
-			<td>
-				비밀번호 <input type = "password" name = "password" id = "password" placeholder = "비밀번호는 4자리 이상">
+			<td class="title">비밀번호</td>
+			<td> 
+				<input type = "password" name = "password" id = "password" placeholder = "비밀번호는 4자리 이상">
 			</td>
 		</tr>
 		
 		<tr>	
-			<td>
-				비밀번호 확인 <input type = "password" name = "passwordc" id = "passwordc" placeholder = "비밀번호와 동일하게 입력">
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				이름 <input type = "text" name = "name" id = "name" value = "${member.name}">
+			<td class="title">비밀번호 확인</td>
+			<td> 
+				<input type = "password" name = "passwordc" id = "passwordc" placeholder = "비밀번호와 동일하게 입력">
 			</td>
 		</tr>
 		
 		<tr>	
+			<td class="title">email</td>
 			<td>
-				email <input type = "text" id = "email" name = "email" value = "${member.email}">
-						<label for="email"></label>
-						<input type = "hidden" id = "nowmail" name = "nowmail" value = "${member.email}">
-						
-						<input type = "button" name = "emailcheck" id = "emailcheck" value = "email확인" ><br>
+				 <input type = "text" id = "email" name = "email" value = "${member.email}">
+				<input type = "hidden" id = "nowmail" name = "nowmail" value = "${member.email}">
+				<input type = "button" class="btn" name = "emailcheck" id = "emailcheck" value = "email확인" ><br>
 			</td>
 		</tr>	
 		
 		<tr>
+			<td class="title">인증번호 입력</td>
 			<td>
-				인증번호 입력 <input type = "text" name = "checknum" id = "checknum" placeholder = "인증번호 입력">
-								<input type = "button" name = "checknumc" id = "checknumc" value = "인증번호 전송">
+				<input type = "text" name = "checknum" id = "checknum" placeholder = "인증번호 입력">
+				<input type = "button" class="btn" name = "checknumc" id = "checknumc" value = "인증번호 전송">
 			</td>
 		</tr>
 		
 	</table>
-	
-		<input type = "submit" value = "수정" class = "submit" id = "submit"> <input type = "reset" value = "다시쓰기">
+	<div class="dv"></div>
+		<input type = "submit" value = "수정" class = "submit btn" id = "submit">
+		<input type = "reset" class="btn" value = "다시쓰기">
 </form>
-
+<input type="hidden" id="rada" value="${rada}">
 </body>
 </html>

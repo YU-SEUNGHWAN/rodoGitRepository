@@ -191,9 +191,9 @@ margin-left: 5px;
 <div id='msgwrite'>
 	<c:choose>
 		<c:when test="${sendmessage!=null}">
-			<b>To.</b> <input type="text" id="receiver" value="${sendmessage.sender}" readonly="readonly"><br>
+			<b>To.</b> <input type="text" id="receiver" value="${sendmessage.receiver}" readonly="readonly"><br>
 			<b>TITLE</b> <input type="text" id = "title" value="${sendmessage.title}" readonly="readonly"><br>
-			<textarea id ="text" readonly="readonly">${sendmessage.senddate}</textarea><br>
+			<textarea id ="text" readonly="readonly">${sendmessage.text}</textarea><br>
 			<input type="button" id = "sendlist" value="목록으로">
 		</c:when>
 		<c:otherwise>

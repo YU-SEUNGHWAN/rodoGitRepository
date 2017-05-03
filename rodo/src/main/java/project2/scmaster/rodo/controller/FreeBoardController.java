@@ -37,12 +37,6 @@ import project2.scmaster.rodo.vo.Rodo_FreeReply;
 @Controller
 public class FreeBoardController
 {
-	List<Integer> reList;
-	List<Integer> fList;
-
-	// 서버 리부팅 이전 삭제 카운트 설정
-	int num = 12;
-	
 	private static final Logger logger = LoggerFactory.getLogger(FreeBoardController.class);
 	final int countPerPage = 15;		// 페이지 당 글 수
 	final int pagePerGroup = 5;		// 페이지 이동 그룹 당 표시할 페이지 수
@@ -70,61 +64,10 @@ public class FreeBoardController
 		PageNavigator navi = new PageNavigator(countPerPage, pagePerGroup, page, total);
 		
 		List<Rodo_FreeBoard> list = dao.list(navi.getStartRecord(), navi.getCountPerPage(), searchText);
-		
-		// 리플 카운트 List 선언 (초기화)
-		reList = new ArrayList<> ();
-		
-		// 게시판 사이즈 + 글 삭제 했을 시 사이즈에 추가 할 변수
-		int rSize = list.size() + num;	
-		
-		// 게시판 사이즈 + 삭제한 카운트 만큼 반복
-		for (int i = 0; i < rSize; i++)
-		{
-			// 해당 글 번호 리플 수를 Get!
-			int temp = dao.getReplyCount(i);
-		
-			// 해당 글에 리플이 없는 경우 (해당 리스트 인덱스에 null 대입)
-			if (temp == 0 || temp == -1)
-			{
-				reList.add(i, null);
-			}
-			
-			// 해당 글에 리플이 있는 경우 (해당 리스트 인덱스에 가져 온 리플 카운트 대입)
-			else if (temp > 0)
-			{
-				reList.add(i, temp);
-			}
-		}
-		
-		// 첨부 파일 카운트 List 선언 (초기화)
-		fList = new ArrayList<> ();
-		
-		// 파일 리스트 사이즈 + 글 삭제 했을 시 사이즈에 추가 할 변수
-		// (이하 위와 동일)
-		for (int j = 0; j < rSize; j++)
-		{
-			int temp2 = dao.getFileCount(j);
-			
-			if (temp2 == 0 || temp2 == -1)
-			{
-				fList.add(j, null);
-			}
-			
-			else if (temp2 > 0)
-			{
-				fList.add(j, temp2);
-			}
-		}
-		
+						
 		model.addAttribute("searchText", searchText);
 		model.addAttribute("list", list);
 		model.addAttribute("navi", navi);
-		
-		// 리플 카운트 (모델)
-		model.addAttribute("reList", reList);
-		
-		// 파일 카운트 (모델)
-		model.addAttribute("fList", fList);
 		
 		return "freeboard/freeboardlist";
 	}

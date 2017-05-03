@@ -34,9 +34,16 @@ function drawChart() {
 	   materialChart.draw(data, materialOptions);
 	   chartFlag = 1; 
 	   
+	   $("#chart_div2").html("<table style='border-top:2px solid black; border-bottom:2px solid black;width:200px; text-align:center;'><tr><td>최대고도&nbsp;&nbsp;:&nbsp;&nbsp;<b>"+ highele +"</b></td></tr>"
+ 	   					+"<tr><td>평균고도&nbsp;&nbsp;:&nbsp;&nbsp;<b>" + arele + "</b></td></tr>"
+						+ "<tr><td>최대속도&nbsp;&nbsp;:&nbsp;&nbsp;<b>" + highdist + "</b></td></tr>"
+						+ "<tr><td>평균속도&nbsp;&nbsp;:&nbsp;&nbsp;<b>" + ardist + "</b></td></tr>"
+						+ "</table>");
+	   
    }else{
 		if(chartFlag == 1){
 			$("#chart_div").html("");
+			 $("#chart_div2").html("");
 			chartFlag = 0;
 		}	   
    }

@@ -307,23 +307,8 @@
 		
 	where
 		free_id = #{id}
-		
 	order by
 		free_boardnum desc
 
 </select>
-
-	<!--	  				리플 카운트 					 	-->
-	<select id = "getReplyCount" parameterType="int" resultType="int">
-		SELECT count(*)
-		FROM   rodo_freereply
-		WHERE  free_boardnum = #{free_boardnum}
-	</select>	
-						
-	<!--	  			  첨부 파일 카운트				 	-->
-	<select id = "getFileCount" parameterType="int" resultType="int">
-		SELECT count(freefile_saved)
-		FROM   rodo_freefile
-		WHERE  free_boardnum = #{free_boardnum}
-	</select>
 	</mapper>

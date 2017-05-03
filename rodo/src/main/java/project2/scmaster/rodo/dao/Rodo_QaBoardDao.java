@@ -193,34 +193,6 @@ public class Rodo_QaBoardDao
 		return result;
 	}
 	
-	public int getReplyCount(int qa_boardnum)
-	{
-		Rodo_QaBoardMapper mapper = sqlsession.getMapper(Rodo_QaBoardMapper.class);
-		
-		int result = mapper.getReplyCount(qa_boardnum);
-		
-		return result;
-	}
-	
-
-	public int getMinReply()
-	{
-		Rodo_QaBoardMapper mapper = sqlsession.getMapper(Rodo_QaBoardMapper.class);
-		
-		int result = mapper.getMinReply();
-		
-		return result;
-	}
-
-	public int getFileCount (int qa_boardnum)
-	{
-		Rodo_QaBoardMapper mapper = sqlsession.getMapper(Rodo_QaBoardMapper.class);
-		
-		int result = mapper.getFileCount(qa_boardnum);
-		
-		return result;
-	}
-	
 	public void hitsPlus (int qa_boardnum)
 	{
 		Rodo_QaBoardMapper mapper = sqlsession.getMapper(Rodo_QaBoardMapper.class);

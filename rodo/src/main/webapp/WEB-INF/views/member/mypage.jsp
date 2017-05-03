@@ -5,13 +5,97 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
-<title>My Info</title>
+<meta charset="utf-8">
+<title>Share Your Road</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="" name="keywords">
+<meta content="" name="description">
+
+<!-- Facebook Opengraph integration: https://developers.facebook.com/docs/sharing/opengraph -->
+<meta property="og:title" content="">
+<meta property="og:image" content="">
+<meta property="og:url" content="">
+<meta property="og:site_name" content="">
+<meta property="og:description" content="">
+
+<!-- Twitter Cards integration: https://dev.twitter.com/cards/  -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="">
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="">
+<meta name="twitter:image" content="">
+
+<script src="resources/js/jquery-3.1.1.js"></script>
+
+<!-- Place your favicon.ico and apple-touch-icon.png in the template root directory -->
+<link href="favicon.ico" rel="shortcut icon">
+
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800"
+	rel="stylesheet">
+
+<!-- Bootstrap CSS File -->
+<link href="resources/lib/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<!-- Libraries CSS Files -->
+<link href="resources/lib/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href="resources/lib/animate-css/animate.min.css" rel="stylesheet">
+
+<!-- Main Stylesheet File -->
+<link href="resources/css/style.css" rel="stylesheet">
+<link href="resources/css/login.css" rel="stylesheet">
+  
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+
+<style type="text/css">
+.reverse
+{
+	color: #E31414;
+	font-size: 11pt;
+	font-weight: 900;
+}
+
+.reverse a
+{
+	color: #E31414;
+	font-size: 11pt;
+	font-weight: 900;
+}
+
+th
+{
+	border-top: 3px solid #6B6B6B;
+	background-color: #E0E0E0;
+	height: 38px;
+	text-align: center;
+	color: #000000;
+}
+
+td
+{
+	height: 30px;
+}
+
+.title{
+	color:black;
+}
+.title:hover{
+	color:red;
+}
+
+.pagingset
+{
+	color : white;
+}
+
+</style>
+
 
 <script>
-
-
 
 function freepagingFormSubmit(currentPage)
 {
@@ -29,17 +113,17 @@ function freepagingFormSubmit(currentPage)
 		
 		success : function(data)
 		{	
-			var html = 	"<table>"
-				+ "<tr>"
-				+ "<td>FreeBoard</td>"
-				+ "<td>게시글 제목</td>"
-				+ "<td>게시글 날짜</td>"
-				+ "</tr>";
+			var html = '<div class="point"><h3>FreeBoard</h3></div>'	
+				
+				+ '<table width="800">'
+				+ '<tr style="background-color:#E0E0E0;">'
+				+ '<td width = "450"><strong>게시글 제목</strong></td>'
+				+ '<td width = "200"><strong>게시글 날짜</strong></td>'
+				+ '</tr>';
 			
 			$.each(data.freelist, function(index, item)
 			{
 				html += "<tr>"
-						+ "<td>FreeBoard</td>"
 						+ "<td><a href='#none' onclick='warpfreeread("+item.free_boardnum+")'>"+item.free_title+"</a></td>"
 						+ "<td>"+item.free_input_dt+"</td>"
 						+ "</tr>";
@@ -112,17 +196,16 @@ function photopagingFormSubmit(currentPage)
 		
 		success : function(data)
 		{	
-			var html = 	"<table>"
-				+ "<tr>"
-				+ "<td>PhotoBoard</td>"
-				+ "<td>게시글 제목</td>"
-				+ "<td>게시글 날짜</td>"
+			var html = 	'<div class="point"><h3>PhotoBoard</h3></div>'	
+				+ "<table>"
+				+ '<tr style="background-color:#E0E0E0;">'
+				+ '<td width = "450"><strong>게시글 제목</strong></td>'
+				+ '<td width = "200"><strong>게시글 날짜</strong></td>'
 				+ "</tr>";
 				
 			$.each(data.photolist, function(index, item)
 			{	
 				html += "<tr>"
-						+ "<td>PhotoBoard</td>"
 						+ "<td><a href='#none' onclick='warpphotoread("+item.photo_boardnum+")'>"+item.photo_title+"</a></td>"
 						+ "<td>"+item.photo_input_dt+"</td>"
 						+ "</tr>";
@@ -195,17 +278,16 @@ function videopagingFormSubmit(currentPage)
 		
 		success : function(data)
 		{	
-			var html5 = 	"<table>"
-				+ "<tr>"
-				+ "<td>VideoBoard</td>"
-				+ "<td>게시글 제목</td>"
-				+ "<td>게시글 날짜</td>"
+			var html5 = '<div class="point"><h3>VideoBoard</h3></div>'	
+				+ "<table>"
+				+ '<tr style="background-color:#E0E0E0;">'
+				+ '<td width = "450"><strong>게시글 제목</strong></td>'
+				+ '<td width = "200"><strong>게시글 날짜</strong></td>'
 				+ "</tr>";
 				
 			$.each(data.videolist, function(index, item)
 			{	
 				html5 += "<tr>"
-						+ "<td>VideoBoard</td>"
 						+ "<td><a href='#none' onclick='warpvideoread("+item.video_boardnum+")'>"+item.video_title+"</a></td>"
 						+ "<td>"+item.video_input_dt+"</td>"
 						+ "</tr>";
@@ -278,17 +360,16 @@ function gpspagingFormSubmit(currentPage)
 		
 		success : function(data)
 		{	
-			var html7 = 	"<table>"
-				+ "<tr>"
-				+ "<td>GpsBoard</td>"
-				+ "<td>게시글 제목</td>"
-				+ "<td>게시글 날짜</td>"
+			var html7 = '<div class="point"><h3>GpsBoard</h3></div>'	
+				+ "<table>"
+				+ '<tr style="background-color:#E0E0E0;">'
+				+ '<td width = "450"><strong>게시글 제목</strong></td>'
+				+ '<td width = "200"><strong>게시글 날짜</strong></td>'
 				+ "</tr>";
 				
 			$.each(data.gpslist, function(index, item)
 			{	
 				html7 += "<tr>"
-						+ "<td>GpsBoard</td>"
 						+ "<td><a href='#none' onclick='warpgpsread("+item.gps_boardnum+")'>"+item.gps_title+"</a></td>"
 						+ "<td>"+item.gps_input_dt+"</td>"
 						+ "</tr>";
@@ -344,8 +425,6 @@ function warpgpsread(boardnum)
 	location.href="gpsread?gps_boardnum="+boardnum;
 }
 
-
-
 	$.ajax
 	({
 		type : "post",
@@ -354,11 +433,10 @@ function warpgpsread(boardnum)
 		success : function(data)
 		{	
 			
-			var html = 	"<table>"
-						+ "<tr>"
-						+ "<td>FreeBoard</td>"
-						+ "<td>게시글 제목</td>"
-						+ "<td>게시글 날짜</td>"
+			var html = 	'<div class="point"><h3>FreeBoard</h3></div>'
+						+ '<tr style="background-color:#E0E0E0;">'
+						+ '<td width = "450"><strong>게시글 제목</strong></td>'
+						+ '<td width = "200"><strong>게시글 날짜</strong></td>'
 						+ "</tr>";
 						
 			var html2 = "";
@@ -367,7 +445,6 @@ function warpgpsread(boardnum)
 				$.each(data.freelist, function(index, item)
 				{
 					html += "<tr>"
-							+ "<td>FreeBoard</td>"
 							+ "<td><a href='#none' onclick='warpfreeread("+item.free_boardnum+")'>"+item.free_title+"</a></td>"
 							+ "<td>"+item.free_input_dt+"</td>"
 							+ "</tr>";
@@ -411,10 +488,10 @@ function warpgpsread(boardnum)
 		/* ======================================== 포토 게시판 ======================================== */
 				
 				
-			var html3 = "<tr>"
-				+ "<td>PhotoBoard</td>"
-				+ "<td>게시글 제목</td>"
-				+ "<td>게시글 날짜</td>"
+			var html3 = '<div class="point"><h3>PhotoBoard</h3></div>'
+				+ '<tr style="background-color:#E0E0E0;">'
+				+ '<td width = "450"><strong>게시글 제목</strong></td>'
+				+ '<td width = "200"><strong>게시글 날짜</strong></td>'
 				+ "</tr>";
 				
 			var html4 = "";
@@ -423,7 +500,6 @@ function warpgpsread(boardnum)
 			$.each(data.photolist, function(index, item)
 			{
 				html3 += "<tr>"
-						+ "<td>PhotoBoard</td>"
 						+ "<td><a href='#none' onclick='warpphotoread("+item.photo_boardnum+")'>"+item.photo_title+"</a></td>"
 						+ "<td>"+item.photo_input_dt+"</td>"
 						+ "</tr>";
@@ -465,10 +541,10 @@ function warpgpsread(boardnum)
 		/* ======================================== 비디오 게시판 ======================================== */
 			
 			
-			var html5 = "<tr>"
-				+ "<td>VideoBoard</td>"
-				+ "<td>게시글 제목</td>"
-				+ "<td>게시글 날짜</td>"
+			var html5 = '<div class="point"><h3>VideoBoard</h3></div>'
+				+ '<tr style="background-color:#E0E0E0;">'
+				+ '<td width = "450"><strong>게시글 제목</strong></td>'
+				+ '<td width = "200"><strong>게시글 날짜</strong></td>'
 				+ "</tr>";
 				
 			var html6 = "";
@@ -477,7 +553,6 @@ function warpgpsread(boardnum)
 			$.each(data.videolist, function(index, item)
 			{
 				html5 += "<tr>"
-						+ "<td>VideoBoard</td>"
 						+ "<td><a href='#none' onclick='warpvideoread("+item.video_boardnum+")'>"+item.video_title+"</a></td>"
 						+ "<td>"+item.video_input_dt+"</td>"
 						+ "</tr>";
@@ -519,10 +594,10 @@ function warpgpsread(boardnum)
 			/* ======================================== GPS 게시판 ======================================== */
 			
 			
-			var html7 = "<tr>"
-				+ "<td>GpsBoard</td>"
-				+ "<td>게시글 제목</td>"
-				+ "<td>게시글 날짜</td>"
+			var html7 = '<div class="point"><h3>GpsBoard</h3></div>'
+				+ '<tr style="background-color:#E0E0E0;">'
+				+ '<td width = "450"><strong>게시글 제목</strong></td>'
+				+ '<td width = "200"><strong>게시글 날짜</strong></td>'
 				+ "</tr>";
 				
 			var html8 = "";
@@ -531,7 +606,6 @@ function warpgpsread(boardnum)
 			$.each(data.gpslist, function(index, item)
 			{
 				html7 += "<tr>"
-						+ "<td>GpsBoard</td>"
 						+ "<td><a href='#none' onclick='warpgpsread("+item.gps_boardnum+")'>"+item.gps_title+"</a></td>"
 						+ "<td>"+item.gps_input_dt+"</td>"
 						+ "</tr>";
@@ -576,40 +650,107 @@ function warpgpsread(boardnum)
 				console.log(e);
 			}
 	})
-
-
+	
 
 </script>
-
+<style>
+</style>
 </head>
 <body>
 
 
-<table id = "myinfolist" style="width:800px;">
+<!--==========================
+  Header Section
+============================-->
+	<%@ include file="../header.jsp"%>
+
+	<!--==========================
+  Porfolio Section
+============================-->
+
+<section id="services">
+	<div class="container wow fadeInUp">
+	
+	<div class="row">
+	<div class="col-md-12" style="padding-bottom: 35px">
+		<h3 class="section-title">MY LIST</h3>
+		<div class="section-title-divider"></div>
+	</div>
+</div>
+	
+<table id = "gpslist" class = "table-striped" style="width : 70%; border-bottom: 2px solid gray; margin:auto; ">
 </table>
 
-<table id = "freepaging" style="width:800px; text-align: center;">
+<table id = "gpspaging" style="width:800px; text-align: center; margin:auto; margin-bottom:80px;">
+</table>
+
+<table id = "photolist" class = "table-striped" style="width : 70%; border-bottom: 2px solid gray; margin:auto;">
+</table>
+
+<table id = "photopaging" style="width:800px; text-align: center; margin:auto; margin-bottom:80px;"> 
 </table><p>
 
-<table id = "photolist" style="width:800px;">
+<table id = "videolist" class = "table-striped" style="width : 70%; border-bottom: 2px solid gray; margin:auto;">
 </table>
 
-<table id = "photopaging" style="width:800px; text-align: center;"> 
+<table id = "videopaging" style="width:800px; text-align: center; margin:auto; margin-bottom:80px;">
 </table><p>
 
-<table id = "videolist" style="width:800px;">
+<table id = "myinfolist" class = "table-striped" style="width : 70%; border-bottom: 2px solid gray; margin:auto;">
 </table>
 
-<table id = "videopaging" style="width:800px; text-align: center;">
+<table id = "freepaging" style="width:800px; text-align: center; margin:auto;">
 </table><p>
 
-<table id = "gpslist" style="width:800px;">
-</table>
-
-<table id = "gpspaging" style="width:800px; text-align: center;">
-</table>
 
 <input type = "hidden" name = "page" id = "page">
+
+</div>
+</section>
+
+<!--==========================
+  Footer
+============================-->
+	<footer id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						&copy; Copyright <strong>Imperial Theme</strong>. All Rights
+						Reserved
+					</div>
+					<div class="credits">
+						<!-- 
+                All the links in the footer should remain intact. 
+                You can delete the links only if you purchased the pro version.
+                Licensing information: https://bootstrapmade.com/license/
+                Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Imperial
+              -->
+						Bootstrap Themes by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- #footer -->
+
+	<a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+	<!-- Required JavaScript Libraries -->
+	<script src="resources/lib/jquery/jquery.min.js"></script>
+	<script src="resources/lib/jquery/jquery-migrate.min.js"></script>
+	<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script src="resources/lib/superfish/hoverIntent.js"></script>
+	<script src="resources/lib/superfish/superfish.min.js"></script>
+	<script src="resources/lib/morphext/morphext.min.js"></script>
+	<script src="resources/lib/wow/wow.min.js"></script>
+	<script src="resources/lib/stickyjs/sticky.js"></script>
+	<script src="resources/lib/easing/easing.js"></script>
+
+	<!-- Template Specisifc Custom Javascript File -->
+	<script src="resources/js/custom.js"></script>
+
+
 
 </body>
 </html>

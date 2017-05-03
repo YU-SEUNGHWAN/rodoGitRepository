@@ -184,19 +184,4 @@ public class Rodo_FreeBoardDao{
 		return list;
 	}
 	
-	public int getReplyCount(int free_boardnum)
-	{
-		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
-		int result = mapper.getReplyCount(free_boardnum);
-		
-		return result;
-	}
-	
-	public int getFileCount (int free_boardnum)
-	{
-		Rodo_FreeBoardMapper mapper = sqlsession.getMapper(Rodo_FreeBoardMapper.class);
-		int result = mapper.getFileCount(free_boardnum);
-		
-		return result;
-	}
 }

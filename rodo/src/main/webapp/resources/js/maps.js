@@ -3,6 +3,11 @@
 	var map, placeOverlay, contentNode, markers, currCategory, ps, overlayOn, container, mapWrapper, mapContainer, rvContainer,
 	mapCenter, rv, rvClient, markImage, marker;
 	var startLat, startLng, arriveLat, arriveLng;
+	var ardist = 0;
+	var arele = 0;
+	var highele = 0;
+	var highdist = 0;
+	var listcount = 1;
 	
 	$(function(){
 		$.ajax({
@@ -21,10 +26,21 @@
 					}
 					latlngList.push(latlng);
 					if(index%3==0){
-						var ele = [new Date(item.time), parseFloat(item.ele), parseFloat(item.dist)];			
+						var ele = [new Date(item.time), parseFloat(item.ele), parseFloat(item.dist)];		
 						eleChart.push(ele);
+						ardist = parseFloat(ardist)+parseFloat(item.dist);
+						arele = parseFloat(arele)+parseFloat(item.ele);
+						listcount++;
+						if(parseFloat(item.dist) > highdist){
+							highdist = parseFloat(item.dist);
+						}
+						if(parseFloat(item.ele) > highele){
+							highele = parseFloat(item.ele);
+						}
 					}
 				})
+				ardist = (ardist/listcount).toFixed(2);
+				arele = (arele/listcount).toFixed(2);
 				var m = $('#myMarks').val();
 				marks = JSON.parse(m);
 				initMap(startLat, startLng, arriveLat, arriveLng, marks);

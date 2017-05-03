@@ -209,7 +209,7 @@ b{
 	    <div class="container wow fadeInUp board-main">  
 	      <div class="row">
 	        <div class="col-md-12" style="padding-bottom:35px; padding-top: 40px;">
-	          <span class="board-title">GPS Write</span>
+	          <span class="board-title">GPS UPDATE</span>
 	          <div class="board-title-divider"></div>
 	        </div>
 	      </div> 

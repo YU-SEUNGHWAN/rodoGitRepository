@@ -89,7 +89,17 @@ function pagingFormSubmit(currentPage)
 	
 	form.submit();
 }
-
+$(function(){
+	$(".pagingset").css("color", "white");
+	
+	$(".btn-page").mouseover(function(){
+		$(this).find(".pagingset").css("color", "black");
+	});
+		
+	$(".btn-page").mouseout(function(){
+		$(this).find(".pagingset").css("color", "white");			
+	});	
+});
 $(function()
 {
 	$(".tcolor").on
@@ -133,9 +143,8 @@ $(function()
        	<table class = "table-striped" style="width : 100%; border-bottom: 2px solid gray;">
         		<tr>
         			<th style="text-align:center; width:8%;">		번호		</th>
-        			<th style="text-align:center; width:3%;">		    	</th>
         			<th style="text-align:center; width:57%;">		제목		</th>
-        			<th style="text-align:center; width:12%;">		글쓴이	</th>
+        			<th style="text-align:center; width:15%;">		글쓴이	</th>
         			<th style="text-align:center; width:10%;">		날짜		</th>
         			<th style="text-align:center; width:10%;">		조회		</th>
         		</tr>
@@ -143,14 +152,6 @@ $(function()
        	 <c:forEach var="board" items="${list}">
         		<tr class = "tcolor">
         			<td style="text-align:center; width:8%;"> ${board.qa_boardnum}
-        			</td>
-
-       				<td style="text-align:center; width:3%;">
-						 <c:forEach var ="fc"  items= "${fList}" 
-						 begin="${board.qa_boardnum}" end="${board.qa_boardnum}">
-							<c:if test="${fc == null}">		<img src = "./resources/img/front.png">		</c:if>
-							<c:if test="${fc != null}">		<img src = "./resources/img/picon.png">		</c:if>
-						</c:forEach>
         			</td>
 
         			<td style="text-align:left; width:57%;">
@@ -162,10 +163,9 @@ $(function()
 							<c:if test="${a != null}">		[	${a}	]		</c:if>
 							<c:if test="${a == null}">			　				</c:if>
 						</c:forEach>
-						
         			</td>
         			
-        			<td style="text-align:center; width:12%;">${board.qa_id}			</td>
+        			<td style="text-align:center; width:15%;">${board.qa_id}			</td>
         			<td style="text-align:center; width:10%;">${board.qa_input_dt}	</td>
         			<td style="text-align:center; width:10%;">${board.qa_hit}			</td>
         		</tr>

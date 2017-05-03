@@ -7,6 +7,8 @@
 <title>개인정보 수정 확인</title>
 
 <script type = "text/javascript" src = "./resources/js/jquery-3.1.1.js"></script>
+<script src="resources/lib/bootstrap/js/bootstrap.min.js"></script>
+<link href="resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <script>
 
@@ -30,7 +32,8 @@
 				{
 					if (password == data)
 					{
-						location.href="update"
+						location.href="update";
+						window.resizeTo(500, 440);
 					}
 					
 					else
@@ -51,12 +54,57 @@
 	})
 
 </script>
-
+<style>
+h3
+{
+   font-weight: bolder;
+   margin-left: 10px;
+   font-family: "Open Sans",sans-serif;
+}
+h5{
+	margin-left: 10px;
+	color: red;
+}
+.slice{
+background: black;
+width: 310px;
+height: 3px;
+margin-bottom: 15px;
+margin-left: 5px;
+}
+table{
+	margin-left: 10px;
+	padding : 5px;
+}
+table label{
+	text-align:center;
+	width: 60px;
+}
+table #id, table #password{
+	border: 1px solid black;
+	width:200px;
+}
+#button{
+	border: 2px solid #313233;
+	background: #313233;
+	color:white;
+	margin-left: 250px;
+	margin-top: 8px;
+}
+#button:hover{
+	border: 2px solid #313233;
+	background: white;
+	color:#313233;
+}
+</style>
 </head>
 <body>
-
-<form action = "update" method = "post">
-
+<header>
+	<h3>개인정보 수정</h3>
+	<div class="slice"></div>
+</header>
+	<h5>비밀번호를 입력해 본인인증을 해 주세요</h5>
+	<form action = "update" method = "post">
 	<table>
 		<tr>
 			<td>
@@ -71,20 +119,8 @@
 				<input type = "password" id = "password" name = "password">
 			</td>
 		</tr>
-		
-		<tr>
-			<td>
-				<input type = "button" id = "button" name = "button" value = "확인">
-			</td>
-		</tr>
-		
-		<tr>
-			<td>
-				<a href = "./">메인으로</a>
-			</td>
-		</tr>
 	</table>
-	
+	<input type = "button" id = "button" name = "button" value = "확인">
 </form>
 
 </body>

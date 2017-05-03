@@ -52,8 +52,4 @@ public interface Rodo_FreeBoardMapper
 	public int writefreeboardcount(String id);
 	
 	public List<Rodo_FreeBoard> myfreelist(RowBounds rb, String id);
-	
-	public int getReplyCount(int free_boardnum);
-
-	public int getFileCount(int free_boardnum);
 }
